@@ -1,0 +1,12 @@
+{
+  "extends": "./node_modules/gts/tsconfig-google.json",
+  "compilerOptions": {
+    "jsx": "react-native",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "./lib",
+    "removeComments": true
+  },
+  "include": ["src"],
+  "exclude": ["**/__tests__/*"]
+}
