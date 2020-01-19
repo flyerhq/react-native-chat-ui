@@ -16,7 +16,8 @@
     "compile": "tsc -p .",
     "fix": "gts fix",
     "prepare": "yarn run compile",
-    "test": "jest"
+    "test": "jest",
+    "type-coverage": "type-coverage --at-least 100 --strict --ignore-catch --cache"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
@@ -32,6 +33,7 @@
     "react-native": "^0.61.5",
     "react-native-testing-library": "^1.12.0",
     "react-test-renderer": "^16.12.0",
+    "type-coverage": "^2.4.0",
     "typescript": "^3.7.5"
   },
   "peerDependencies": {
@@ -48,5 +50,8 @@
       "json",
       "node"
     ]
+  },
+  "typeCoverage": {
+    "atLeast": 100
   }
 }

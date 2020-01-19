@@ -65,3 +65,6 @@ buck-out/
 
 # Library
 lib/
+
+# Type coverage
+.type-coverage/
