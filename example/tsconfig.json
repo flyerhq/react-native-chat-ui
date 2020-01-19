@@ -9,7 +9,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "react-native-flyer-ui": ["../lib"]
+      "react-native-flyer-ui": ["../src"]
     },
     "skipLibCheck": true
   },

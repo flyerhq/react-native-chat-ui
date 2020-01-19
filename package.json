@@ -30,6 +30,7 @@
     "metro-react-native-babel-preset": "^0.57.0",
     "react": "^16.12.0",
     "react-native": "^0.61.5",
+    "react-native-testing-library": "^1.12.0",
     "react-test-renderer": "^16.12.0",
     "typescript": "^3.7.5"
   },
