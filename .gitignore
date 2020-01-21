@@ -68,3 +68,6 @@ lib/
 
 # Type coverage
 .type-coverage/
+
+# Tests coverage
+coverage/

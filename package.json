@@ -49,7 +49,22 @@
       "jsx",
       "json",
       "node"
-    ]
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!**/index.{ts,tsx}",
+      "!**/styles.{ts,tsx}",
+      "!**/*.d.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
   },
   "typeCoverage": {
     "atLeast": 100
