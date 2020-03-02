@@ -9,8 +9,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "react-native-flyer-ui": ["../src"]
+      "@flyerhq/react-native-flyer-ui": ["../src"]
     },
+    "resolveJsonModule": true,
     "skipLibCheck": true
   },
   "include": ["src"]

@@ -6,11 +6,13 @@ import {
   TextInputProps,
   View,
 } from 'react-native'
+import uuidv4 from 'uuid/v4'
 import { SendButton } from '../SendButton'
+import { Message } from '../types'
 import styles from './styles'
 
 export interface InputProps {
-  onSendPress: (message: string) => void
+  onSendPress: (message: Message) => void
   textInputProps?: TextInputProps
 }
 
@@ -22,6 +24,11 @@ export const Input = ({ onSendPress, textInputProps }: InputProps) => {
     // Track local state in case `onChangeText` is provided and `value` is not
     setText(text)
     textInputProps?.onChangeText?.(text)
+  }
+
+  const handleSend = () => {
+    onSendPress({ id: uuidv4(), text: value })
+    setText('')
   }
 
   const value = textInputProps?.value ?? text
@@ -38,12 +45,12 @@ export const Input = ({ onSendPress, textInputProps }: InputProps) => {
         onChangeText={handleChangeText}
         value={value}
       />
-      <SendButton onPress={() => onSendPress(value)} />
+      <SendButton onPress={handleSend} />
     </View>
   )
 
   return (
-    <>
+    <View accessibilityRole='toolbar'>
       {Platform.OS === 'ios' ? (
         <InputAccessoryView backgroundColor='#ddd'>
           {renderInput()}
@@ -51,6 +58,6 @@ export const Input = ({ onSendPress, textInputProps }: InputProps) => {
       ) : (
         renderInput()
       )}
-    </>
+    </View>
   )
 }

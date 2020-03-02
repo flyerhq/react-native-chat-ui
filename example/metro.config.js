@@ -16,10 +16,17 @@ module.exports = {
     extraNodeModules: {
       react: path.resolve(__dirname, 'node_modules/react'),
       'react-native': path.resolve(__dirname, 'node_modules/react-native'),
+      'react-native-safe-area-context': path.resolve(
+        __dirname,
+        'node_modules/react-native-safe-area-context'
+      ),
     },
     blacklistRE: blacklist([
       new RegExp(`${moduleRoot}/node_modules/react/.*`),
       new RegExp(`${moduleRoot}/node_modules/react-native/.*`),
+      new RegExp(
+        `${moduleRoot}/node_modules/react-native-safe-area-context/.*`
+      ),
     ]),
   },
   transformer: {

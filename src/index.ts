@@ -1,3 +1,7 @@
+export * from './Chat'
 export * from './Input'
 export * from './SendButton'
+export * from './TextMessage'
+export * from './hooks'
+export * from './types'
 export * from './utils'

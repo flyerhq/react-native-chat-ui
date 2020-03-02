@@ -1,80 +1,90 @@
 import * as React from 'react'
-import { View } from 'react-native'
+import { InputAccessoryView, View } from 'react-native'
 import { fireEvent, render } from 'react-native-testing-library'
+import { ReactTestInstance } from 'react-test-renderer'
 import { Input } from '../Input'
 
 describe('input', () => {
   test('it sends a correct message', () => {
     const onSendPress = jest.fn()
-    const { getByPlaceholder, getByText } = render(
+    const { getByPlaceholder, getByA11yLabel } = render(
       <Input onSendPress={onSendPress} />
     )
     const textInput = getByPlaceholder('Message')
-    const button = getByText('Send')
+    const button = getByA11yLabel('Send a message')
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith('text')
+    expect(onSendPress).toHaveBeenCalledWith({ id: 'uuidv4', text: 'text' })
+    expect(textInput.props.value).toEqual('')
   })
 
   test('it sends a correct message if onChangeText and value are provided', () => {
     const onSendPress = jest.fn()
     const value = 'value'
     const onChangeText = jest.fn(value => {
-      update(
+      rerender(
         <Input
           onSendPress={onSendPress}
           textInputProps={{ onChangeText, value }}
         />
       )
     })
-    const { getByPlaceholder, getByText, update } = render(
+    const { getByPlaceholder, getByA11yLabel, rerender } = render(
       <Input
         onSendPress={onSendPress}
         textInputProps={{ onChangeText, value }}
       />
     )
     const textInput = getByPlaceholder('Message')
-    const button = getByText('Send')
+    const button = getByA11yLabel('Send a message')
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith('text')
+    expect(onSendPress).toHaveBeenCalledWith({ id: 'uuidv4', text: 'text' })
+    expect(textInput.props.value).toEqual('text')
   })
 
   test('it sends a correct message if onChangeText is provided', () => {
     const onSendPress = jest.fn()
     const onChangeText = jest.fn()
-    const { getByPlaceholder, getByText } = render(
+    const { getByPlaceholder, getByA11yLabel } = render(
       <Input onSendPress={onSendPress} textInputProps={{ onChangeText }} />
     )
     const textInput = getByPlaceholder('Message')
-    const button = getByText('Send')
+    const button = getByA11yLabel('Send a message')
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith('text')
+    expect(onSendPress).toHaveBeenCalledWith({ id: 'uuidv4', text: 'text' })
+    expect(textInput.props.value).toEqual('')
   })
 
   test('it sends a correct message if value is provided', () => {
     const onSendPress = jest.fn()
     const value = 'value'
-    const { getByPlaceholder, getByText } = render(
+    const { getByPlaceholder, getByA11yLabel } = render(
       <Input onSendPress={onSendPress} textInputProps={{ value }} />
     )
     const textInput = getByPlaceholder('Message')
-    const button = getByText('Send')
+    const button = getByA11yLabel('Send a message')
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith(value)
+    expect(onSendPress).toHaveBeenCalledWith({ id: 'uuidv4', text: value })
+    expect(textInput.props.value).toEqual(value)
   })
 
   test('it sends a correct message if defaultValue is provided', () => {
     const onSendPress = jest.fn()
     const defaultValue = 'defaultValue'
-    const { getByText } = render(
+    const { getByPlaceholder, getByA11yLabel } = render(
       <Input onSendPress={onSendPress} textInputProps={{ defaultValue }} />
     )
-    const button = getByText('Send')
+    const textInput = getByPlaceholder('Message')
+    const button = getByA11yLabel('Send a message')
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith(defaultValue)
+    expect(onSendPress).toHaveBeenCalledWith({
+      id: 'uuidv4',
+      text: defaultValue,
+    })
+    expect(textInput.props.value).toEqual('')
   })
 })
 
@@ -86,22 +96,26 @@ describe('input per platform', () => {
   test('it renders InputAccessoryView for iOS', () => {
     jest.mock('react-native/Libraries/Utilities/Platform', () => ({
       OS: 'ios',
+      select: jest.fn(),
     }))
 
     const onSendPress = jest.fn()
-    const { getByType } = render(<Input onSendPress={onSendPress} />)
-    const container = getByType(View)
-    expect(container.parent.type).toEqual('RCTInputAccessoryView')
+    const { getByA11yRole } = render(<Input onSendPress={onSendPress} />)
+    const container = getByA11yRole('toolbar')
+    expect((container.children[0] as ReactTestInstance).type).toEqual(
+      InputAccessoryView
+    )
   })
 
   test('it does not render InputAccessoryView for Android', () => {
     jest.mock('react-native/Libraries/Utilities/Platform', () => ({
       OS: 'android',
+      select: jest.fn(),
     }))
 
     const onSendPress = jest.fn()
-    const { getByType } = render(<Input onSendPress={onSendPress} />)
-    const container = getByType(View)
-    expect(container.parent.type).not.toEqual('RCTInputAccessoryView')
+    const { getByA11yRole } = render(<Input onSendPress={onSendPress} />)
+    const container = getByA11yRole('toolbar')
+    expect((container.children[0] as ReactTestInstance).type).toEqual(View)
   })
 })
