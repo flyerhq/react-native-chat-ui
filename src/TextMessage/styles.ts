@@ -1,12 +1,12 @@
-import { Dimensions, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    marginVertical: 2,
-    paddingRight: Dimensions.get('screen').width * 0.18,
-    paddingLeft: Dimensions.get('screen').width * 0.02,
+    marginVertical: 4,
+    paddingRight: 48,
+    paddingLeft: 8,
   },
   message: {
     backgroundColor: '#ddd',
