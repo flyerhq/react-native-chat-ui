@@ -6,7 +6,7 @@ import {
   TextInputProps,
   View,
 } from 'react-native'
-import uuidv4 from 'uuid/v4'
+import { v4 as uuidv4 } from 'uuid'
 import { SendButton } from '../SendButton'
 import { Message } from '../types'
 import styles from './styles'

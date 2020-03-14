@@ -1,6 +1,6 @@
 const casual = require('casual')
 const fs = require('fs')
-const uuidv4 = require('uuid/v4')
+const { v4: uuidv4 } = require('uuid')
 
 let numberOfMessages = 10
 const arg = process.argv.slice(2)[0]

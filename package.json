@@ -26,7 +26,7 @@
     "@types/jest": "^25.1.4",
     "@types/react-native": "^0.61.22",
     "@types/react-test-renderer": "^16.9.2",
-    "@types/uuid": "^3.4.7",
+    "@types/uuid": "^7.0.0",
     "babel-jest": "^25.1.0",
     "gts": "^1.1.2",
     "jest": "^25.1.0",
@@ -45,7 +45,7 @@
     "react-native-safe-area-context": "*"
   },
   "dependencies": {
-    "uuid": "^3.4.0"
+    "uuid": "^7.0.2"
   },
   "jest": {
     "preset": "react-native",
