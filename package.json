@@ -1,6 +1,6 @@
 {
   "name": "@flyerhq/react-native-flyer-ui",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Flyer Chat UI",
   "homepage": "https://github.com/flyerhq/react-native-flyer-ui#readme",
   "main": "lib/index.js",
@@ -37,13 +37,15 @@
     "react-native-testing-library": "^1.13.0",
     "react-test-renderer": "^16.13.1",
     "type-coverage": "^2.4.2",
-    "typescript": "^3.8.3",
-    "uuid": "^7.0.2"
+    "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
     "react-native-safe-area-context": "*",
+    "react-native-get-random-values": "*"
+  },
+  "dependencies": {
     "uuid": "^7.0.2"
   },
   "jest": {
