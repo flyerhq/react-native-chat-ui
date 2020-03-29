@@ -37,14 +37,13 @@
     "react-native-testing-library": "^1.13.0",
     "react-test-renderer": "^16.13.1",
     "type-coverage": "^2.4.2",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "uuid": "^7.0.2"
   },
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
-    "react-native-safe-area-context": "*"
-  },
-  "dependencies": {
+    "react-native-safe-area-context": "*",
     "uuid": "^7.0.2"
   },
   "jest": {

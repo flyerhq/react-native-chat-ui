@@ -20,6 +20,7 @@ module.exports = {
         __dirname,
         'node_modules/react-native-safe-area-context'
       ),
+      uuid: path.resolve(__dirname, 'node_modules/uuid'),
     },
     blacklistRE: blacklist([
       new RegExp(`${moduleRoot}/node_modules/react/.*`),
@@ -27,6 +28,7 @@ module.exports = {
       new RegExp(
         `${moduleRoot}/node_modules/react-native-safe-area-context/.*`
       ),
+      new RegExp(`${moduleRoot}/node_modules/uuid/.*`),
     ]),
   },
   transformer: {
