@@ -39,7 +39,7 @@ test('returns correct bottom inset', () => {
     result.current.updateBottomInset(event)
   })
 
-  expect(result.current.bottomInset).toBe(479)
+  expect(result.current.bottomInset).toEqual(479)
 })
 
 test('returns correct bottom inset with longer animation time', () => {
@@ -53,7 +53,7 @@ test('returns correct bottom inset with longer animation time', () => {
     result.current.updateBottomInset(event)
   })
 
-  expect(result.current.bottomInset).toBe(479)
+  expect(result.current.bottomInset).toEqual(479)
 })
 
 test('does not configure animation if keyboard event duration is 0', () => {
@@ -67,7 +67,7 @@ test('does not configure animation if keyboard event duration is 0', () => {
     result.current.updateBottomInset(event)
   })
 
-  expect(result.current.bottomInset).toBe(479)
+  expect(result.current.bottomInset).toEqual(479)
 })
 
 test('skips setBottomInset if bottom inset does not change', () => {
@@ -84,5 +84,5 @@ test('skips setBottomInset if bottom inset does not change', () => {
     result.current.updateBottomInset(event)
   })
 
-  expect(result.current.bottomInset).toBe(0)
+  expect(result.current.bottomInset).toEqual(0)
 })

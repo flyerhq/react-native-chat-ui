@@ -1,6 +1,7 @@
 const casual = require('casual')
 const fs = require('fs')
 const { v4: uuidv4 } = require('uuid')
+const users = require('../src/users.json')
 
 let numberOfMessages = 10
 const arg = process.argv.slice(2)[0]
@@ -10,9 +11,12 @@ if (!isNaN(arg) && parseInt(arg) > 0) {
 }
 
 const messages = [...Array(numberOfMessages)].map(() => {
-  const random = Math.round(Math.random())
-  const text = random ? casual.text : casual.sentence
+  const randomText = Math.round(Math.random())
+  const text = randomText ? casual.text : casual.sentence
+  const randomAuthorId = Math.round(Math.random())
+  const authorId = randomAuthorId ? users[0].id : users[1].id
   const data = {
+    authorId,
     id: uuidv4(),
     text,
   }

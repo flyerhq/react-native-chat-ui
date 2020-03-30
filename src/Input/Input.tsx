@@ -8,15 +8,16 @@ import {
 } from 'react-native'
 import { v4 as uuidv4 } from 'uuid'
 import { SendButton } from '../SendButton'
-import { Message } from '../types'
+import { Message, User } from '../types'
 import styles from './styles'
 
 export interface InputProps {
   onSendPress: (message: Message) => void
   textInputProps?: TextInputProps
+  user: User
 }
 
-export const Input = ({ onSendPress, textInputProps }: InputProps) => {
+export const Input = ({ onSendPress, textInputProps, user }: InputProps) => {
   // Use `defaultValue` if provided
   const [text, setText] = React.useState(textInputProps?.defaultValue ?? '')
 
@@ -27,7 +28,7 @@ export const Input = ({ onSendPress, textInputProps }: InputProps) => {
   }
 
   const handleSend = () => {
-    onSendPress({ id: uuidv4(), text: value })
+    onSendPress({ authorId: user.id, id: uuidv4(), text: value })
     setText('')
   }
 
@@ -52,7 +53,7 @@ export const Input = ({ onSendPress, textInputProps }: InputProps) => {
   return (
     <View accessibilityRole='toolbar'>
       {Platform.OS === 'ios' ? (
-        <InputAccessoryView backgroundColor='#ddd'>
+        <InputAccessoryView backgroundColor='#eee'>
           {renderInput()}
         </InputAccessoryView>
       ) : (

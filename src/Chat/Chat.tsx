@@ -1,16 +1,18 @@
 import * as React from 'react'
 import { FlatList, SafeAreaView } from 'react-native'
-import { useKeyboardBottomInset } from '../hooks'
+import { useComponentSize, useKeyboardBottomInset } from '../hooks'
 import { Input, InputProps } from '../Input'
 import { TextMessage } from '../TextMessage'
-import { Message } from '../types'
+import { Message, User } from '../types'
 import styles from './styles'
 
 export interface ChatProps extends InputProps {
   messages: Message[]
+  user: User
 }
 
-export const Chat = ({ messages, onSendPress }: ChatProps) => {
+export const Chat = ({ messages, onSendPress, user }: ChatProps) => {
+  const { onLayout, size } = useComponentSize()
   const { bottomInset } = useKeyboardBottomInset()
 
   const list = React.useRef<FlatList<Message>>(null)
@@ -20,21 +22,27 @@ export const Chat = ({ messages, onSendPress }: ChatProps) => {
     list.current?.scrollToOffset({ animated: true, offset: -bottomInset })
   }
 
+  const keyExtractor = (item: Message) => item.id
+
+  const renderItem = ({ item }: { item: Message }) => (
+    <TextMessage message={item} parentComponentSize={size} user={user} />
+  )
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} onLayout={onLayout}>
       <FlatList
         ref={list}
         contentContainerStyle={{ paddingTop: bottomInset }}
         style={styles.list}
         data={messages}
-        renderItem={({ item }) => <TextMessage text={item.text} />}
+        renderItem={renderItem}
         automaticallyAdjustContentInsets={false}
         inverted
         keyboardDismissMode='interactive'
-        keyExtractor={item => item.id}
+        keyExtractor={keyExtractor}
         scrollIndicatorInsets={{ top: bottomInset }}
       />
-      <Input onSendPress={handleSendPress} />
+      <Input onSendPress={handleSendPress} user={user} />
     </SafeAreaView>
   )
 }

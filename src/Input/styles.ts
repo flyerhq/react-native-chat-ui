@@ -4,7 +4,7 @@ export default StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    backgroundColor: '#ddd',
+    backgroundColor: '#eee',
     padding: 8,
   },
   input: {
