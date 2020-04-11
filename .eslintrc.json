@@ -1,0 +1,24 @@
+{
+  "extends": ["@react-native-community", "./node_modules/gts"],
+  "plugins": ["simple-import-sort"],
+  "root": true,
+  "rules": {
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      {
+        "multiline": {
+          "delimiter": "none",
+          "requireLast": false
+        },
+        "singleline": {
+          "delimiter": "comma"
+        }
+      }
+    ],
+    "simple-import-sort/sort": [
+      "error",
+      { "groups": [["^\\u0000", "^@?\\w", "^[^.]", "^\\."]] }
+    ],
+    "sort-imports": "off"
+  }
+}

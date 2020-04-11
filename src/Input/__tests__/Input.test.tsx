@@ -22,11 +22,11 @@ describe('input', () => {
   test('it sends a correct message if onChangeText and value are provided', () => {
     const onSendPress = jest.fn()
     const value = 'value'
-    const onChangeText = jest.fn(value => {
+    const onChangeText = jest.fn(newValue => {
       rerender(
         <Input
           onSendPress={onSendPress}
-          textInputProps={{ onChangeText, value }}
+          textInputProps={{ onChangeText, value: newValue }}
           user={user}
         />
       )

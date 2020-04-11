@@ -21,10 +21,10 @@ export const Input = ({ onSendPress, textInputProps, user }: InputProps) => {
   // Use `defaultValue` if provided
   const [text, setText] = React.useState(textInputProps?.defaultValue ?? '')
 
-  const handleChangeText = (text: string) => {
+  const handleChangeText = (newText: string) => {
     // Track local state in case `onChangeText` is provided and `value` is not
-    setText(text)
-    textInputProps?.onChangeText?.(text)
+    setText(newText)
+    textInputProps?.onChangeText?.(newText)
   }
 
   const handleSend = () => {
