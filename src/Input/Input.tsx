@@ -28,7 +28,12 @@ export const Input = ({ onSendPress, textInputProps, user }: InputProps) => {
   }
 
   const handleSend = () => {
-    onSendPress({ authorId: user.id, id: uuidv4(), text: value })
+    onSendPress({
+      authorId: user.id,
+      id: uuidv4(),
+      text: value,
+      timestamp: Math.floor(Date.now() / 1000),
+    })
     setText('')
   }
 

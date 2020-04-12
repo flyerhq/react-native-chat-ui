@@ -2,6 +2,7 @@ export interface Message {
   authorId: string
   id: string
   text: string
+  timestamp: number
 }
 
 export interface Size {
