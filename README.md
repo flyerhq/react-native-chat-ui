@@ -1,4 +1,4 @@
-# React Native Flyer UI
+# React Native Chat UI
 
 [![CircleCI](https://circleci.com/gh/flyerhq/react-native-flyer-ui.svg?style=shield)](https://circleci.com/gh/flyerhq/react-native-flyer-ui)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/d17d30c78c367e8bf53a/test_coverage)](https://codeclimate.com/github/flyerhq/react-native-flyer-ui/test_coverage)
