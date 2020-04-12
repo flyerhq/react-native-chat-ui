@@ -1,6 +1,6 @@
 {
   "name": "@flyerhq/react-native-chat-ui",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Flyer Chat UI",
   "homepage": "https://github.com/flyerhq/react-native-chat-ui#readme",
   "main": "lib/index.js",
@@ -13,7 +13,7 @@
   "scripts": {
     "check": "gts check",
     "clean": "gts clean",
-    "compile": "tsc -p .",
+    "compile": "tsc -p . && copyup src/assets/*.png lib",
     "fix": "gts fix",
     "prepare": "yarn run compile",
     "test": "jest",
@@ -29,6 +29,7 @@
     "@types/react-test-renderer": "^16.9.2",
     "@types/uuid": "^7.0.2",
     "babel-jest": "^25.3.0",
+    "copyfiles": "^2.2.0",
     "eslint": "^6.8.0",
     "eslint-plugin-simple-import-sort": "^5.0.2",
     "gts": "^2.0.0",
