@@ -15,7 +15,7 @@ describe('input', () => {
     const { getByPlaceholder, getByA11yLabel } = render(
       <Input onSendPress={onSendPress} user={user} />
     )
-    const textInput = getByPlaceholder('Message')
+    const textInput = getByPlaceholder('Your message here')
     const button = getByA11yLabel('Send a message')
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
@@ -42,7 +42,7 @@ describe('input', () => {
         user={user}
       />
     )
-    const textInput = getByPlaceholder('Message')
+    const textInput = getByPlaceholder('Your message here')
     const button = getByA11yLabel('Send a message')
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
@@ -60,7 +60,7 @@ describe('input', () => {
         user={user}
       />
     )
-    const textInput = getByPlaceholder('Message')
+    const textInput = getByPlaceholder('Your message here')
     const button = getByA11yLabel('Send a message')
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
@@ -74,7 +74,7 @@ describe('input', () => {
     const { getByPlaceholder, getByA11yLabel } = render(
       <Input onSendPress={onSendPress} textInputProps={{ value }} user={user} />
     )
-    const textInput = getByPlaceholder('Message')
+    const textInput = getByPlaceholder('Your message here')
     const button = getByA11yLabel('Send a message')
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
@@ -92,7 +92,7 @@ describe('input', () => {
         user={user}
       />
     )
-    const textInput = getByPlaceholder('Message')
+    const textInput = getByPlaceholder('Your message here')
     const button = getByA11yLabel('Send a message')
     fireEvent.press(button)
     expect(onSendPress).toHaveBeenCalledWith({ ...message, text: defaultValue })

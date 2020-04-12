@@ -40,25 +40,31 @@ export const Input = ({ onSendPress, textInputProps, user }: InputProps) => {
   const value = textInputProps?.value ?? text
 
   const renderInput = () => (
-    <View style={styles.container}>
-      <TextInput
-        multiline
-        placeholder='Message'
-        underlineColorAndroid='transparent'
-        {...textInputProps}
-        // Keep our implementation but allow user to use these `TextInputProps`
-        style={[styles.input, textInputProps?.style]}
-        onChangeText={handleChangeText}
-        value={value}
-      />
-      <SendButton onPress={handleSend} />
+    // Wrap container in a `View` with a background color set to
+    // chat background to mimic `borderRadius` on an `InputAccessoryView`
+    // which is not supported
+    <View style={styles.wrapper}>
+      <View style={styles.container}>
+        <TextInput
+          multiline
+          placeholder='Your message here'
+          placeholderTextColor='#fffc'
+          underlineColorAndroid='transparent'
+          {...textInputProps}
+          // Keep our implementation but allow user to use these `TextInputProps`
+          style={[styles.input, textInputProps?.style]}
+          onChangeText={handleChangeText}
+          value={value}
+        />
+        <SendButton onPress={handleSend} />
+      </View>
     </View>
   )
 
   return (
     <View accessibilityRole='toolbar'>
       {Platform.OS === 'ios' ? (
-        <InputAccessoryView backgroundColor='#eee'>
+        <InputAccessoryView backgroundColor='#000'>
           {renderInput()}
         </InputAccessoryView>
       ) : (

@@ -1,11 +1,10 @@
 import * as React from 'react'
 import {
   GestureResponderEvent,
-  Text,
+  Image,
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native'
-import styles from './styles'
 
 export interface SendButtonProps {
   disabled?: boolean
@@ -32,7 +31,7 @@ export const SendButton = ({
       {...touchableOpacityProps}
       onPress={handlePress}
     >
-      <Text style={styles.button}>Send</Text>
+      <Image source={require('../assets/icon-send.png')} />
     </TouchableOpacity>
   )
 }

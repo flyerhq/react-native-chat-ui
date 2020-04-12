@@ -14,7 +14,7 @@ export const TextMessage = ({
   parentComponentSize,
   user,
 }: TextMessageProps) => {
-  const { container, message: messageStyle } = styles({
+  const { container, message: messageStyle, messageContainer } = styles({
     message,
     parentComponentSize,
     user,
@@ -22,9 +22,11 @@ export const TextMessage = ({
 
   return (
     <View style={container}>
-      <Text accessibilityRole='text' style={messageStyle}>
-        {message.text}
-      </Text>
+      <View style={messageContainer}>
+        <Text accessibilityRole='text' style={messageStyle}>
+          {message.text}
+        </Text>
+      </View>
     </View>
   )
 }
