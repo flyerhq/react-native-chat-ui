@@ -9,7 +9,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "@flyerhq/react-native-flyer-ui": ["../src"]
+      "@flyerhq/react-native-chat-ui": ["../src"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true

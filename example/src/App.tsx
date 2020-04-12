@@ -1,4 +1,4 @@
-import { Chat, Message } from '@flyerhq/react-native-flyer-ui'
+import { Chat, Message } from '@flyerhq/react-native-chat-ui'
 import React, { useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import data from './messages.json'
