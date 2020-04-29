@@ -14,7 +14,7 @@
           "requireLast": false
         },
         "singleline": {
-          "delimiter": "comma"
+          "delimiter": "semi"
         }
       }
     ],
