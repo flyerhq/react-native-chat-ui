@@ -3,10 +3,6 @@ import { fireEvent, render } from 'react-native-testing-library'
 import { message, user } from '../../fixtures'
 import { Chat } from '../Chat'
 
-beforeAll(() => {
-  Date.now = jest.fn(() => 0)
-})
-
 test('it calls onSendPress', () => {
   const messages = [message]
   const onSendPress = jest.fn()

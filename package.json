@@ -25,22 +25,21 @@
     "@react-native-community/eslint-config": "^1.1.0",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^25.2.1",
-    "@types/react-native": "^0.62.5",
+    "@types/react-native": "^0.62.7",
     "@types/react-test-renderer": "^16.9.2",
-    "@types/uuid": "^3.4.9",
-    "babel-jest": "^25.5.1",
+    "babel-jest": "^26.0.1",
     "copyfiles": "^2.2.0",
     "eslint": "^6.8.0",
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "gts": "^2.0.0",
-    "jest": "^25.5.1",
+    "jest": "^26.0.1",
     "metro-react-native-babel-preset": "^0.59.0",
     "react": "^16.13.1",
     "react-native": "^0.62.2",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-testing-library": "^1.13.2",
     "react-test-renderer": "^16.13.1",
-    "type-coverage": "^2.4.2",
+    "type-coverage": "^2.5.0",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
@@ -48,19 +47,7 @@
     "react-native": "*",
     "react-native-safe-area-context": "*"
   },
-  "dependencies": {
-    "uuid": "^3.4.0"
-  },
   "jest": {
-    "preset": "react-native",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ],
     "collectCoverage": true,
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
@@ -76,7 +63,19 @@
         "lines": 100,
         "statements": 100
       }
-    }
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "preset": "react-native",
+    "setupFiles": [
+      "./src/jest.setup.ts"
+    ]
   },
   "typeCoverage": {
     "atLeast": 100

@@ -1,4 +1,7 @@
 {
+  "env": {
+    "jest": true
+  },
   "extends": ["@react-native-community", "./node_modules/gts"],
   "plugins": ["simple-import-sort"],
   "root": true,

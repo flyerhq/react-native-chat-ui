@@ -5,10 +5,6 @@ import { ReactTestInstance } from 'react-test-renderer'
 import { message, user } from '../../fixtures'
 import { Input } from '../Input'
 
-beforeAll(() => {
-  Date.now = jest.fn(() => 0)
-})
-
 describe('input', () => {
   test('it sends a correct message', () => {
     const onSendPress = jest.fn()
