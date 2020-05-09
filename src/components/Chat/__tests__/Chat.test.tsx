@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { fireEvent, render } from 'react-native-testing-library'
-import { message, user } from '../../fixtures'
+import { message, user } from '../../../utils/fixtures'
 import { Chat } from '../Chat'
 
 test('it calls onSendPress', () => {

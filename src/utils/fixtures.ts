@@ -1,4 +1,4 @@
-import { Message, Size, User } from './types'
+import { Message, Size, User } from '../types'
 
 export const message: Message = {
   authorId: 'userId',

@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { FlatList, SafeAreaView } from 'react-native'
-import { useComponentSize, useKeyboardBottomInset } from '../hooks'
+import { useComponentSize, useKeyboardBottomInset } from '../../hooks'
+import { Message, User } from '../../types'
 import { Input, InputProps } from '../Input'
 import { TextMessage } from '../TextMessage'
-import { Message, User } from '../types'
 import styles from './styles'
 
 export interface ChatProps extends InputProps {

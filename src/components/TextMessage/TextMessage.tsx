@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Text, View } from 'react-native'
-import { Message, Size, User } from '../types'
+import { Message, Size, User } from '../../types'
 import styles from './styles'
 
 export interface TextMessageProps {

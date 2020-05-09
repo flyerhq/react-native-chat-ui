@@ -31,7 +31,7 @@ export const SendButton = ({
       {...touchableOpacityProps}
       onPress={handlePress}
     >
-      <Image source={require('../assets/icon-send.png')} />
+      <Image source={require('../../assets/icon-send.png')} />
     </TouchableOpacity>
   )
 }
