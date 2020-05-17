@@ -1,6 +1,8 @@
 import { Dimensions, LayoutAnimation } from 'react-native'
 import * as utils from './utils'
 
+jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
+
 jest.spyOn(Date, 'now').mockReturnValue(0)
 jest
   .spyOn(Dimensions, 'get')

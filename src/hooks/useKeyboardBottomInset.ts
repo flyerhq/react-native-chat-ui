@@ -43,5 +43,5 @@ export const useKeyboardBottomInset = () => {
     setBottomInset(newBottomInset)
   }
 
-  return { bottomInset, updateBottomInset }
+  return { bottomInset }
 }
