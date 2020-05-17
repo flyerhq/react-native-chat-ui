@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import { onLayoutEvent, size } from '../../utils/fixtures'
+import { onLayoutEvent, size } from '../../fixtures'
 import { useComponentSize } from '../useComponentSize'
 
 describe('useComponentSize', () => {

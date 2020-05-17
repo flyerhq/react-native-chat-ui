@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { render } from 'react-native-testing-library'
-import { message, size, user } from '../../../utils/fixtures'
+import { message, size, user } from '../../../fixtures'
 import { TextMessage } from '../TextMessage'
 
 describe('text message', () => {

@@ -1,5 +1,5 @@
 import { Dimensions, LayoutAnimation } from 'react-native'
-import * as utils from './utils'
+import * as utils from '../src/utils'
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter')
 

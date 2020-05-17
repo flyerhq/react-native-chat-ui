@@ -1,4 +1,4 @@
-import { getTextSizeInBytes, uuidv4 } from '../'
+import { getTextSizeInBytes, uuidv4 } from '..'
 
 describe('text size in bytes', () => {
   it('calculates the size for a simple text', () => {

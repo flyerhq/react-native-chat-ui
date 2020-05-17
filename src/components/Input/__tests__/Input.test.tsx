@@ -2,7 +2,7 @@ import * as React from 'react'
 import { InputAccessoryView, View } from 'react-native'
 import { fireEvent, render } from 'react-native-testing-library'
 import { ReactTestInstance } from 'react-test-renderer'
-import { message, user } from '../../../utils/fixtures'
+import { message, user } from '../../../fixtures'
 import { Input } from '../Input'
 
 describe('input', () => {

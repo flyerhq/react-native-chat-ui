@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import { Keyboard, NativeEventEmitter } from 'react-native'
-import { keyboardEvent } from '../../utils/fixtures'
+import { keyboardEvent } from '../../fixtures'
 import { useKeyboardBottomInset } from '../useKeyboardBottomInset'
 
 const emitter = new NativeEventEmitter()
