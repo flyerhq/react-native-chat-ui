@@ -4,11 +4,10 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "check": "gts check",
     "compile": "tsc -p .",
-    "fix": "gts fix",
     "generate-messages": "node scripts/generateMessages.js",
     "ios": "react-native run-ios",
+    "lint": "eslint .",
     "prepare": "yarn generate-messages",
     "start": "react-native start",
     "test": "jest"
@@ -16,25 +15,26 @@
   "dependencies": {
     "react": "^16.13.1",
     "react-native": "^0.62.2",
-    "react-native-safe-area-context": "^0.7.3"
+    "react-native-safe-area-context": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/runtime": "^7.9.6",
     "@react-native-community/eslint-config": "^1.1.0",
-    "@types/jest": "^25.2.1",
-    "@types/react-native": "^0.62.7",
+    "@types/jest": "^25.2.2",
+    "@types/react-native": "^0.62.10",
     "@types/react-test-renderer": "^16.9.2",
     "@types/uuid": "^7.0.3",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
     "babel-jest": "^26.0.1",
     "casual": "^1.6.2",
-    "eslint": "^6.8.0",
+    "eslint": "^7.0.0",
+    "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-simple-import-sort": "^5.0.3",
-    "gts": "^2.0.0",
     "jest": "^26.0.1",
     "metro-react-native-babel-preset": "^0.59.0",
     "react-test-renderer": "^16.13.1",
-    "typescript": "^3.8.3",
+    "typescript": "^3.9.2",
     "uuid": "^8.0.0"
   },
   "jest": {

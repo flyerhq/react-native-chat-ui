@@ -1,10 +1,10 @@
 {
-  "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "declaration": false,
     "esModuleInterop": true,
     "jsx": "react-native",
+    "lib": ["ESNext"],
+    "module": "CommonJS",
     "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -12,7 +12,10 @@
       "@flyerhq/react-native-chat-ui": ["../src"]
     },
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ESNext"
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }

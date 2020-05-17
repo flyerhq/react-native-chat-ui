@@ -12,8 +12,8 @@
   ],
   "scripts": {
     "compile": "tsc -p . && copyup src/assets/*.png lib",
-    "lint": "yarn eslint .",
-    "prepare": "yarn run compile",
+    "lint": "eslint .",
+    "prepare": "yarn compile",
     "test": "jest",
     "type-coverage": "type-coverage --is 100 --strict --ignore-catch --cache"
   },

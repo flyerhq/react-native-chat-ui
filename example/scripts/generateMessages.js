@@ -27,4 +27,6 @@ const messages = [...Array(numberOfMessages)].map((_, index) => {
 
 const json = `${JSON.stringify(messages, null, 2)}\n`
 
-fs.writeFile('src/messages.json', json, () => {})
+fs.writeFile('src/messages.json', json, () => {
+  console.log(`Generated ${numberOfMessages} messages`)
+})
