@@ -5,11 +5,11 @@ import {
   KeyboardEvent,
   LayoutAnimation,
 } from 'react-native'
-import { useSafeArea } from 'react-native-safe-area-context'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const useKeyboardBottomInset = () => {
   const [bottomInset, setBottomInset] = React.useState(0)
-  const { bottom: safeAreaBottomInset } = useSafeArea()
+  const { bottom: safeAreaBottomInset } = useSafeAreaInsets()
 
   React.useEffect(() => {
     Keyboard.addListener('keyboardWillChangeFrame', updateBottomInset)

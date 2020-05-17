@@ -2,10 +2,18 @@
   "env": {
     "jest": true
   },
-  "extends": ["@react-native-community", "./node_modules/gts"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jest/all",
+    "@react-native-community",
+    "plugin:prettier/recommended"
+  ],
   "plugins": ["simple-import-sort"],
   "root": true,
   "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/member-delimiter-style": [
       "error",
       {
@@ -16,6 +24,13 @@
         "singleline": {
           "delimiter": "semi"
         }
+      }
+    ],
+    "@typescript-eslint/no-use-before-define": "off",
+    "jest/no-hooks": [
+      "error",
+      {
+        "allow": ["beforeEach"]
       }
     ],
     "simple-import-sort/sort": [

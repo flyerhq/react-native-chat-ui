@@ -21,6 +21,8 @@ export const Input = ({ onSendPress, textInputProps, user }: InputProps) => {
   // Use `defaultValue` if provided
   const [text, setText] = React.useState(textInputProps?.defaultValue ?? '')
 
+  const value = textInputProps?.value ?? text
+
   const handleChangeText = (newText: string) => {
     // Track local state in case `onChangeText` is provided and `value` is not
     setText(newText)
@@ -36,8 +38,6 @@ export const Input = ({ onSendPress, textInputProps, user }: InputProps) => {
     })
     setText('')
   }
-
-  const value = textInputProps?.value ?? text
 
   const renderInput = () => (
     // Wrap container in a `View` with a background color set to

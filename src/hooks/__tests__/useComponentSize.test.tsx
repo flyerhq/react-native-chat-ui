@@ -1,23 +1,14 @@
 import { act, renderHook } from '@testing-library/react-hooks'
+import { onLayoutEvent, size } from '../../utils/fixtures'
 import { useComponentSize } from '../useComponentSize'
 
-test('returns correct component size', () => {
-  const size = {
-    height: 100,
-    width: 100,
-  }
-
-  const event = {
-    nativeEvent: {
-      layout: { x: 0, y: 0, ...size },
-    },
-  }
-
-  const { result } = renderHook(() => useComponentSize())
-
-  act(() => {
-    result.current.onLayout(event)
+describe('useComponentSize', () => {
+  it('returns correct size', () => {
+    expect.assertions(1)
+    const { result } = renderHook(() => useComponentSize())
+    act(() => {
+      result.current.onLayout(onLayoutEvent)
+    })
+    expect(result.current.size).toStrictEqual(size)
   })
-
-  expect(result.current.size).toEqual(size)
 })

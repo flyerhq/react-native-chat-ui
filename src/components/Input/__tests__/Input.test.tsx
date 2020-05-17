@@ -6,7 +6,8 @@ import { message, user } from '../../../utils/fixtures'
 import { Input } from '../Input'
 
 describe('input', () => {
-  test('it sends a correct message', () => {
+  it('sends a correct message', () => {
+    expect.assertions(2)
     const onSendPress = jest.fn()
     const { getByPlaceholder, getByA11yLabel } = render(
       <Input onSendPress={onSendPress} user={user} />
@@ -16,13 +17,14 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
     expect(onSendPress).toHaveBeenCalledWith(message)
-    expect(textInput.props.value).toEqual('')
+    expect(textInput.props.value).toStrictEqual('')
   })
 
-  test('it sends a correct message if onChangeText and value are provided', () => {
+  it('sends a correct message if onChangeText and value are provided', () => {
+    expect.assertions(2)
     const onSendPress = jest.fn()
     const value = 'value'
-    const onChangeText = jest.fn(newValue => {
+    const onChangeText = jest.fn((newValue) => {
       rerender(
         <Input
           onSendPress={onSendPress}
@@ -43,10 +45,11 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
     expect(onSendPress).toHaveBeenCalledWith(message)
-    expect(textInput.props.value).toEqual('text')
+    expect(textInput.props.value).toStrictEqual('text')
   })
 
-  test('it sends a correct message if onChangeText is provided', () => {
+  it('sends a correct message if onChangeText is provided', () => {
+    expect.assertions(2)
     const onSendPress = jest.fn()
     const onChangeText = jest.fn()
     const { getByPlaceholder, getByA11yLabel } = render(
@@ -61,10 +64,11 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
     expect(onSendPress).toHaveBeenCalledWith(message)
-    expect(textInput.props.value).toEqual('')
+    expect(textInput.props.value).toStrictEqual('')
   })
 
-  test('it sends a correct message if value is provided', () => {
+  it('sends a correct message if value is provided', () => {
+    expect.assertions(2)
     const onSendPress = jest.fn()
     const value = 'value'
     const { getByPlaceholder, getByA11yLabel } = render(
@@ -75,10 +79,11 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
     expect(onSendPress).toHaveBeenCalledWith({ ...message, text: value })
-    expect(textInput.props.value).toEqual(value)
+    expect(textInput.props.value).toStrictEqual(value)
   })
 
-  test('it sends a correct message if defaultValue is provided', () => {
+  it('sends a correct message if defaultValue is provided', () => {
+    expect.assertions(2)
     const onSendPress = jest.fn()
     const defaultValue = 'defaultValue'
     const { getByPlaceholder, getByA11yLabel } = render(
@@ -92,16 +97,17 @@ describe('input', () => {
     const button = getByA11yLabel('Send a message')
     fireEvent.press(button)
     expect(onSendPress).toHaveBeenCalledWith({ ...message, text: defaultValue })
-    expect(textInput.props.value).toEqual('')
+    expect(textInput.props.value).toStrictEqual('')
   })
 })
 
 describe('input per platform', () => {
   beforeEach(() => {
-    jest.dontMock('react-native/Libraries/Utilities/Platform').resetModules()
+    jest.resetModules()
   })
 
-  test('it renders InputAccessoryView for iOS', () => {
+  it('renders InputAccessoryView for iOS', () => {
+    expect.assertions(1)
     jest.mock('react-native/Libraries/Utilities/Platform', () => ({
       OS: 'ios',
       select: jest.fn(),
@@ -112,12 +118,13 @@ describe('input per platform', () => {
       <Input onSendPress={onSendPress} user={user} />
     )
     const container = getByA11yRole('toolbar')
-    expect((container.children[0] as ReactTestInstance).type).toEqual(
+    expect((container.children[0] as ReactTestInstance).type).toStrictEqual(
       InputAccessoryView
     )
   })
 
-  test('it does not render InputAccessoryView for Android', () => {
+  it('does not render InputAccessoryView for Android', () => {
+    expect.assertions(1)
     jest.mock('react-native/Libraries/Utilities/Platform', () => ({
       OS: 'android',
       select: jest.fn(),
@@ -128,6 +135,8 @@ describe('input per platform', () => {
       <Input onSendPress={onSendPress} user={user} />
     )
     const container = getByA11yRole('toolbar')
-    expect((container.children[0] as ReactTestInstance).type).toEqual(View)
+    expect((container.children[0] as ReactTestInstance).type).toStrictEqual(
+      View
+    )
   })
 })

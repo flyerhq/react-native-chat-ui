@@ -1,13 +1,17 @@
 {
-  "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
+    "declaration": true,
     "esModuleInterop": true,
     "jsx": "react-native",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "lib": ["ESNext"],
+    "module": "CommonJS",
+    "noEmitOnError": true,
     "outDir": "./lib",
-    "removeComments": true
+    "removeComments": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "ESNext"
   },
   "include": ["src"],
-  "exclude": ["**/__tests__/*"]
+  "exclude": ["node_modules", "**/__tests__/*"]
 }

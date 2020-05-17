@@ -3,14 +3,16 @@ import { fireEvent, render } from 'react-native-testing-library'
 import { message, user } from '../../../utils/fixtures'
 import { Chat } from '../Chat'
 
-test('it calls onSendPress', () => {
-  const messages = [message]
-  const onSendPress = jest.fn()
-  const { getByA11yLabel } = render(
-    <Chat messages={messages} onSendPress={onSendPress} user={user} />
-  )
-
-  const button = getByA11yLabel('Send a message')
-  fireEvent.press(button)
-  expect(onSendPress).toHaveBeenCalledWith({ ...message, text: '' })
+describe('chat', () => {
+  it('calls onSendPress', () => {
+    expect.assertions(1)
+    const messages = [message]
+    const onSendPress = jest.fn()
+    const { getByA11yLabel } = render(
+      <Chat messages={messages} onSendPress={onSendPress} user={user} />
+    )
+    const button = getByA11yLabel('Send a message')
+    fireEvent.press(button)
+    expect(onSendPress).toHaveBeenCalledWith({ ...message, text: '' })
+  })
 })
