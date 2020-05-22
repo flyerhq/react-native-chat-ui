@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  example
 //
-//  Copyright © 2019 Flyer. All rights reserved.
+//  Copyright © 2020 Oleksandr Demchenko. All rights reserved.
 //
 
 import UIKit

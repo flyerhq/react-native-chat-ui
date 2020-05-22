@@ -5,7 +5,7 @@
   "homepage": "https://github.com/flyerhq/react-native-chat-ui#readme",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "author": "Alex Demchenko <alexdemchenko@yahoo.com>",
+  "author": "Oleksandr Demchenko <alexdemchenko@yahoo.com>",
   "license": "MIT",
   "files": [
     "lib"
