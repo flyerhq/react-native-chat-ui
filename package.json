@@ -11,7 +11,7 @@
     "lib"
   ],
   "scripts": {
-    "compile": "tsc -p . && copyup src/assets/*.png lib",
+    "compile": "rm -rf lib && tsc -p . && copyup src/assets/*.png lib",
     "lint": "eslint .",
     "prepare": "yarn compile",
     "test": "jest",
