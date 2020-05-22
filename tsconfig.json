@@ -6,6 +6,8 @@
     "lib": ["ESNext"],
     "module": "CommonJS",
     "noEmitOnError": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "outDir": "./lib",
     "removeComments": true,
     "sourceMap": true,

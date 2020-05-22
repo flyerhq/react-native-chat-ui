@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const casual = require('casual')
 const fs = require('fs')
 const { v4: uuidv4 } = require('uuid')
 const users = require('../src/users.json')
+/* eslint-enable @typescript-eslint/no-var-requires */
 
 let numberOfMessages = 10
 const arg = process.argv.slice(2)[0]
