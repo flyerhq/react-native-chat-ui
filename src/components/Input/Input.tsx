@@ -8,16 +8,23 @@ import {
 } from 'react-native'
 import { Message, User } from '../../types'
 import { uuidv4 } from '../../utils'
+import { AttachmentButton } from '../AttachmentButton'
 import { SendButton } from '../SendButton'
 import styles from './styles'
 
 export interface InputProps {
+  onAttachmentPress?: () => void
   onSendPress: (message: Message) => void
   textInputProps?: TextInputProps
   user: User
 }
 
-export const Input = ({ onSendPress, textInputProps, user }: InputProps) => {
+export const Input = ({
+  onAttachmentPress,
+  onSendPress,
+  textInputProps,
+  user,
+}: InputProps) => {
   // Use `defaultValue` if provided
   const [text, setText] = React.useState(textInputProps?.defaultValue ?? '')
 
@@ -45,6 +52,7 @@ export const Input = ({ onSendPress, textInputProps, user }: InputProps) => {
     // which is not supported
     <View style={styles.wrapper}>
       <View style={styles.container}>
+        <AttachmentButton onPress={onAttachmentPress} />
         <TextInput
           multiline
           placeholder='Your message here'

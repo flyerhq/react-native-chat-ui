@@ -8,8 +8,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#000',
-    paddingHorizontal: 32,
-    paddingVertical: 24,
+    padding: 24,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
   },
@@ -21,7 +20,7 @@ export default StyleSheet.create({
     // Fixes default Android paddings
     margin: 0,
     padding: 0,
-    paddingRight: 16,
+    paddingHorizontal: 16,
     paddingBottom: 8,
     // Fixes iOS top padding for multiline
     paddingTop: 8,

@@ -11,7 +11,12 @@ export interface ChatProps extends InputProps {
   user: User
 }
 
-export const Chat = ({ messages, onSendPress, user }: ChatProps) => {
+export const Chat = ({
+  messages,
+  onAttachmentPress,
+  onSendPress,
+  user,
+}: ChatProps) => {
   const { onLayout, size } = useComponentSize()
   const { bottomInset } = useKeyboardBottomInset()
 
@@ -42,7 +47,11 @@ export const Chat = ({ messages, onSendPress, user }: ChatProps) => {
         keyExtractor={keyExtractor}
         scrollIndicatorInsets={{ top: bottomInset }}
       />
-      <Input onSendPress={handleSendPress} user={user} />
+      <Input
+        onAttachmentPress={onAttachmentPress}
+        onSendPress={handleSendPress}
+        user={user}
+      />
     </SafeAreaView>
   )
 }
