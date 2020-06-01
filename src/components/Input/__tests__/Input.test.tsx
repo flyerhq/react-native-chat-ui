@@ -1,8 +1,6 @@
 import * as React from 'react'
-import { InputAccessoryView, View } from 'react-native'
 import { fireEvent, render } from 'react-native-testing-library'
-import { ReactTestInstance } from 'react-test-renderer'
-import { message, user } from '../../../fixtures'
+import { message, user } from '../../../../jest/fixtures'
 import { Input } from '../Input'
 
 describe('input', () => {
@@ -98,45 +96,5 @@ describe('input', () => {
     fireEvent.press(button)
     expect(onSendPress).toHaveBeenCalledWith({ ...message, text: defaultValue })
     expect(textInput.props.value).toStrictEqual('')
-  })
-})
-
-describe('input per platform', () => {
-  beforeEach(() => {
-    jest.resetModules()
-  })
-
-  it('renders InputAccessoryView for iOS', () => {
-    expect.assertions(1)
-    jest.mock('react-native/Libraries/Utilities/Platform', () => ({
-      OS: 'ios',
-      select: jest.fn(),
-    }))
-
-    const onSendPress = jest.fn()
-    const { getByA11yRole } = render(
-      <Input onSendPress={onSendPress} user={user} />
-    )
-    const container = getByA11yRole('toolbar')
-    expect((container.children[0] as ReactTestInstance).type).toStrictEqual(
-      InputAccessoryView
-    )
-  })
-
-  it('does not render InputAccessoryView for Android', () => {
-    expect.assertions(1)
-    jest.mock('react-native/Libraries/Utilities/Platform', () => ({
-      OS: 'android',
-      select: jest.fn(),
-    }))
-
-    const onSendPress = jest.fn()
-    const { getByA11yRole } = render(
-      <Input onSendPress={onSendPress} user={user} />
-    )
-    const container = getByA11yRole('toolbar')
-    expect((container.children[0] as ReactTestInstance).type).toStrictEqual(
-      View
-    )
   })
 })

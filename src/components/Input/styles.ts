@@ -1,16 +1,10 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-  wrapper: {
-    backgroundColor: '#fff',
-  },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#000',
     padding: 24,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
   },
   input: {
     color: '#fff',
@@ -25,5 +19,10 @@ export default StyleSheet.create({
     // Fixes iOS top padding for multiline
     paddingTop: 8,
     flex: 1,
+  },
+  keyboardAccessoryView: {
+    backgroundColor: '#000',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
   },
 })

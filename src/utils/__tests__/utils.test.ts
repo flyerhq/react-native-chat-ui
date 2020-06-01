@@ -1,6 +1,6 @@
 import { getTextSizeInBytes, uuidv4 } from '..'
 
-describe('text size in bytes', () => {
+describe('getTextSizeInBytes', () => {
   it('calculates the size for a simple text', () => {
     expect.assertions(1)
     const text = 'text'

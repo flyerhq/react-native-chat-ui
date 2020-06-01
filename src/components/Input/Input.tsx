@@ -1,11 +1,6 @@
+import { KeyboardAccessoryView } from '@flyerhq/react-native-keyboard-accessory-view'
 import * as React from 'react'
-import {
-  InputAccessoryView,
-  Platform,
-  TextInput,
-  TextInputProps,
-  View,
-} from 'react-native'
+import { TextInput, TextInputProps, View } from 'react-native'
 import { Message, User } from '../../types'
 import { uuidv4 } from '../../utils'
 import { AttachmentButton } from '../AttachmentButton'
@@ -14,14 +9,18 @@ import styles from './styles'
 
 export interface InputProps {
   onAttachmentPress?: () => void
+  onContentBottomInsetUpdate?: (contentBottomInset: number) => void
   onSendPress: (message: Message) => void
+  panResponderPositionY?: number
   textInputProps?: TextInputProps
   user: User
 }
 
 export const Input = ({
   onAttachmentPress,
+  onContentBottomInsetUpdate,
   onSendPress,
+  panResponderPositionY,
   textInputProps,
   user,
 }: InputProps) => {
@@ -46,11 +45,12 @@ export const Input = ({
     setText('')
   }
 
-  const renderInput = () => (
-    // Wrap container in a `View` with a background color set to
-    // chat background to mimic `borderRadius` on an `InputAccessoryView`
-    // which is not supported
-    <View style={styles.wrapper}>
+  return (
+    <KeyboardAccessoryView
+      onContentBottomInsetUpdate={onContentBottomInsetUpdate}
+      panResponderPositionY={panResponderPositionY}
+      style={styles.keyboardAccessoryView}
+    >
       <View style={styles.container}>
         <AttachmentButton onPress={onAttachmentPress} />
         <TextInput
@@ -66,18 +66,6 @@ export const Input = ({
         />
         <SendButton onPress={handleSend} />
       </View>
-    </View>
-  )
-
-  return (
-    <View accessibilityRole='toolbar'>
-      {Platform.OS === 'ios' ? (
-        <InputAccessoryView backgroundColor='#000'>
-          {renderInput()}
-        </InputAccessoryView>
-      ) : (
-        renderInput()
-      )}
-    </View>
+    </KeyboardAccessoryView>
   )
 }
