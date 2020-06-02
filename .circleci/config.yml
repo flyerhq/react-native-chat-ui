@@ -1,52 +1,30 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 version: 2.1
+orbs:
+  node: circleci/node@1.1.6
 jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:latest
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
-
+  build-and-test:
+    executor:
+      name: node/default
     steps:
       - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run: yarn install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
-      - run:
-          name: Setup Code Climate test-reporter
-          command: |
-            # download test reporter as a static binary
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-            chmod +x ./cc-test-reporter
-
-      - run: yarn lint
-
-      - run: yarn type-coverage
-
-      - run:
-          name: Run tests
-          command: |
-            ./cc-test-reporter before-build
-            yarn test
-            ./cc-test-reporter after-build --coverage-input-type lcov --exit-code $?
+      - node/with-cache:
+          steps:
+            - run: yarn
+            - run:
+                name: Setup Code Climate test-reporter
+                command: |
+                  # download test reporter as a static binary
+                  curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+                  chmod +x ./cc-test-reporter
+            - run: yarn lint
+            - run: yarn type-coverage
+            - run:
+                name: Run tests
+                command: |
+                  ./cc-test-reporter before-build
+                  yarn test
+                  ./cc-test-reporter after-build --coverage-input-type lcov --exit-code $?
+workflows:
+  build-and-test:
+    jobs:
+      - build-and-test
