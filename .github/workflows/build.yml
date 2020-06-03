@@ -1,0 +1,40 @@
+name: build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2.2.0
+
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v1.4.2
+      with:
+        node-version: 14.x
+
+    - name: Restore cache
+      id: cache
+      uses: actions/cache@v2.0.0
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+    - name: Install dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: yarn
+      
+    - run: yarn lint
+    - run: yarn type-coverage
+    
+    - name: Coverage
+      uses: paambaati/codeclimate-action@v2.6.0
+      env:
+        CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+      with:
+        coverageCommand: yarn test

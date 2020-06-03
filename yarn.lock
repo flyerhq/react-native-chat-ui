@@ -1209,10 +1209,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@flyerhq/react-native-keyboard-accessory-view@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@flyerhq/react-native-keyboard-accessory-view/-/react-native-keyboard-accessory-view-1.0.4.tgz#473a30e5da0dc37925fa89c813827a5088f367cd"
-  integrity sha512-a2aMBroQWfcegOw449SOLbwBU5T7xO0EBe6IDRMygKNkjtd6taZXSM5/IhPCCO6Dpphh4hi6+5sPSYbRO5NZOQ==
+"@flyerhq/react-native-keyboard-accessory-view@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@flyerhq/react-native-keyboard-accessory-view/-/react-native-keyboard-accessory-view-1.0.6.tgz#88f48c769f067fe82e634e40b0e2b4e175d186db"
+  integrity sha512-B2G/qMHlrZxhMPK0G0Lxn27Hx/6OKGAAX+K8Nw9+RdnSiNL+YIs6dOCOou/XZXwbRUv4daV9qw4q4Nj5UmeOWQ==
 
 "@hapi/address@2.x.x":
   version "2.1.2"
@@ -6370,10 +6370,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.11.0.tgz#b85dfecd48ad1ce469ff558a882ca8e8313928fa"
   integrity sha512-gbBVYR2p8mnriqAwWx9LbuUrShnAuSCNnuPGyc7GJrMVQtPDAh8iLpv7FRuMPFb56KkaVZIYSz1PrjI9q0QPCw==
 
-react-native-testing-library@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-testing-library/-/react-native-testing-library-2.0.0.tgz#0b2079e00b024108ab8f6331ce61417964f788bd"
-  integrity sha512-7pEAsr9rC1TZ9jYMeSb7YIea0g3gPIQE0IdnhzgsWKtSF9XBRHNb268HRCjI0kcRkBRJR4QgxOjMVPsKJNGhaw==
+react-native-testing-library@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-testing-library/-/react-native-testing-library-2.0.1.tgz#ff2aa9fd065f964ddae4e92c3e361b84276d236a"
+  integrity sha512-GyUn3G14TGXCH5g8szsMGneNfWR0Nxy03igQnljwYBun84iF9fyf9DZZp9iUrfyTVxII2VjbAFdBPFcKFXzHYQ==
   dependencies:
     pretty-format "^26.0.1"
 
