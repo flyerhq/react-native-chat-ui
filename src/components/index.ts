@@ -1,3 +1,4 @@
+export * from './AttachmentButton'
 export * from './Chat'
 export * from './Input'
 export * from './SendButton'
