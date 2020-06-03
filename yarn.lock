@@ -1209,10 +1209,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@flyerhq/react-native-keyboard-accessory-view@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@flyerhq/react-native-keyboard-accessory-view/-/react-native-keyboard-accessory-view-1.0.3.tgz#9e2f4d6d3380c3186a8bcf0fadad1af5de754c41"
-  integrity sha512-H+HKDzY14AU7OX6K88NgVTcmRfsfNdvGE/u0mMOiRHjYHQA/5xYqEIbM0p1n61iqApQX20MhvUWwdC2Sisgl6Q==
+"@flyerhq/react-native-keyboard-accessory-view@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@flyerhq/react-native-keyboard-accessory-view/-/react-native-keyboard-accessory-view-1.0.4.tgz#473a30e5da0dc37925fa89c813827a5088f367cd"
+  integrity sha512-a2aMBroQWfcegOw449SOLbwBU5T7xO0EBe6IDRMygKNkjtd6taZXSM5/IhPCCO6Dpphh4hi6+5sPSYbRO5NZOQ==
 
 "@hapi/address@2.x.x":
   version "2.1.2"

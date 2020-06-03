@@ -1,5 +1,6 @@
 # React Native Chat UI
 
+![npm](https://img.shields.io/npm/v/@flyerhq/react-native-chat-ui)
 [![CircleCI](https://circleci.com/gh/flyerhq/react-native-chat-ui.svg?style=shield)](https://circleci.com/gh/flyerhq/react-native-chat-ui)
 [![Maintainability](https://api.codeclimate.com/v1/badges/cc0aeb07c6674ce204ec/maintainability)](https://codeclimate.com/github/flyerhq/react-native-chat-ui/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/cc0aeb07c6674ce204ec/test_coverage)](https://codeclimate.com/github/flyerhq/react-native-chat-ui/test_coverage)
