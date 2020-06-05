@@ -18,15 +18,15 @@
     "type-coverage": "type-coverage --is 100 --strict --ignore-catch --cache"
   },
   "dependencies": {
-    "@flyerhq/react-native-keyboard-accessory-view": "^1.0.6"
+    "@flyerhq/react-native-keyboard-accessory-view": "^1.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "@babel/runtime": "^7.10.2",
     "@react-native-community/eslint-config": "^1.1.0",
-    "@testing-library/react-hooks": "^3.2.1",
+    "@testing-library/react-hooks": "^3.3.0",
     "@types/jest": "^25.2.3",
-    "@types/react-native": "^0.62.12",
+    "@types/react-native": "^0.62.13",
     "@types/react-test-renderer": "^16.9.2",
     "babel-jest": "^26.0.1",
     "copyfiles": "^2.3.0",
@@ -40,7 +40,7 @@
     "react-native-testing-library": "^2.0.1",
     "react-test-renderer": "^16.13.1",
     "type-coverage": "^2.7.1",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.5"
   },
   "peerDependencies": {
     "react": "*",

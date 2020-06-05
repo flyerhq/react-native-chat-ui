@@ -1209,10 +1209,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@flyerhq/react-native-keyboard-accessory-view@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@flyerhq/react-native-keyboard-accessory-view/-/react-native-keyboard-accessory-view-1.0.6.tgz#88f48c769f067fe82e634e40b0e2b4e175d186db"
-  integrity sha512-B2G/qMHlrZxhMPK0G0Lxn27Hx/6OKGAAX+K8Nw9+RdnSiNL+YIs6dOCOou/XZXwbRUv4daV9qw4q4Nj5UmeOWQ==
+"@flyerhq/react-native-keyboard-accessory-view@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@flyerhq/react-native-keyboard-accessory-view/-/react-native-keyboard-accessory-view-1.0.8.tgz#682fc30a46fd75d835b38bf8b8cf081b36a5842a"
+  integrity sha512-BLosTaw1U+5HTX31yQDWthOtCIOdJAbRDUm0RQVLFcwqM46gw0JpWlUgHdeE0Do42/i36gcL7tofNEVVFUP2Dw==
 
 "@hapi/address@2.x.x":
   version "2.1.2"
@@ -1614,10 +1614,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@testing-library/react-hooks@^3.2.1":
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/@testing-library/react-hooks/-/react-hooks-3.2.1.tgz#19b6caa048ef15faa69d439c469033873ea01294"
-  integrity sha512-1OB6Ksvlk6BCJA1xpj8/WWz0XVd1qRcgqdaFAq+xeC6l61Ucj0P6QpA5u+Db/x9gU4DCX8ziR5b66Mlfg0M2RA==
+"@testing-library/react-hooks@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/react-hooks/-/react-hooks-3.3.0.tgz#dc217bfce8e7c34a99c811d73d23feef957b7c1d"
+  integrity sha512-rE9geI1+HJ6jqXkzzJ6abREbeud6bLF8OmF+Vyc7gBoPwZAEVBYjbC1up5nNoVfYBhO5HUwdD4u9mTehAUeiyw==
   dependencies:
     "@babel/runtime" "^7.5.4"
     "@types/testing-library__react-hooks" "^3.0.0"
@@ -1725,10 +1725,10 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
 
-"@types/react-native@^0.62.12":
-  version "0.62.12"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.62.12.tgz#24407983b527749f37b512cd5d2bdc6133810b17"
-  integrity sha512-EuM2QOx0LGwY3mKQ313+QcTYOwJhw5eggmE42GO4ElIKIfNK+zxxM6Pe9dT1Eq8eCJXY0oG327L7gUBWniwNNA==
+"@types/react-native@^0.62.13":
+  version "0.62.13"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.62.13.tgz#c688c5ae03e426f927f7e1fa1a59cd067f35d1c2"
+  integrity sha512-hs4/tSABhcJx+J8pZhVoXHrOQD89WFmbs8QiDLNSA9zNrD46pityAuBWuwk1aMjPk9I3vC5ewkJroVRHgRIfdg==
   dependencies:
     "@types/react" "*"
 
@@ -7623,10 +7623,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.9.3:
-  version "3.9.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.3.tgz#d3ac8883a97c26139e42df5e93eeece33d610b8a"
-  integrity sha512-D/wqnB2xzNFIcoBG9FG8cXRDjiqSTbG2wd8DMZeQyJlP1vfTkIxH4GKveWaEBYySKIg+USu+E+EDIR47SqnaMQ==
+typescript@^3.9.5:
+  version "3.9.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.5.tgz#586f0dba300cde8be52dd1ac4f7e1009c1b13f36"
+  integrity sha512-hSAifV3k+i6lEoCJ2k6R2Z/rp/H3+8sdmcn5NrS3/3kE7+RyZXm9aqvxWqjEXHAd8b0pShatpcdMTvEdvAJltQ==
 
 ua-parser-js@^0.7.18:
   version "0.7.20"
