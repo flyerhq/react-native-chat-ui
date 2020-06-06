@@ -9,11 +9,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "./lib",
-    "removeComments": true,
     "sourceMap": true,
     "strict": true,
     "target": "ESNext"
   },
   "include": ["src"],
-  "exclude": ["node_modules", "src/fixtures", "**/__tests__/*"]
+  "exclude": ["node_modules", "**/__tests__/*"]
 }

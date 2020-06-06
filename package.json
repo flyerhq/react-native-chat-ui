@@ -1,6 +1,6 @@
 {
   "name": "@flyerhq/react-native-chat-ui",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "React Native Chat UI",
   "homepage": "https://github.com/flyerhq/react-native-chat-ui#readme",
   "main": "lib/index.js",
@@ -21,25 +21,25 @@
     "type-coverage": "type-coverage --is 100 --strict --ignore-catch --cache"
   },
   "dependencies": {
-    "@flyerhq/react-native-keyboard-accessory-view": "^1.0.8"
+    "@flyerhq/react-native-keyboard-accessory-view": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "@babel/runtime": "^7.10.2",
     "@react-native-community/eslint-config": "^1.1.0",
-    "@testing-library/react-hooks": "^3.3.0",
     "@types/jest": "^25.2.3",
     "@types/react-native": "^0.62.13",
     "@types/react-test-renderer": "^16.9.2",
     "babel-jest": "^26.0.1",
     "copyfiles": "^2.3.0",
-    "eslint": "^7.1.0",
+    "eslint": "^7.2.0",
     "eslint-plugin-jest": "^23.13.2",
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "jest": "^26.0.1",
     "metro-react-native-babel-preset": "^0.59.0",
     "react": "^16.13.1",
     "react-native": "^0.62.2",
+    "react-native-safe-area-context": "^3.0.2",
     "react-native-testing-library": "^2.0.1",
     "react-test-renderer": "^16.13.1",
     "type-coverage": "^2.7.1",
