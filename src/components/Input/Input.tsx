@@ -1,6 +1,6 @@
 import { KeyboardAccessoryView } from '@flyerhq/react-native-keyboard-accessory-view'
 import * as React from 'react'
-import { TextInput, TextInputProps, View } from 'react-native'
+import { Animated, TextInput, TextInputProps, View } from 'react-native'
 import { Message, User } from '../../types'
 import { uuidv4 } from '../../utils'
 import { AttachmentButton } from '../AttachmentButton'
@@ -11,7 +11,7 @@ export interface InputProps {
   onAttachmentPress?: () => void
   onContentBottomInsetUpdate?: (contentBottomInset: number) => void
   onSendPress: (message: Message) => void
-  panResponderPositionY?: number
+  panResponderPositionY?: Animated.Value
   textInputProps?: TextInputProps
   user: User
 }
