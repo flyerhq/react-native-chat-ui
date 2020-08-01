@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { render } from 'react-native-testing-library'
-import { message, size, user } from '../../../../jest/fixtures'
+import { size, textMessage, user } from '../../../../jest/fixtures'
 import { TextMessage } from '../TextMessage'
 
 describe('text message', () => {
@@ -8,7 +8,11 @@ describe('text message', () => {
     expect.assertions(1)
     const text = 'text'
     const { getByText } = render(
-      <TextMessage message={message} parentComponentSize={size} user={user} />
+      <TextMessage
+        message={textMessage}
+        parentComponentSize={size}
+        user={user}
+      />
     )
     const textComponent = getByText(text)
     expect(textComponent).toBeDefined()

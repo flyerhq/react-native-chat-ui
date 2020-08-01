@@ -23,6 +23,7 @@ const messages = [...Array(numberOfMessages)].map((_, index) => {
     id: uuidv4(),
     text,
     timestamp,
+    type: 'text',
   }
   return data
 })

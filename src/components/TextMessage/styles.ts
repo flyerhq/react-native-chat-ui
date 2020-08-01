@@ -1,12 +1,12 @@
 import { StyleSheet } from 'react-native'
-import { Message, Size, User } from '../../types'
+import { MessageType, Size, User } from '../../types'
 
 const styles = ({
   message,
   parentComponentSize,
   user,
 }: {
-  message: Message
+  message: MessageType.Text
   parentComponentSize: Size
   user: User
 }) =>

@@ -1,7 +1,7 @@
 import { KeyboardAccessoryView } from '@flyerhq/react-native-keyboard-accessory-view'
 import * as React from 'react'
 import { Animated, TextInput, TextInputProps, View } from 'react-native'
-import { Message, User } from '../../types'
+import { MessageType, User } from '../../types'
 import { uuidv4 } from '../../utils'
 import { AttachmentButton } from '../AttachmentButton'
 import { SendButton } from '../SendButton'
@@ -10,7 +10,7 @@ import styles from './styles'
 export interface InputProps {
   onAttachmentPress?: () => void
   onContentBottomInsetUpdate?: (contentBottomInset: number) => void
-  onSendPress: (message: Message) => void
+  onSendPress: (message: MessageType.Any) => void
   panResponderPositionY?: Animated.Value
   textInputProps?: TextInputProps
   user: User
@@ -39,8 +39,9 @@ export const Input = ({
     onSendPress({
       authorId: user.id,
       id: uuidv4(),
-      text: value,
+      text: value.trim(),
       timestamp: Math.floor(Date.now() / 1000),
+      type: 'text',
     })
     setText('')
   }
@@ -64,7 +65,7 @@ export const Input = ({
           onChangeText={handleChangeText}
           value={value}
         />
-        <SendButton onPress={handleSend} />
+        <SendButton disabled={!value} onPress={handleSend} />
       </View>
     </KeyboardAccessoryView>
   )

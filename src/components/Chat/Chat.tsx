@@ -4,13 +4,13 @@ import {
 } from '@flyerhq/react-native-keyboard-accessory-view'
 import * as React from 'react'
 import { FlatList, SafeAreaView } from 'react-native'
-import { Message, User } from '../../types'
+import { MessageType, User } from '../../types'
 import { Input, InputProps } from '../Input'
 import { TextMessage } from '../TextMessage'
 import styles from './styles'
 
 export interface ChatProps extends InputProps {
-  messages: Message[]
+  messages: MessageType.Any[]
   user: User
 }
 
@@ -24,9 +24,9 @@ export const Chat = ({
   const { panHandlers, positionY } = usePanResponder()
   const [contentBottomInset, setContentBottomInset] = React.useState(0)
 
-  const list = React.useRef<FlatList<Message>>(null)
+  const list = React.useRef<FlatList<MessageType.Any>>(null)
 
-  const handleSendPress = (message: Message) => {
+  const handleSendPress = (message: MessageType.Any) => {
     onSendPress(message)
     list.current?.scrollToOffset({
       animated: true,
@@ -34,11 +34,18 @@ export const Chat = ({
     })
   }
 
-  const keyExtractor = (item: Message) => item.id
+  const keyExtractor = (item: MessageType.Any) => item.id
 
-  const renderItem = ({ item }: { item: Message }) => (
-    <TextMessage message={item} parentComponentSize={size} user={user} />
-  )
+  const renderItem = ({ item }: { item: MessageType.Any }) => {
+    switch (item.type) {
+      case 'image':
+        return null
+      case 'text':
+        return (
+          <TextMessage message={item} parentComponentSize={size} user={user} />
+        )
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container} onLayout={onLayout}>

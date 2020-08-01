@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { fireEvent, render } from 'react-native-testing-library'
-import { message, user } from '../../../../jest/fixtures'
+import { textMessage, user } from '../../../../jest/fixtures'
 import { Input } from '../Input'
 
 describe('input', () => {
@@ -14,7 +14,7 @@ describe('input', () => {
     const button = getByA11yLabel('Send a message')
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith(message)
+    expect(onSendPress).toHaveBeenCalledWith(textMessage)
     expect(textInput.props.value).toStrictEqual('')
   })
 
@@ -42,7 +42,7 @@ describe('input', () => {
     const button = getByA11yLabel('Send a message')
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith(message)
+    expect(onSendPress).toHaveBeenCalledWith(textMessage)
     expect(textInput.props.value).toStrictEqual('text')
   })
 
@@ -61,7 +61,7 @@ describe('input', () => {
     const button = getByA11yLabel('Send a message')
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith(message)
+    expect(onSendPress).toHaveBeenCalledWith(textMessage)
     expect(textInput.props.value).toStrictEqual('')
   })
 
@@ -76,7 +76,7 @@ describe('input', () => {
     const button = getByA11yLabel('Send a message')
     fireEvent.changeText(textInput, 'text')
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith({ ...message, text: value })
+    expect(onSendPress).toHaveBeenCalledWith({ ...textMessage, text: value })
     expect(textInput.props.value).toStrictEqual(value)
   })
 
@@ -94,7 +94,10 @@ describe('input', () => {
     const textInput = getByPlaceholder('Your message here')
     const button = getByA11yLabel('Send a message')
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith({ ...message, text: defaultValue })
+    expect(onSendPress).toHaveBeenCalledWith({
+      ...textMessage,
+      text: defaultValue,
+    })
     expect(textInput.props.value).toStrictEqual('')
   })
 })
