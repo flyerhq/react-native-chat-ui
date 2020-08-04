@@ -3,10 +3,10 @@ import {
   usePanResponder,
 } from '@flyerhq/react-native-keyboard-accessory-view'
 import * as React from 'react'
-import { FlatList, SafeAreaView } from 'react-native'
+import { FlatList, SafeAreaView, View } from 'react-native'
 import { MessageType, User } from '../../types'
 import { Input, InputProps } from '../Input'
-import { TextMessage } from '../TextMessage'
+import { Message } from '../Message'
 import styles from './styles'
 
 export interface ChatProps extends InputProps {
@@ -36,15 +36,24 @@ export const Chat = ({
 
   const keyExtractor = (item: MessageType.Any) => item.id
 
-  const renderItem = ({ item }: { item: MessageType.Any }) => {
-    switch (item.type) {
-      case 'image':
-        return null
-      case 'text':
-        return (
-          <TextMessage message={item} parentComponentSize={size} user={user} />
-        )
-    }
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: MessageType.Any
+    index: number
+  }) => {
+    const previousMessageSameAuthor =
+      messages[index - 1]?.authorId === item.authorId
+
+    return (
+      <Message
+        message={item}
+        parentComponentSize={size}
+        previousMessageSameAuthor={previousMessageSameAuthor}
+        user={user}
+      />
+    )
   }
 
   return (
@@ -60,6 +69,8 @@ export const Chat = ({
         keyboardDismissMode='interactive'
         keyExtractor={keyExtractor}
         scrollIndicatorInsets={{ top: contentBottomInset }}
+        ListFooterComponent={<View />}
+        ListFooterComponentStyle={styles.footer}
         {...panHandlers}
       />
       <Input

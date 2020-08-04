@@ -9,9 +9,10 @@ export namespace MessageType {
   }
 
   export interface Image extends Base {
+    height?: number
     imageUrl: string
-    text?: string
     type: 'image'
+    width?: number
   }
 
   export interface Text extends Base {
@@ -19,6 +20,12 @@ export namespace MessageType {
     type: 'text'
   }
 }
+
+export type SendImageCallback = (payload: {
+  height?: number
+  imageUrl: string
+  width?: number
+}) => void
 
 export interface Size {
   height: number

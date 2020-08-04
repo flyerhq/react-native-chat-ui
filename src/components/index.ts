@@ -1,5 +1,7 @@
 export * from './AttachmentButton'
 export * from './Chat'
+export * from './ImageMessage'
 export * from './Input'
+export * from './Message'
 export * from './SendButton'
 export * from './TextMessage'
