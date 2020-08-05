@@ -7,6 +7,7 @@ import styles from './styles'
 
 export interface MessageProps {
   message: MessageType.Any
+  onImagePress: (imageUrl: string) => void
   parentComponentSize: Size
   previousMessageSameAuthor: boolean
   user: User
@@ -14,6 +15,7 @@ export interface MessageProps {
 
 export const Message = ({
   message,
+  onImagePress,
   parentComponentSize,
   previousMessageSameAuthor,
   user,
@@ -28,7 +30,7 @@ export const Message = ({
   const renderMessage = () => {
     switch (message.type) {
       case 'image':
-        return <ImageMessage message={message} />
+        return <ImageMessage message={message} onPress={onImagePress} />
       case 'text':
         return <TextMessage message={message} user={user} />
     }
