@@ -7,8 +7,8 @@ import {
   TextInputProps,
   View,
 } from 'react-native'
-import { MessageType, SendImageCallback, User } from '../../types'
-import { uuidv4 } from '../../utils'
+import { MessageType, SendImageCallback } from '../../types'
+import { UserContext, uuidv4 } from '../../utils'
 import { AttachmentButton } from '../AttachmentButton'
 import { SendButton } from '../SendButton'
 import styles from './styles'
@@ -19,7 +19,6 @@ export interface InputProps {
   onSendPress: (message: MessageType.Any) => void
   panResponderPositionY?: Animated.Value
   textInputProps?: TextInputProps
-  user: User
 }
 
 export const Input = ({
@@ -28,8 +27,8 @@ export const Input = ({
   onSendPress,
   panResponderPositionY,
   textInputProps,
-  user,
 }: InputProps) => {
+  const user = React.useContext(UserContext)
   // Use `defaultValue` if provided
   const [text, setText] = React.useState(textInputProps?.defaultValue ?? '')
 
@@ -42,14 +41,16 @@ export const Input = ({
   }
 
   const handleSend = () => {
-    onSendPress({
-      authorId: user.id,
-      id: uuidv4(),
-      text: value.trim(),
-      timestamp: Math.floor(Date.now() / 1000),
-      type: 'text',
-    })
-    setText('')
+    if (user) {
+      onSendPress({
+        authorId: user.id,
+        id: uuidv4(),
+        text: value.trim(),
+        timestamp: Math.floor(Date.now() / 1000),
+        type: 'text',
+      })
+      setText('')
+    }
   }
 
   const handleSendImage = ({
@@ -57,15 +58,16 @@ export const Input = ({
     imageUrl,
     width,
   }: Parameters<SendImageCallback>[0]) => {
-    onSendPress({
-      authorId: user.id,
-      height,
-      id: uuidv4(),
-      imageUrl,
-      timestamp: Math.floor(Date.now() / 1000),
-      type: 'image',
-      width,
-    })
+    user &&
+      onSendPress({
+        authorId: user.id,
+        height,
+        id: uuidv4(),
+        imageUrl,
+        timestamp: Math.floor(Date.now() / 1000),
+        type: 'image',
+        width,
+      })
   }
 
   return (
@@ -89,7 +91,7 @@ export const Input = ({
           onChangeText={handleChangeText}
           value={value}
         />
-        {value ? <SendButton onPress={handleSend} /> : null}
+        {user && value ? <SendButton onPress={handleSend} /> : null}
       </View>
     </KeyboardAccessoryView>
   )

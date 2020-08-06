@@ -1,4 +1,8 @@
+import * as React from 'react'
 import Blob from 'react-native/Libraries/Blob/Blob'
+import { User } from '../types'
+
+export const UserContext = React.createContext<User | undefined>(undefined)
 
 export const getTextSizeInBytes = (text: string) => {
   return new Blob([text]).size

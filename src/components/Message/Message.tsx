@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { View } from 'react-native'
-import { MessageType, Size, User } from '../../types'
+import { MessageType, Size } from '../../types'
+import { UserContext } from '../../utils'
 import { ImageMessage } from '../ImageMessage'
 import { TextMessage } from '../TextMessage'
 import styles from './styles'
@@ -10,7 +11,6 @@ export interface MessageProps {
   onImagePress: (imageUrl: string) => void
   parentComponentSize: Size
   previousMessageSameAuthor: boolean
-  user: User
 }
 
 export const Message = ({
@@ -18,8 +18,8 @@ export const Message = ({
   onImagePress,
   parentComponentSize,
   previousMessageSameAuthor,
-  user,
 }: MessageProps) => {
+  const user = React.useContext(UserContext)
   const { container, contentContainer } = styles({
     message,
     parentComponentSize,
@@ -32,7 +32,7 @@ export const Message = ({
       case 'image':
         return <ImageMessage message={message} onPress={onImagePress} />
       case 'text':
-        return <TextMessage message={message} user={user} />
+        return <TextMessage message={message} />
     }
   }
 

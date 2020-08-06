@@ -6,6 +6,7 @@ import * as React from 'react'
 import { FlatList, SafeAreaView, StatusBar, View } from 'react-native'
 import ImageView from 'react-native-image-viewing'
 import { MessageType, User } from '../../types'
+import { UserContext } from '../../utils'
 import { Input, InputProps } from '../Input'
 import { Message } from '../Message'
 import styles from './styles'
@@ -65,44 +66,44 @@ export const Chat = ({
         }}
         parentComponentSize={size}
         previousMessageSameAuthor={previousMessageSameAuthor}
-        user={user}
       />
     )
   }
 
   return (
-    <SafeAreaView style={styles.container} onLayout={onLayout}>
-      <FlatList
-        ref={list}
-        contentContainerStyle={{ paddingTop: contentBottomInset }}
-        style={styles.list}
-        data={messages}
-        renderItem={renderItem}
-        automaticallyAdjustContentInsets={false}
-        inverted
-        keyboardDismissMode='interactive'
-        keyExtractor={keyExtractor}
-        scrollIndicatorInsets={{ top: contentBottomInset }}
-        ListFooterComponent={<View />}
-        ListFooterComponentStyle={styles.footer}
-        {...panHandlers}
-      />
-      <Input
-        onAttachmentPress={onAttachmentPress}
-        onContentBottomInsetUpdate={setContentBottomInset}
-        onSendPress={handleSendPress}
-        panResponderPositionY={positionY}
-        user={user}
-      />
-      <ImageView
-        images={images}
-        imageIndex={imageViewIndex}
-        onRequestClose={() => {
-          setIsImageViewVisible(false)
-          StatusBar.setHidden(false, 'slide')
-        }}
-        visible={isImageViewVisible}
-      />
-    </SafeAreaView>
+    <UserContext.Provider value={user}>
+      <SafeAreaView style={styles.container} onLayout={onLayout}>
+        <FlatList
+          ref={list}
+          contentContainerStyle={{ paddingTop: contentBottomInset }}
+          style={styles.list}
+          data={messages}
+          renderItem={renderItem}
+          automaticallyAdjustContentInsets={false}
+          inverted
+          keyboardDismissMode='interactive'
+          keyExtractor={keyExtractor}
+          scrollIndicatorInsets={{ top: contentBottomInset }}
+          ListFooterComponent={<View />}
+          ListFooterComponentStyle={styles.footer}
+          {...panHandlers}
+        />
+        <Input
+          onAttachmentPress={onAttachmentPress}
+          onContentBottomInsetUpdate={setContentBottomInset}
+          onSendPress={handleSendPress}
+          panResponderPositionY={positionY}
+        />
+        <ImageView
+          images={images}
+          imageIndex={imageViewIndex}
+          onRequestClose={() => {
+            setIsImageViewVisible(false)
+            StatusBar.setHidden(false, 'slide')
+          }}
+          visible={isImageViewVisible}
+        />
+      </SafeAreaView>
+    </UserContext.Provider>
   )
 }
