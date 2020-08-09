@@ -1,6 +1,7 @@
 import * as React from 'react'
-import { Image, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import { Image, TouchableWithoutFeedback } from 'react-native'
 import { MessageType, Size } from '../../types'
+import styles from './styles'
 
 export interface ImageMessageProps {
   message: MessageType.Image
@@ -14,9 +15,10 @@ export const ImageMessage = ({ message, onPress }: ImageMessageProps) => {
     height: defaultHeight,
     width: defaultWidth,
   })
+  const { image } = styles({ size })
 
   React.useEffect(() => {
-    if (defaultHeight || defaultWidth <= 0)
+    if (defaultHeight <= 0 || defaultWidth <= 0)
       Image.getSize(
         message.imageUrl,
         (width, height) => setSize({ height, width }),
@@ -33,10 +35,7 @@ export const ImageMessage = ({ message, onPress }: ImageMessageProps) => {
       <Image
         accessibilityRole='image'
         source={{ uri: message.imageUrl }}
-        style={StyleSheet.flatten([
-          { aspectRatio: size.height > 0 ? size.width / size.height : 1 },
-          { width: size.width < 520 ? size.width : '100%' },
-        ])}
+        style={image}
       />
     </TouchableWithoutFeedback>
   )

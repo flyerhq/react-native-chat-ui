@@ -13,6 +13,7 @@ const styles = ({
       color: user?.id === message.authorId ? '#fff' : '#2e2c2c',
       fontSize: 16,
       fontWeight: '500',
+      lineHeight: 20,
       marginHorizontal: 24,
       marginVertical: 16,
     },

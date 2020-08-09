@@ -20,6 +20,7 @@ export const Chat = ({
   messages,
   onAttachmentPress,
   onSendPress,
+  textInputProps,
   user,
 }: ChatProps) => {
   const { onLayout, size } = useComponentSize()
@@ -28,10 +29,8 @@ export const Chat = ({
   const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
   const [imageViewIndex, setImageViewIndex] = React.useState(0)
   const images = messages
-    .filter((message) => message.type === 'image')
-    .map((message) => ({
-      uri: message.type === 'image' ? message.imageUrl : undefined,
-    }))
+    .filter((message): message is MessageType.Image => message.type === 'image')
+    .map((message) => ({ uri: message.imageUrl }))
     .reverse()
 
   const list = React.useRef<FlatList<MessageType.Any>>(null)
@@ -93,14 +92,19 @@ export const Chat = ({
           onContentBottomInsetUpdate={setContentBottomInset}
           onSendPress={handleSendPress}
           panResponderPositionY={positionY}
+          textInputProps={textInputProps}
         />
         <ImageView
           images={images}
           imageIndex={imageViewIndex}
-          onRequestClose={() => {
-            setIsImageViewVisible(false)
-            StatusBar.setHidden(false, 'slide')
-          }}
+          // TODO: Tapping on a close button results in the next warning:
+          // `An update to ImageViewing inside a test was not wrapped in act(...).`
+          onRequestClose={
+            /* istanbul ignore next */ () => {
+              setIsImageViewVisible(false)
+              StatusBar.setHidden(false, 'slide')
+            }
+          }
           visible={isImageViewVisible}
         />
       </SafeAreaView>

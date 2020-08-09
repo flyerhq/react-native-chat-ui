@@ -34,6 +34,14 @@ export const Input = ({
 
   const value = textInputProps?.value ?? text
 
+  const defaultMessageParams = () => ({
+    // Buttons only rendered when the user exists, so we can safely force unwrap it
+    /* type-coverage:ignore-next-line */ // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    authorId: user!.id,
+    id: uuidv4(),
+    timestamp: Math.floor(Date.now() / 1000),
+  })
+
   const handleChangeText = (newText: string) => {
     // Track local state in case `onChangeText` is provided and `value` is not
     setText(newText)
@@ -41,33 +49,28 @@ export const Input = ({
   }
 
   const handleSend = () => {
-    if (user) {
-      onSendPress({
-        authorId: user.id,
-        id: uuidv4(),
-        text: value.trim(),
-        timestamp: Math.floor(Date.now() / 1000),
-        type: 'text',
-      })
-      setText('')
-    }
+    onSendPress({
+      ...defaultMessageParams(),
+      text: value.trim(),
+      type: 'text',
+    })
+    setText('')
   }
 
+  // TODO: This function is binded to the `onAttachmentPress`, how to mock this in tests?
+  /* istanbul ignore next */
   const handleSendImage = ({
     height,
     imageUrl,
     width,
   }: Parameters<SendImageCallback>[0]) => {
-    user &&
-      onSendPress({
-        authorId: user.id,
-        height,
-        id: uuidv4(),
-        imageUrl,
-        timestamp: Math.floor(Date.now() / 1000),
-        type: 'image',
-        width,
-      })
+    onSendPress({
+      ...defaultMessageParams(),
+      height,
+      imageUrl,
+      type: 'image',
+      width,
+    })
   }
 
   return (
@@ -77,9 +80,11 @@ export const Input = ({
       style={styles.keyboardAccessoryView}
     >
       <View style={styles.container}>
-        <AttachmentButton
-          onPress={onAttachmentPress?.bind(null, handleSendImage)}
-        />
+        {user && (
+          <AttachmentButton
+            onPress={onAttachmentPress?.bind(null, handleSendImage)}
+          />
+        )}
         <TextInput
           multiline
           placeholder='Your message here'
@@ -91,7 +96,7 @@ export const Input = ({
           onChangeText={handleChangeText}
           value={value}
         />
-        {user && value ? <SendButton onPress={handleSend} /> : null}
+        {user && value.trim() ? <SendButton onPress={handleSend} /> : null}
       </View>
     </KeyboardAccessoryView>
   )

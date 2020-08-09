@@ -7,13 +7,11 @@ import {
 } from 'react-native'
 
 export interface AttachmentButtonProps {
-  disabled?: boolean
   onPress?: () => void
   touchableOpacityProps?: TouchableOpacityProps
 }
 
 export const AttachmentButton = ({
-  disabled,
   onPress,
   touchableOpacityProps,
 }: AttachmentButtonProps) => {
@@ -26,8 +24,6 @@ export const AttachmentButton = ({
     <TouchableOpacity
       accessibilityRole='button'
       accessibilityLabel='Add an attachment'
-      accessibilityState={{ disabled }}
-      disabled={disabled}
       {...touchableOpacityProps}
       onPress={handlePress}
     >
