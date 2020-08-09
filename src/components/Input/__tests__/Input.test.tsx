@@ -1,100 +1,123 @@
+import { fireEvent, render } from '@testing-library/react-native'
 import * as React from 'react'
-import { fireEvent, render } from 'react-native-testing-library'
-import { message, user } from '../../../../jest/fixtures'
+import { textMessage, user } from '../../../../jest/fixtures'
+import { UserContext } from '../../../utils'
 import { Input } from '../Input'
 
 describe('input', () => {
-  it('sends a correct message', () => {
+  it('sends a text message', () => {
     expect.assertions(2)
     const onSendPress = jest.fn()
-    const { getByPlaceholder, getByA11yLabel } = render(
-      <Input onSendPress={onSendPress} user={user} />
+    const { getByPlaceholderText, getByLabelText } = render(
+      <UserContext.Provider value={user}>
+        <Input onSendPress={onSendPress} />
+      </UserContext.Provider>
     )
-    const textInput = getByPlaceholder('Your message here')
-    const button = getByA11yLabel('Send a message')
+    const textInput = getByPlaceholderText('Your message here')
     fireEvent.changeText(textInput, 'text')
+    const button = getByLabelText('Send a message')
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith(message)
-    expect(textInput.props.value).toStrictEqual('')
+    expect(onSendPress).toHaveBeenCalledWith(textMessage)
+    expect(textInput.props).toHaveProperty('value', '')
   })
 
-  it('sends a correct message if onChangeText and value are provided', () => {
+  it('sends a text message if onChangeText and value are provided', () => {
     expect.assertions(2)
     const onSendPress = jest.fn()
     const value = 'value'
     const onChangeText = jest.fn((newValue) => {
       rerender(
-        <Input
-          onSendPress={onSendPress}
-          textInputProps={{ onChangeText, value: newValue }}
-          user={user}
-        />
+        <UserContext.Provider value={user}>
+          <Input
+            onSendPress={onSendPress}
+            textInputProps={{ onChangeText, value: newValue }}
+          />
+        </UserContext.Provider>
       )
     })
-    const { getByPlaceholder, getByA11yLabel, rerender } = render(
-      <Input
-        onSendPress={onSendPress}
-        textInputProps={{ onChangeText, value }}
-        user={user}
-      />
+    const { getByPlaceholderText, getByLabelText, rerender } = render(
+      <UserContext.Provider value={user}>
+        <Input
+          onSendPress={onSendPress}
+          textInputProps={{ onChangeText, value }}
+        />
+      </UserContext.Provider>
     )
-    const textInput = getByPlaceholder('Your message here')
-    const button = getByA11yLabel('Send a message')
+    const textInput = getByPlaceholderText('Your message here')
     fireEvent.changeText(textInput, 'text')
+    const button = getByLabelText('Send a message')
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith(message)
-    expect(textInput.props.value).toStrictEqual('text')
+    expect(onSendPress).toHaveBeenCalledWith(textMessage)
+    expect(textInput.props).toHaveProperty('value', 'text')
   })
 
-  it('sends a correct message if onChangeText is provided', () => {
+  it('sends a text message if onChangeText is provided', () => {
     expect.assertions(2)
     const onSendPress = jest.fn()
     const onChangeText = jest.fn()
-    const { getByPlaceholder, getByA11yLabel } = render(
-      <Input
-        onSendPress={onSendPress}
-        textInputProps={{ onChangeText }}
-        user={user}
-      />
+    const { getByPlaceholderText, getByLabelText } = render(
+      <UserContext.Provider value={user}>
+        <Input onSendPress={onSendPress} textInputProps={{ onChangeText }} />
+      </UserContext.Provider>
     )
-    const textInput = getByPlaceholder('Your message here')
-    const button = getByA11yLabel('Send a message')
+    const textInput = getByPlaceholderText('Your message here')
     fireEvent.changeText(textInput, 'text')
+    const button = getByLabelText('Send a message')
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith(message)
-    expect(textInput.props.value).toStrictEqual('')
+    expect(onSendPress).toHaveBeenCalledWith(textMessage)
+    expect(textInput.props).toHaveProperty('value', '')
   })
 
-  it('sends a correct message if value is provided', () => {
+  it('sends a text message if value is provided', () => {
     expect.assertions(2)
     const onSendPress = jest.fn()
     const value = 'value'
-    const { getByPlaceholder, getByA11yLabel } = render(
-      <Input onSendPress={onSendPress} textInputProps={{ value }} user={user} />
+    const { getByPlaceholderText, getByLabelText } = render(
+      <UserContext.Provider value={user}>
+        <Input onSendPress={onSendPress} textInputProps={{ value }} />
+      </UserContext.Provider>
     )
-    const textInput = getByPlaceholder('Your message here')
-    const button = getByA11yLabel('Send a message')
+    const textInput = getByPlaceholderText('Your message here')
     fireEvent.changeText(textInput, 'text')
+    const button = getByLabelText('Send a message')
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith({ ...message, text: value })
-    expect(textInput.props.value).toStrictEqual(value)
+    expect(onSendPress).toHaveBeenCalledWith({ ...textMessage, text: value })
+    expect(textInput.props).toHaveProperty('value', value)
   })
 
-  it('sends a correct message if defaultValue is provided', () => {
+  it('sends a text message if defaultValue is provided', () => {
     expect.assertions(2)
     const onSendPress = jest.fn()
     const defaultValue = 'defaultValue'
-    const { getByPlaceholder, getByA11yLabel } = render(
-      <Input
-        onSendPress={onSendPress}
-        textInputProps={{ defaultValue }}
-        user={user}
-      />
+    const { getByPlaceholderText, getByLabelText } = render(
+      <UserContext.Provider value={user}>
+        <Input onSendPress={onSendPress} textInputProps={{ defaultValue }} />
+      </UserContext.Provider>
     )
-    const textInput = getByPlaceholder('Your message here')
-    const button = getByA11yLabel('Send a message')
+    const textInput = getByPlaceholderText('Your message here')
+    const button = getByLabelText('Send a message')
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith({ ...message, text: defaultValue })
-    expect(textInput.props.value).toStrictEqual('')
+    expect(onSendPress).toHaveBeenCalledWith({
+      ...textMessage,
+      text: defaultValue,
+    })
+    expect(textInput.props).toHaveProperty('value', '')
+  })
+
+  it('sends an image message', () => {
+    expect.assertions(1)
+    const onAttachmentPress = jest.fn()
+    const onSendPress = jest.fn()
+    const { getByLabelText } = render(
+      <UserContext.Provider value={user}>
+        <Input
+          onAttachmentPress={onAttachmentPress}
+          onSendPress={onSendPress}
+        />
+      </UserContext.Provider>
+    )
+    const button = getByLabelText('Add an attachment')
+    fireEvent.press(button)
+    expect(onAttachmentPress).toHaveBeenCalledTimes(1)
   })
 })

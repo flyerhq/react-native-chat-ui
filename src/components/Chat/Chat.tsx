@@ -3,14 +3,16 @@ import {
   usePanResponder,
 } from '@flyerhq/react-native-keyboard-accessory-view'
 import * as React from 'react'
-import { FlatList, SafeAreaView } from 'react-native'
-import { Message, User } from '../../types'
+import { FlatList, SafeAreaView, StatusBar, View } from 'react-native'
+import ImageView from 'react-native-image-viewing'
+import { MessageType, User } from '../../types'
+import { UserContext } from '../../utils'
 import { Input, InputProps } from '../Input'
-import { TextMessage } from '../TextMessage'
+import { Message } from '../Message'
 import styles from './styles'
 
 export interface ChatProps extends InputProps {
-  messages: Message[]
+  messages: MessageType.Any[]
   user: User
 }
 
@@ -18,15 +20,22 @@ export const Chat = ({
   messages,
   onAttachmentPress,
   onSendPress,
+  textInputProps,
   user,
 }: ChatProps) => {
   const { onLayout, size } = useComponentSize()
   const { panHandlers, positionY } = usePanResponder()
   const [contentBottomInset, setContentBottomInset] = React.useState(0)
+  const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
+  const [imageViewIndex, setImageViewIndex] = React.useState(0)
+  const images = messages
+    .filter((message): message is MessageType.Image => message.type === 'image')
+    .map((message) => ({ uri: message.imageUrl }))
+    .reverse()
 
-  const list = React.useRef<FlatList<Message>>(null)
+  const list = React.useRef<FlatList<MessageType.Any>>(null)
 
-  const handleSendPress = (message: Message) => {
+  const handleSendPress = (message: MessageType.Any) => {
     onSendPress(message)
     list.current?.scrollToOffset({
       animated: true,
@@ -34,34 +43,71 @@ export const Chat = ({
     })
   }
 
-  const keyExtractor = (item: Message) => item.id
+  const keyExtractor = (item: MessageType.Any) => item.id
 
-  const renderItem = ({ item }: { item: Message }) => (
-    <TextMessage message={item} parentComponentSize={size} user={user} />
-  )
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: MessageType.Any
+    index: number
+  }) => {
+    const previousMessageSameAuthor =
+      messages[index - 1]?.authorId === item.authorId
+
+    return (
+      <Message
+        message={item}
+        onImagePress={(imageUrl) => {
+          setImageViewIndex(images.findIndex((image) => image.uri === imageUrl))
+          setIsImageViewVisible(true)
+          StatusBar.setHidden(true, 'slide')
+        }}
+        parentComponentSize={size}
+        previousMessageSameAuthor={previousMessageSameAuthor}
+      />
+    )
+  }
 
   return (
-    <SafeAreaView style={styles.container} onLayout={onLayout}>
-      <FlatList
-        ref={list}
-        contentContainerStyle={{ paddingTop: contentBottomInset }}
-        style={styles.list}
-        data={messages}
-        renderItem={renderItem}
-        automaticallyAdjustContentInsets={false}
-        inverted
-        keyboardDismissMode='interactive'
-        keyExtractor={keyExtractor}
-        scrollIndicatorInsets={{ top: contentBottomInset }}
-        {...panHandlers}
-      />
-      <Input
-        onAttachmentPress={onAttachmentPress}
-        onContentBottomInsetUpdate={setContentBottomInset}
-        onSendPress={handleSendPress}
-        panResponderPositionY={positionY}
-        user={user}
-      />
-    </SafeAreaView>
+    <UserContext.Provider value={user}>
+      <SafeAreaView style={styles.container} onLayout={onLayout}>
+        <FlatList
+          ref={list}
+          contentContainerStyle={{ paddingTop: contentBottomInset }}
+          style={styles.list}
+          data={messages}
+          renderItem={renderItem}
+          automaticallyAdjustContentInsets={false}
+          inverted
+          keyboardDismissMode='interactive'
+          keyExtractor={keyExtractor}
+          scrollIndicatorInsets={{ top: contentBottomInset }}
+          ListFooterComponent={<View />}
+          ListFooterComponentStyle={styles.footer}
+          {...panHandlers}
+        />
+        <Input
+          onAttachmentPress={onAttachmentPress}
+          onContentBottomInsetUpdate={setContentBottomInset}
+          onSendPress={handleSendPress}
+          panResponderPositionY={positionY}
+          textInputProps={textInputProps}
+        />
+        <ImageView
+          images={images}
+          imageIndex={imageViewIndex}
+          // TODO: Tapping on a close button results in the next warning:
+          // `An update to ImageViewing inside a test was not wrapped in act(...).`
+          onRequestClose={
+            /* istanbul ignore next */ () => {
+              setIsImageViewVisible(false)
+              StatusBar.setHidden(false, 'slide')
+            }
+          }
+          visible={isImageViewVisible}
+        />
+      </SafeAreaView>
+    </UserContext.Provider>
   )
 }

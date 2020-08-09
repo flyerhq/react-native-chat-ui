@@ -1,19 +1,24 @@
 import { KeyboardAccessoryView } from '@flyerhq/react-native-keyboard-accessory-view'
 import * as React from 'react'
-import { Animated, TextInput, TextInputProps, View } from 'react-native'
-import { Message, User } from '../../types'
-import { uuidv4 } from '../../utils'
+import {
+  Animated,
+  StyleSheet,
+  TextInput,
+  TextInputProps,
+  View,
+} from 'react-native'
+import { MessageType, SendImageCallback } from '../../types'
+import { UserContext, uuidv4 } from '../../utils'
 import { AttachmentButton } from '../AttachmentButton'
 import { SendButton } from '../SendButton'
 import styles from './styles'
 
 export interface InputProps {
-  onAttachmentPress?: () => void
+  onAttachmentPress?: (send: SendImageCallback) => void
   onContentBottomInsetUpdate?: (contentBottomInset: number) => void
-  onSendPress: (message: Message) => void
+  onSendPress: (message: MessageType.Any) => void
   panResponderPositionY?: Animated.Value
   textInputProps?: TextInputProps
-  user: User
 }
 
 export const Input = ({
@@ -22,12 +27,20 @@ export const Input = ({
   onSendPress,
   panResponderPositionY,
   textInputProps,
-  user,
 }: InputProps) => {
+  const user = React.useContext(UserContext)
   // Use `defaultValue` if provided
   const [text, setText] = React.useState(textInputProps?.defaultValue ?? '')
 
   const value = textInputProps?.value ?? text
+
+  const defaultMessageParams = () => ({
+    // Buttons only rendered when the user exists, so we can safely force unwrap it
+    /* type-coverage:ignore-next-line */ // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    authorId: user!.id,
+    id: uuidv4(),
+    timestamp: Math.floor(Date.now() / 1000),
+  })
 
   const handleChangeText = (newText: string) => {
     // Track local state in case `onChangeText` is provided and `value` is not
@@ -37,12 +50,27 @@ export const Input = ({
 
   const handleSend = () => {
     onSendPress({
-      authorId: user.id,
-      id: uuidv4(),
-      text: value,
-      timestamp: Math.floor(Date.now() / 1000),
+      ...defaultMessageParams(),
+      text: value.trim(),
+      type: 'text',
     })
     setText('')
+  }
+
+  // TODO: This function is binded to the `onAttachmentPress`, how to mock this in tests?
+  /* istanbul ignore next */
+  const handleSendImage = ({
+    height,
+    imageUrl,
+    width,
+  }: Parameters<SendImageCallback>[0]) => {
+    onSendPress({
+      ...defaultMessageParams(),
+      height,
+      imageUrl,
+      type: 'image',
+      width,
+    })
   }
 
   return (
@@ -52,7 +80,11 @@ export const Input = ({
       style={styles.keyboardAccessoryView}
     >
       <View style={styles.container}>
-        <AttachmentButton onPress={onAttachmentPress} />
+        {user && (
+          <AttachmentButton
+            onPress={onAttachmentPress?.bind(null, handleSendImage)}
+          />
+        )}
         <TextInput
           multiline
           placeholder='Your message here'
@@ -60,11 +92,11 @@ export const Input = ({
           underlineColorAndroid='transparent'
           {...textInputProps}
           // Keep our implementation but allow user to use these `TextInputProps`
-          style={[styles.input, textInputProps?.style]}
+          style={StyleSheet.flatten([styles.input, textInputProps?.style])}
           onChangeText={handleChangeText}
           value={value}
         />
-        <SendButton onPress={handleSend} />
+        {user && value.trim() ? <SendButton onPress={handleSend} /> : null}
       </View>
     </KeyboardAccessoryView>
   )

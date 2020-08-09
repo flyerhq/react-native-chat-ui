@@ -1,32 +1,23 @@
 import * as React from 'react'
-import { Text, View } from 'react-native'
-import { Message, Size, User } from '../../types'
+import { Text } from 'react-native'
+import { MessageType } from '../../types'
+import { UserContext } from '../../utils'
 import styles from './styles'
 
 export interface TextMessageProps {
-  message: Message
-  parentComponentSize: Size
-  user: User
+  message: MessageType.Text
 }
 
-export const TextMessage = ({
-  message,
-  parentComponentSize,
-  user,
-}: TextMessageProps) => {
-  const { container, message: messageStyle, messageContainer } = styles({
+export const TextMessage = ({ message }: TextMessageProps) => {
+  const user = React.useContext(UserContext)
+  const { text } = styles({
     message,
-    parentComponentSize,
     user,
   })
 
   return (
-    <View style={container}>
-      <View style={messageContainer}>
-        <Text accessibilityRole='text' style={messageStyle}>
-          {message.text}
-        </Text>
-      </View>
-    </View>
+    <Text accessibilityRole='text' style={text}>
+      {message.text}
+    </Text>
   )
 }

@@ -7,13 +7,11 @@ import {
 } from 'react-native'
 
 export interface SendButtonProps {
-  disabled?: boolean
   onPress: () => void
   touchableOpacityProps?: TouchableOpacityProps
 }
 
 export const SendButton = ({
-  disabled,
   onPress,
   touchableOpacityProps,
 }: SendButtonProps) => {
@@ -26,8 +24,6 @@ export const SendButton = ({
     <TouchableOpacity
       accessibilityRole='button'
       accessibilityLabel='Send a message'
-      accessibilityState={{ disabled }}
-      disabled={disabled}
       {...touchableOpacityProps}
       onPress={handlePress}
     >
