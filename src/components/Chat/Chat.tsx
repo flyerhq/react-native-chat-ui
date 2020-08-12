@@ -3,7 +3,13 @@ import {
   usePanResponder,
 } from '@flyerhq/react-native-keyboard-accessory-view'
 import * as React from 'react'
-import { FlatList, SafeAreaView, StatusBar, View } from 'react-native'
+import {
+  FlatList,
+  SafeAreaView,
+  StatusBar,
+  StatusBarProps,
+  View,
+} from 'react-native'
 import ImageView from 'react-native-image-viewing'
 import { MessageType, User } from '../../types'
 import { UserContext } from '../../utils'
@@ -28,6 +34,7 @@ export const Chat = ({
   const [contentBottomInset, setContentBottomInset] = React.useState(0)
   const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
   const [imageViewIndex, setImageViewIndex] = React.useState(0)
+  const [stackEntry, setStackEntry] = React.useState<StatusBarProps>({})
   const images = messages
     .filter((message): message is MessageType.Image => message.type === 'image')
     .map((message) => ({ uri: message.imageUrl }))
@@ -61,7 +68,12 @@ export const Chat = ({
         onImagePress={(imageUrl) => {
           setImageViewIndex(images.findIndex((image) => image.uri === imageUrl))
           setIsImageViewVisible(true)
-          StatusBar.setHidden(true, 'slide')
+          setStackEntry(
+            StatusBar.pushStackEntry({
+              barStyle: 'light-content',
+              animated: true,
+            })
+          )
         }}
         parentComponentSize={size}
         previousMessageSameAuthor={previousMessageSameAuthor}
@@ -102,7 +114,7 @@ export const Chat = ({
           onRequestClose={
             /* istanbul ignore next */ () => {
               setIsImageViewVisible(false)
-              StatusBar.setHidden(false, 'slide')
+              StatusBar.popStackEntry(stackEntry)
             }
           }
           visible={isImageViewVisible}
