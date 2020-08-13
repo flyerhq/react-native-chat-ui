@@ -7,7 +7,13 @@ import {
   TextInputProps,
   View,
 } from 'react-native'
-import { MessageType, SendCallback, SendCallbackParameters } from '../../types'
+import {
+  MessageType,
+  SendCallback,
+  SendCallbackParameters,
+  SendFileCallbackParameters,
+  SendImageCallbackParameters,
+} from '../../types'
 import { UserContext, uuidv4 } from '../../utils'
 import { AttachmentButton } from '../AttachmentButton'
 import { SendButton } from '../SendButton'
@@ -59,8 +65,13 @@ export const Input = ({
 
   // TODO: This function is binded to the `onAttachmentPress`, how to mock this in tests?
   /* istanbul ignore next */
-  const handleSendImage = (params: SendCallbackParameters) => {
-    if (params.imageUrl) {
+  const handleSendAttachment = (params: SendCallbackParameters) => {
+    function isImageParameters(
+      params1: SendFileCallbackParameters | SendImageCallbackParameters
+    ): params1 is SendImageCallbackParameters {
+      return (params1 as SendImageCallbackParameters).imageUrl !== undefined
+    }
+    if (isImageParameters(params)) {
       const { height, imageUrl, width } = params
       onSendPress({
         ...defaultMessageParams(),
@@ -90,10 +101,7 @@ export const Input = ({
       <View style={styles.container}>
         {user && (
           <AttachmentButton
-            onPress={onAttachmentPress?.bind(
-              null,
-              handleSendImage as SendCallback
-            )}
+            onPress={onAttachmentPress?.bind(null, handleSendAttachment)}
           />
         )}
         <TextInput

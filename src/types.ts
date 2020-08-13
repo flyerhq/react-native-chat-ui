@@ -44,10 +44,11 @@ export interface SendImageCallbackParameters {
   width?: number
 }
 
-export type SendCallback = SendFileCallback & SendImageCallback
+export type SendCallback = (payload: SendCallbackParameters) => void
 
-export type SendCallbackParameters = SendFileCallbackParameters &
-  SendImageCallbackParameters
+export type SendCallbackParameters =
+  | SendFileCallbackParameters
+  | SendImageCallbackParameters
 
 export interface Size {
   height: number

@@ -1,7 +1,5 @@
 import {
   ActionSheetOptions,
-  ActionSheetProvider,
-  connectActionSheet,
   useActionSheet,
 } from '@expo/react-native-action-sheet'
 import { Chat, MessageType, SendCallback } from '@flyerhq/react-native-chat-ui'
@@ -92,14 +90,4 @@ const App = () => {
   )
 }
 
-const ConnectedApp = connectActionSheet(App)
-
-const AppContainer = () => {
-  return (
-    <ActionSheetProvider>
-      <ConnectedApp />
-    </ActionSheetProvider>
-  )
-}
-
-export default AppContainer
+export default App

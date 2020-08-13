@@ -22,9 +22,7 @@ export const FileMessage = ({ message, onPress }: FileMessageProps) => {
 
   return (
     <TouchableOpacity onPress={handlePress}>
-      <Text accessibilityRole='text' style={text}>
-        {message.fileName}
-      </Text>
+      <Text style={text}>{message.fileName}</Text>
     </TouchableOpacity>
   )
 }
