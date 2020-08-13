@@ -7,14 +7,14 @@ import {
   TextInputProps,
   View,
 } from 'react-native'
-import { MessageType, SendImageCallback } from '../../types'
+import { MessageType, SendCallback, SendCallbackParameters } from '../../types'
 import { UserContext, uuidv4 } from '../../utils'
 import { AttachmentButton } from '../AttachmentButton'
 import { SendButton } from '../SendButton'
 import styles from './styles'
 
 export interface InputProps {
-  onAttachmentPress?: (send: SendImageCallback) => void
+  onAttachmentPress?: (send: SendCallback) => void
   onContentBottomInsetUpdate?: (contentBottomInset: number) => void
   onSendPress: (message: MessageType.Any) => void
   panResponderPositionY?: Animated.Value
@@ -59,18 +59,26 @@ export const Input = ({
 
   // TODO: This function is binded to the `onAttachmentPress`, how to mock this in tests?
   /* istanbul ignore next */
-  const handleSendImage = ({
-    height,
-    imageUrl,
-    width,
-  }: Parameters<SendImageCallback>[0]) => {
-    onSendPress({
-      ...defaultMessageParams(),
-      height,
-      imageUrl,
-      type: 'image',
-      width,
-    })
+  const handleSendImage = (params: SendCallbackParameters) => {
+    if (params.imageUrl) {
+      const { height, imageUrl, width } = params
+      onSendPress({
+        ...defaultMessageParams(),
+        height,
+        imageUrl,
+        type: 'image',
+        width,
+      })
+    } else {
+      const { fileName, fileUrl, size } = params
+      onSendPress({
+        ...defaultMessageParams(),
+        fileName,
+        fileUrl,
+        size,
+        type: 'file',
+      })
+    }
   }
 
   return (
@@ -82,7 +90,10 @@ export const Input = ({
       <View style={styles.container}>
         {user && (
           <AttachmentButton
-            onPress={onAttachmentPress?.bind(null, handleSendImage)}
+            onPress={onAttachmentPress?.bind(
+              null,
+              handleSendImage as SendCallback
+            )}
           />
         )}
         <TextInput
