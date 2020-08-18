@@ -5,7 +5,6 @@ import {
 import * as React from 'react'
 import {
   FlatList,
-  Linking,
   SafeAreaView,
   StatusBar,
   StatusBarProps,
@@ -26,6 +25,7 @@ export interface ChatProps extends InputProps {
 export const Chat = ({
   messages,
   onAttachmentPress,
+  onFilePress,
   onSendPress,
   textInputProps,
   user,
@@ -66,13 +66,7 @@ export const Chat = ({
     return (
       <Message
         message={item}
-        onFilePress={(fileUrl) => {
-          if (Linking.canOpenURL(fileUrl)) {
-            Linking.openURL(fileUrl).catch((reason) => {
-              console.log(reason)
-            })
-          }
-        }}
+        onFilePress={onFilePress}
         onImagePress={(imageUrl) => {
           setImageViewIndex(images.findIndex((image) => image.uri === imageUrl))
           setIsImageViewVisible(true)

@@ -1,5 +1,15 @@
 import { MessageType, Size, User } from '../src/types'
 
+export const fileMessage: MessageType.File = {
+  authorId: 'userId',
+  fileName: 'test.pdf',
+  fileUrl: 'file:///Users/admin/dummy.pdf',
+  id: 'uuidv4',
+  size: 15000,
+  timestamp: 0,
+  type: 'file',
+}
+
 export const imageMessage: MessageType.Image = {
   authorId: 'userId',
   height: 100,

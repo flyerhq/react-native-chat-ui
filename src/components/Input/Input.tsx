@@ -22,6 +22,7 @@ import styles from './styles'
 export interface InputProps {
   onAttachmentPress?: (send: SendCallback) => void
   onContentBottomInsetUpdate?: (contentBottomInset: number) => void
+  onFilePress?: (file: MessageType.File) => void
   onSendPress: (message: MessageType.Any) => void
   panResponderPositionY?: Animated.Value
   textInputProps?: TextInputProps
@@ -66,11 +67,12 @@ export const Input = ({
   // TODO: This function is binded to the `onAttachmentPress`, how to mock this in tests?
   /* istanbul ignore next */
   const handleSendAttachment = (params: SendCallbackParameters) => {
-    function isImageParameters(
-      params1: SendFileCallbackParameters | SendImageCallbackParameters
-    ): params1 is SendImageCallbackParameters {
-      return (params1 as SendImageCallbackParameters).imageUrl !== undefined
+    const isImageParameters = (
+      paramsToVerify: SendFileCallbackParameters | SendImageCallbackParameters
+    ): paramsToVerify is SendImageCallbackParameters => {
+      return 'imageUrl' in paramsToVerify
     }
+
     if (isImageParameters(params)) {
       const { height, imageUrl, width } = params
       onSendPress({

@@ -3,7 +3,7 @@
   "version": "0.2.1",
   "description": "React Native Chat UI",
   "homepage": "https://github.com/flyerhq/react-native-chat-ui#readme",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "author": "Oleksandr Demchenko <alexdemchenko@yahoo.com>",
   "license": "MIT",

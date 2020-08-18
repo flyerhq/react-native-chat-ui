@@ -4,6 +4,17 @@ import { User } from '../types'
 
 export const UserContext = React.createContext<User | undefined>(undefined)
 
+export const formatBytes = (a: number, b = 2) => {
+  if (a === 0) return '0 B'
+  const c = b < 0 ? 0 : b,
+    d = Math.floor(Math.log(a) / Math.log(1024))
+  return (
+    parseFloat((a / Math.pow(1024, d)).toFixed(c)) +
+    ' ' +
+    ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'][d]
+  )
+}
+
 export const getTextSizeInBytes = (text: string) => {
   return new Blob([text]).size
 }

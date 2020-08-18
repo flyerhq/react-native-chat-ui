@@ -25,15 +25,7 @@ const messages = [...Array(numberOfMessages)].map((_, index) => {
     timestamp,
     type: 'text',
   }
-  const fileData = {
-    authorId,
-    id: uuidv4(),
-    fileName: text + 'doc',
-    timestamp,
-    type: 'file',
-    fileUrl: 'https://google.com',
-  }
-  return index % 2 === 0 ? data : fileData
+  return data
 })
 
 const json = `${JSON.stringify(messages, null, 2)}\n`

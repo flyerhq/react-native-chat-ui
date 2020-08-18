@@ -11,7 +11,8 @@ export namespace MessageType {
   export interface File extends Base {
     fileUrl: string
     fileName: string
-    size?: number
+    mimeType?: string
+    size: number
     type: 'file'
   }
 
@@ -33,7 +34,8 @@ export type SendFileCallback = (payload: SendFileCallbackParameters) => void
 export interface SendFileCallbackParameters {
   fileName: string
   fileUrl: string
-  size?: number
+  mimeType?: string
+  size: number
 }
 
 export type SendImageCallback = (payload: SendImageCallbackParameters) => void
