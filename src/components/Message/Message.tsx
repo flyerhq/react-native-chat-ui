@@ -2,19 +2,22 @@ import * as React from 'react'
 import { View } from 'react-native'
 import { MessageType, Size } from '../../types'
 import { UserContext } from '../../utils'
+import { FileMessage } from '../FileMessage'
 import { ImageMessage } from '../ImageMessage'
 import { TextMessage } from '../TextMessage'
 import styles from './styles'
 
 export interface MessageProps {
   message: MessageType.Any
-  onImagePress: (imageUrl: string) => void
+  onFilePress?: (file: MessageType.File) => void
+  onImagePress: (url: string) => void
   parentComponentSize: Size
   previousMessageSameAuthor: boolean
 }
 
 export const Message = ({
   message,
+  onFilePress,
   onImagePress,
   parentComponentSize,
   previousMessageSameAuthor,
@@ -29,6 +32,8 @@ export const Message = ({
 
   const renderMessage = () => {
     switch (message.type) {
+      case 'file':
+        return <FileMessage message={message} onPress={onFilePress} />
       case 'image':
         return <ImageMessage message={message} onPress={onImagePress} />
       case 'text':

@@ -1,6 +1,11 @@
 import { fireEvent, render, waitFor } from '@testing-library/react-native'
 import * as React from 'react'
-import { imageMessage, textMessage, user } from '../../../../jest/fixtures'
+import {
+  fileMessage,
+  imageMessage,
+  textMessage,
+  user,
+} from '../../../../jest/fixtures'
 import { Chat } from '../Chat'
 
 describe('chat', () => {
@@ -33,5 +38,24 @@ describe('chat', () => {
     const button = getByLabelText('Send a message')
     fireEvent.press(button)
     expect(onSendPress).toHaveBeenCalledWith(textMessage)
+  })
+
+  it('opens file on a file message tap', () => {
+    expect.assertions(1)
+    const messages = [fileMessage]
+    const onSendPress = jest.fn()
+    const onFilePress = jest.fn()
+    const { getByLabelText } = render(
+      <Chat
+        onFilePress={onFilePress}
+        messages={messages}
+        onSendPress={onSendPress}
+        user={user}
+      />
+    )
+
+    const button = getByLabelText('Open a file')
+    fireEvent.press(button)
+    expect(onFilePress).toHaveBeenCalledWith(fileMessage)
   })
 })

@@ -5,7 +5,7 @@ import styles from './styles'
 
 export interface ImageMessageProps {
   message: MessageType.Image
-  onPress: (imageUrl: string) => void
+  onPress: (url: string) => void
 }
 
 export const ImageMessage = ({ message, onPress }: ImageMessageProps) => {
@@ -20,21 +20,21 @@ export const ImageMessage = ({ message, onPress }: ImageMessageProps) => {
   React.useEffect(() => {
     if (defaultHeight <= 0 || defaultWidth <= 0)
       Image.getSize(
-        message.imageUrl,
+        message.url,
         (width, height) => setSize({ height, width }),
         () => setSize({ height: 0, width: 0 })
       )
-  }, [defaultHeight, defaultWidth, message.imageUrl])
+  }, [defaultHeight, defaultWidth, message.url])
 
   const handlePress = () => {
-    onPress(message.imageUrl)
+    onPress(message.url)
   }
 
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <Image
         accessibilityRole='image'
-        source={{ uri: message.imageUrl }}
+        source={{ uri: message.url }}
         style={image}
       />
     </TouchableWithoutFeedback>

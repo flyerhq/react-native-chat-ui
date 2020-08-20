@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace MessageType {
-  export type Any = Image | Text
+  export type Any = File | Image | Text
 
   interface Base {
     authorId: string
@@ -8,10 +8,18 @@ export namespace MessageType {
     timestamp: number
   }
 
+  export interface File extends Base {
+    mimeType?: string
+    name: string
+    size: number
+    type: 'file'
+    url: string
+  }
+
   export interface Image extends Base {
     height?: number
-    imageUrl: string
     type: 'image'
+    url: string
     width?: number
   }
 
@@ -21,11 +29,30 @@ export namespace MessageType {
   }
 }
 
-export type SendImageCallback = (payload: {
+export type SendAttachmentCallback = (
+  payload: SendAttachmentCallbackParams
+) => void
+
+export type SendAttachmentCallbackParams =
+  | SendFileCallbackParams
+  | SendImageCallbackParams
+
+export type SendFileCallback = (payload: SendFileCallbackParams) => void
+
+export interface SendFileCallbackParams {
+  mimeType?: string
+  name: string
+  size: number
+  url: string
+}
+
+export type SendImageCallback = (payload: SendImageCallbackParams) => void
+
+export interface SendImageCallbackParams {
   height?: number
-  imageUrl: string
+  url: string
   width?: number
-}) => void
+}
 
 export interface Size {
   height: number

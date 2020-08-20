@@ -7,15 +7,22 @@ import {
   TextInputProps,
   View,
 } from 'react-native'
-import { MessageType, SendImageCallback } from '../../types'
+import {
+  MessageType,
+  SendAttachmentCallback,
+  SendAttachmentCallbackParams,
+  SendFileCallbackParams,
+  SendImageCallbackParams,
+} from '../../types'
 import { UserContext, uuidv4 } from '../../utils'
 import { AttachmentButton } from '../AttachmentButton'
 import { SendButton } from '../SendButton'
 import styles from './styles'
 
 export interface InputProps {
-  onAttachmentPress?: (send: SendImageCallback) => void
+  onAttachmentPress?: (sendAttachment: SendAttachmentCallback) => void
   onContentBottomInsetUpdate?: (contentBottomInset: number) => void
+  onFilePress?: (file: MessageType.File) => void
   onSendPress: (message: MessageType.Any) => void
   panResponderPositionY?: Animated.Value
   textInputProps?: TextInputProps
@@ -59,18 +66,33 @@ export const Input = ({
 
   // TODO: This function is binded to the `onAttachmentPress`, how to mock this in tests?
   /* istanbul ignore next */
-  const handleSendImage = ({
-    height,
-    imageUrl,
-    width,
-  }: Parameters<SendImageCallback>[0]) => {
-    onSendPress({
-      ...defaultMessageParams(),
-      height,
-      imageUrl,
-      type: 'image',
-      width,
-    })
+  const handleSendAttachment = (params: SendAttachmentCallbackParams) => {
+    const isFileParams = (
+      arg: SendFileCallbackParams | SendImageCallbackParams
+    ): arg is SendFileCallbackParams => {
+      return 'name' in arg
+    }
+
+    if (isFileParams(params)) {
+      const { mimeType, name, size, url } = params
+      onSendPress({
+        ...defaultMessageParams(),
+        mimeType,
+        name,
+        size,
+        type: 'file',
+        url,
+      })
+    } else {
+      const { height, url, width } = params
+      onSendPress({
+        ...defaultMessageParams(),
+        height,
+        type: 'image',
+        url,
+        width,
+      })
+    }
   }
 
   return (
@@ -82,7 +104,7 @@ export const Input = ({
       <View style={styles.container}>
         {user && (
           <AttachmentButton
-            onPress={onAttachmentPress?.bind(null, handleSendImage)}
+            onPress={onAttachmentPress?.bind(null, handleSendAttachment)}
           />
         )}
         <TextInput
