@@ -9,10 +9,10 @@ import {
 } from 'react-native'
 import {
   MessageType,
-  SendCallback,
-  SendCallbackParameters,
-  SendFileCallbackParameters,
-  SendImageCallbackParameters,
+  SendAttachmentCallback,
+  SendAttachmentCallbackParams,
+  SendFileCallbackParams,
+  SendImageCallbackParams,
 } from '../../types'
 import { UserContext, uuidv4 } from '../../utils'
 import { AttachmentButton } from '../AttachmentButton'
@@ -20,7 +20,7 @@ import { SendButton } from '../SendButton'
 import styles from './styles'
 
 export interface InputProps {
-  onAttachmentPress?: (send: SendCallback) => void
+  onAttachmentPress?: (sendAttachment: SendAttachmentCallback) => void
   onContentBottomInsetUpdate?: (contentBottomInset: number) => void
   onFilePress?: (file: MessageType.File) => void
   onSendPress: (message: MessageType.Any) => void
@@ -66,30 +66,31 @@ export const Input = ({
 
   // TODO: This function is binded to the `onAttachmentPress`, how to mock this in tests?
   /* istanbul ignore next */
-  const handleSendAttachment = (params: SendCallbackParameters) => {
-    const isImageParameters = (
-      paramsToVerify: SendFileCallbackParameters | SendImageCallbackParameters
-    ): paramsToVerify is SendImageCallbackParameters => {
-      return 'imageUrl' in paramsToVerify
+  const handleSendAttachment = (params: SendAttachmentCallbackParams) => {
+    const isFileParams = (
+      arg: SendFileCallbackParams | SendImageCallbackParams
+    ): arg is SendFileCallbackParams => {
+      return 'name' in arg
     }
 
-    if (isImageParameters(params)) {
-      const { height, imageUrl, width } = params
+    if (isFileParams(params)) {
+      const { mimeType, name, size, url } = params
+      onSendPress({
+        ...defaultMessageParams(),
+        mimeType,
+        name,
+        size,
+        type: 'file',
+        url,
+      })
+    } else {
+      const { height, url, width } = params
       onSendPress({
         ...defaultMessageParams(),
         height,
-        imageUrl,
         type: 'image',
+        url,
         width,
-      })
-    } else {
-      const { fileName, fileUrl, size } = params
-      onSendPress({
-        ...defaultMessageParams(),
-        fileName,
-        fileUrl,
-        size,
-        type: 'file',
       })
     }
   }

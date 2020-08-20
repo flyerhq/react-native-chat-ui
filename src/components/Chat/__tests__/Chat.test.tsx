@@ -40,12 +40,12 @@ describe('chat', () => {
     expect(onSendPress).toHaveBeenCalledWith(textMessage)
   })
 
-  it('opens file on file message tap', () => {
+  it('opens file on a file message tap', () => {
     expect.assertions(1)
     const messages = [fileMessage]
     const onSendPress = jest.fn()
     const onFilePress = jest.fn()
-    const { getByRole } = render(
+    const { getByLabelText } = render(
       <Chat
         onFilePress={onFilePress}
         messages={messages}
@@ -54,7 +54,7 @@ describe('chat', () => {
       />
     )
 
-    const button = getByRole('text').parent
+    const button = getByLabelText('Open a file')
     fireEvent.press(button)
     expect(onFilePress).toHaveBeenCalledWith(fileMessage)
   })

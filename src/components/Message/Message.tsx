@@ -10,7 +10,7 @@ import styles from './styles'
 export interface MessageProps {
   message: MessageType.Any
   onFilePress?: (file: MessageType.File) => void
-  onImagePress: (imageUrl: string) => void
+  onImagePress: (url: string) => void
   parentComponentSize: Size
   previousMessageSameAuthor: boolean
 }

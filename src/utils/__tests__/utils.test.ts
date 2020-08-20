@@ -1,4 +1,16 @@
-import { getTextSizeInBytes, uuidv4 } from '..'
+import { formatBytes, getTextSizeInBytes, uuidv4 } from '..'
+
+describe('formatBytes', () => {
+  it('formats bytes correctly when the size is 0', () => {
+    expect.assertions(1)
+    expect(formatBytes(0)).toStrictEqual('0 B')
+  })
+
+  it('formats bytes correctly', () => {
+    expect.assertions(1)
+    expect(formatBytes(1024)).toStrictEqual('1 kB')
+  })
+})
 
 describe('getTextSizeInBytes', () => {
   it('calculates the size for a simple text', () => {

@@ -12,11 +12,7 @@ const styles = ({
     container: {
       flexDirection: 'row',
     },
-    image: {
-      height: 20,
-      width: 18,
-    },
-    imageContainer: {
+    iconContainer: {
       alignItems: 'center',
       backgroundColor:
         user?.id === message.authorId ? '#ffffff33' : '#2e2c2c33',
@@ -27,26 +23,24 @@ const styles = ({
       marginVertical: 16,
       width: 44,
     },
-    size: {
+    name: {
       color: user?.id === message.authorId ? '#fff' : '#2e2c2c',
+      fontSize: 16,
+      fontWeight: '500',
+      lineHeight: 20,
+    },
+    size: {
+      color: user?.id === message.authorId ? '#ffffff66' : '#2e2c2c66',
       fontSize: 12,
       fontWeight: '500',
       lineHeight: 16,
-      marginBottom: 18,
       marginTop: 2,
-      opacity: 0.4,
     },
     textContainer: {
       flexShrink: 1,
       marginLeft: 12,
       marginRight: 24,
-    },
-    title: {
-      color: user?.id === message.authorId ? '#fff' : '#2e2c2c',
-      fontSize: 16,
-      fontWeight: '500',
-      lineHeight: 20,
-      marginTop: 16,
+      marginVertical: 16,
     },
   })
 

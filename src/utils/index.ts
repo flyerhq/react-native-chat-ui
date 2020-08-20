@@ -4,14 +4,13 @@ import { User } from '../types'
 
 export const UserContext = React.createContext<User | undefined>(undefined)
 
-export const formatBytes = (a: number, b = 2) => {
-  if (a === 0) return '0 B'
-  const c = b < 0 ? 0 : b,
-    d = Math.floor(Math.log(a) / Math.log(1024))
+export const formatBytes = (size: number, fractionDigits = 2) => {
+  if (size === 0) return '0 B'
+  const multiple = Math.floor(Math.log(size) / Math.log(1024))
   return (
-    parseFloat((a / Math.pow(1024, d)).toFixed(c)) +
+    parseFloat((size / Math.pow(1024, multiple)).toFixed(fractionDigits)) +
     ' ' +
-    ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'][d]
+    ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'][multiple]
   )
 }
 

@@ -11,14 +11,7 @@ export interface FileMessageProps {
 
 export const FileMessage = ({ message, onPress }: FileMessageProps) => {
   const user = React.useContext(UserContext)
-  const {
-    container,
-    image,
-    imageContainer,
-    textContainer,
-    title,
-    size,
-  } = styles({
+  const { container, iconContainer, name, size, textContainer } = styles({
     message,
     user,
   })
@@ -28,21 +21,22 @@ export const FileMessage = ({ message, onPress }: FileMessageProps) => {
   }
 
   return (
-    <View style={container}>
-      <View style={imageContainer}>
-        <Image
-          source={require('../../assets/icon-document.png')}
-          style={image}
-        />
-      </View>
-      <View style={textContainer}>
-        <TouchableOpacity onPress={handlePress}>
-          <Text accessibilityRole='text' style={title}>
-            {message.fileName}
+    <TouchableOpacity
+      accessibilityRole='button'
+      accessibilityLabel='Open a file'
+      onPress={handlePress}
+    >
+      <View style={container}>
+        <View style={iconContainer}>
+          <Image source={require('../../assets/icon-document.png')} />
+        </View>
+        <View style={textContainer}>
+          <Text accessibilityRole='text' style={name}>
+            {message.name}
           </Text>
-        </TouchableOpacity>
-        <Text style={size}>{formatBytes(message.size)}</Text>
+          <Text style={size}>{formatBytes(message.size)}</Text>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }

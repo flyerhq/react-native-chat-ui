@@ -27,7 +27,6 @@ export const AttachmentButton = ({
       {...touchableOpacityProps}
       onPress={handlePress}
     >
-      {/* type-coverage:ignore-next-line */}
       <Image source={require('../../assets/icon-attachment.png')} />
     </TouchableOpacity>
   )

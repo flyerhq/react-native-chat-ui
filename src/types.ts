@@ -9,17 +9,17 @@ export namespace MessageType {
   }
 
   export interface File extends Base {
-    fileUrl: string
-    fileName: string
     mimeType?: string
+    name: string
     size: number
     type: 'file'
+    url: string
   }
 
   export interface Image extends Base {
     height?: number
-    imageUrl: string
     type: 'image'
+    url: string
     width?: number
   }
 
@@ -29,28 +29,30 @@ export namespace MessageType {
   }
 }
 
-export type SendFileCallback = (payload: SendFileCallbackParameters) => void
+export type SendAttachmentCallback = (
+  payload: SendAttachmentCallbackParams
+) => void
 
-export interface SendFileCallbackParameters {
-  fileName: string
-  fileUrl: string
+export type SendAttachmentCallbackParams =
+  | SendFileCallbackParams
+  | SendImageCallbackParams
+
+export type SendFileCallback = (payload: SendFileCallbackParams) => void
+
+export interface SendFileCallbackParams {
   mimeType?: string
+  name: string
   size: number
+  url: string
 }
 
-export type SendImageCallback = (payload: SendImageCallbackParameters) => void
+export type SendImageCallback = (payload: SendImageCallbackParams) => void
 
-export interface SendImageCallbackParameters {
+export interface SendImageCallbackParams {
   height?: number
-  imageUrl: string
+  url: string
   width?: number
 }
-
-export type SendCallback = (payload: SendCallbackParameters) => void
-
-export type SendCallbackParameters =
-  | SendFileCallbackParameters
-  | SendImageCallbackParameters
 
 export interface Size {
   height: number

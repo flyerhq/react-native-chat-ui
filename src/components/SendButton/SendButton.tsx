@@ -27,7 +27,6 @@ export const SendButton = ({
       {...touchableOpacityProps}
       onPress={handlePress}
     >
-      {/* type-coverage:ignore-next-line */}
       <Image source={require('../../assets/icon-send.png')} />
     </TouchableOpacity>
   )
