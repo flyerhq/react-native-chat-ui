@@ -1,8 +1,9 @@
+import { useActionSheet } from '@expo/react-native-action-sheet'
 import {
-  ActionSheetOptions,
-  useActionSheet,
-} from '@expo/react-native-action-sheet'
-import { Chat, MessageType, SendCallback } from '@flyerhq/react-native-chat-ui'
+  Chat,
+  MessageType,
+  SendAttachmentCallback,
+} from '@flyerhq/react-native-chat-ui'
 import React, { useState } from 'react'
 import { StatusBar } from 'react-native'
 import DocumentPicker from 'react-native-document-picker'
@@ -15,59 +16,60 @@ import users from './users.json'
 const App = () => {
   const [messages, setMessages] = useState(data as MessageType.Any[])
   const { showActionSheetWithOptions } = useActionSheet()
-  const options: ActionSheetOptions = {
-    options: ['Photo', 'File', 'Cancel'],
-    cancelButtonIndex: 2,
-  }
 
-  const handleAttachmentPress = (send: SendCallback) => {
-    showActionSheetWithOptions(options, (buttonIndex: number) => {
-      // Do something here depending on the button index selected
-      onSelection(buttonIndex, send)
-    })
-  }
-
-  const handleSendPress = (message: MessageType.Any) => {
-    setMessages([message, ...messages])
-  }
-
-  const handleFilePress = (file: MessageType.File) => {
-    FileViewer.open(file.fileUrl, { showOpenWithDialog: true }).catch(
-      (error) => {
-        console.log(error)
-        // handle error here
+  const handleAttachmentPress = (sendAttachment: SendAttachmentCallback) => {
+    showActionSheetWithOptions(
+      {
+        options: ['Photo', 'File', 'Cancel'],
+        cancelButtonIndex: 2,
+      },
+      (buttonIndex) => {
+        switch (buttonIndex) {
+          case 0:
+            handleImageSelection(sendAttachment)
+            break
+          case 1:
+            handleFileSelection(sendAttachment)
+            break
+        }
       }
     )
   }
 
-  const onFileSelection = async (send: SendCallback) => {
+  const handleFilePress = async (file: MessageType.File) => {
+    try {
+      await FileViewer.open(file.url, { showOpenWithDialog: true })
+    } catch {}
+  }
+
+  const handleFileSelection = async (
+    sendAttachment: SendAttachmentCallback
+  ) => {
     try {
       const response = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
       })
-      send({
-        fileName: response.name,
-        fileUrl: response.uri,
+      sendAttachment({
         mimeType: response.type,
+        name: response.name,
         size: response.size,
+        url: response.uri,
       })
     } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        // User cancelled the picker, exit any dialogs or menus and move on
-      } else {
-        // handle error here
+      if (!DocumentPicker.isCancel(err)) {
+        // Handle error
       }
     }
   }
 
-  const onImageSelection = (send: SendCallback) => {
+  const handleImageSelection = (sendAttachment: SendAttachmentCallback) => {
     ImagePicker.showImagePicker(
       { maxWidth: 1440, quality: 0.7 },
       (response) => {
         if (response.data) {
-          send({
+          sendAttachment({
             height: response.height,
-            imageUrl: 'data:image/jpeg;base64,' + response.data,
+            url: 'data:image/jpeg;base64,' + response.data,
             width: response.width,
           })
         }
@@ -75,8 +77,8 @@ const App = () => {
     )
   }
 
-  const onSelection = async (buttonIndex: number, send: SendCallback) => {
-    buttonIndex === 0 ? onImageSelection(send) : onFileSelection(send)
+  const handleSendPress = (message: MessageType.Any) => {
+    setMessages([message, ...messages])
   }
 
   return (

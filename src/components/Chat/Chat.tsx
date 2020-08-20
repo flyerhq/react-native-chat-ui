@@ -38,7 +38,7 @@ export const Chat = ({
   const [stackEntry, setStackEntry] = React.useState<StatusBarProps>({})
   const images = messages
     .filter((message): message is MessageType.Image => message.type === 'image')
-    .map((message) => ({ uri: message.imageUrl }))
+    .map((message) => ({ uri: message.url }))
     .reverse()
 
   const list = React.useRef<FlatList<MessageType.Any>>(null)
@@ -67,8 +67,8 @@ export const Chat = ({
       <Message
         message={item}
         onFilePress={onFilePress}
-        onImagePress={(imageUrl) => {
-          setImageViewIndex(images.findIndex((image) => image.uri === imageUrl))
+        onImagePress={(url) => {
+          setImageViewIndex(images.findIndex((image) => image.uri === url))
           setIsImageViewVisible(true)
           setStackEntry(
             StatusBar.pushStackEntry({
