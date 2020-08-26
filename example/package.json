@@ -18,7 +18,7 @@
     "react-native": "^0.63.2",
     "react-native-document-picker": "^3.5.4",
     "react-native-file-viewer": "^2.1.1",
-    "react-native-image-picker": "^2.3.3",
+    "react-native-image-crop-picker": "^0.33.2",
     "react-native-safe-area-context": "^3.1.6"
   },
   "devDependencies": {

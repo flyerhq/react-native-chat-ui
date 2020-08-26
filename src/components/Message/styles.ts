@@ -1,14 +1,14 @@
 import { StyleSheet } from 'react-native'
-import { MessageType, Size, User } from '../../types'
+import { MessageType, User } from '../../types'
 
 const styles = ({
   message,
-  parentComponentSize,
+  messageWidth,
   previousMessageSameAuthor,
   user,
 }: {
   message: MessageType.Any
-  parentComponentSize: Size
+  messageWidth: number
   previousMessageSameAuthor: boolean
   user?: User
 }) =>
@@ -28,10 +28,7 @@ const styles = ({
       borderBottomRightRadius: user?.id === message.authorId ? 0 : 20,
       borderRadius: 20,
       marginHorizontal: 24,
-      maxWidth:
-        parentComponentSize.width * 0.8 < 520
-          ? parentComponentSize.width * 0.8
-          : 520,
+      maxWidth: messageWidth,
       overflow: 'hidden',
     },
   })

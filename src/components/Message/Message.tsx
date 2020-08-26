@@ -23,9 +23,10 @@ export const Message = ({
   previousMessageSameAuthor,
 }: MessageProps) => {
   const user = React.useContext(UserContext)
+  const messageWidth = Math.min(parentComponentSize.width * 0.77, 440)
   const { container, contentContainer } = styles({
     message,
-    parentComponentSize,
+    messageWidth,
     previousMessageSameAuthor,
     user,
   })
@@ -35,7 +36,13 @@ export const Message = ({
       case 'file':
         return <FileMessage message={message} onPress={onFilePress} />
       case 'image':
-        return <ImageMessage message={message} onPress={onImagePress} />
+        return (
+          <ImageMessage
+            message={message}
+            messageWidth={messageWidth}
+            onPress={onImagePress}
+          />
+        )
       case 'text':
         return <TextMessage message={message} />
     }

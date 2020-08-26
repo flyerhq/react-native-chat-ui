@@ -13,7 +13,7 @@ describe('text message', () => {
     const message = { ...imageMessage, height: undefined, width: undefined }
     const onPress = jest.fn()
     const { getByRole } = render(
-      <ImageMessage message={message} onPress={onPress} />
+      <ImageMessage message={message} messageWidth={440} onPress={onPress} />
     )
     expect(getSizeMock).toHaveBeenCalledTimes(1)
     const getSizeArgs = getSizeMock.mock.calls[0]
@@ -25,14 +25,14 @@ describe('text message', () => {
     })
     const successImageComponent = getByRole('image')
     expect(successImageComponent.props).toHaveProperty(
-      'style.width',
-      size.width
+      'style.aspectRatio',
+      size.width / size.height
     )
     act(() => {
       error(new Error())
     })
     const errorImageComponent = getByRole('image')
-    expect(errorImageComponent.props).toHaveProperty('style.width', 0)
+    expect(errorImageComponent.props).toHaveProperty('style.aspectRatio', 1)
     getSizeMock.mockRestore()
   })
 
@@ -40,7 +40,11 @@ describe('text message', () => {
     expect.assertions(1)
     const onPress = jest.fn()
     const { getByRole } = render(
-      <ImageMessage message={imageMessage} onPress={onPress} />
+      <ImageMessage
+        message={imageMessage}
+        messageWidth={440}
+        onPress={onPress}
+      />
     )
     const button = getByRole('image').parent
     fireEvent.press(button)

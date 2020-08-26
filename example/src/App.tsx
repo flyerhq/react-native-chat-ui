@@ -8,7 +8,7 @@ import React, { useState } from 'react'
 import { StatusBar } from 'react-native'
 import DocumentPicker from 'react-native-document-picker'
 import FileViewer from 'react-native-file-viewer'
-import ImagePicker from 'react-native-image-picker'
+import ImagePicker from 'react-native-image-crop-picker'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import data from './messages.json'
 import users from './users.json'
@@ -62,19 +62,23 @@ const App = () => {
     }
   }
 
-  const handleImageSelection = (sendAttachment: SendAttachmentCallback) => {
-    ImagePicker.showImagePicker(
-      { maxWidth: 1440, quality: 0.7 },
-      (response) => {
-        if (response.data) {
-          sendAttachment({
-            height: response.height,
-            url: 'data:image/jpeg;base64,' + response.data,
-            width: response.width,
-          })
-        }
+  const handleImageSelection = async (
+    sendAttachment: SendAttachmentCallback
+  ) => {
+    try {
+      const response = await ImagePicker.openPicker({
+        compressImageMaxWidth: 1440,
+        includeBase64: true,
+        mediaType: 'photo',
+      })
+      if (response.data) {
+        sendAttachment({
+          height: response.height,
+          url: `data:${response.mime};base64,${response.data}`,
+          width: response.width,
+        })
       }
-    )
+    } catch (err) {}
   }
 
   const handleSendPress = (message: MessageType.Any) => {
