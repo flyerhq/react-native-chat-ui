@@ -24,4 +24,7 @@ export default StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
+  spinner: {
+    position: 'relative',
+  },
 })

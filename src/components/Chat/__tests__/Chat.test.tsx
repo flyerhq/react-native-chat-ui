@@ -58,4 +58,24 @@ describe('chat', () => {
     fireEvent.press(button)
     expect(onFilePress).toHaveBeenCalledWith(fileMessage)
   })
+
+  it('shows spinner while attachment uploading', () => {
+    expect.assertions(1)
+    const attachmentUploading = true
+    const messages = [textMessage]
+    const onSendPress = jest.fn()
+    const onFilePress = jest.fn()
+    const { getAllByA11yLabel } = render(
+      <Chat
+        attachmentUploading={attachmentUploading}
+        onFilePress={onFilePress}
+        messages={messages}
+        onSendPress={onSendPress}
+        user={user}
+      />
+    )
+
+    const spinner = getAllByA11yLabel('Spinner')
+    expect(spinner).toBeDefined()
+  })
 })
