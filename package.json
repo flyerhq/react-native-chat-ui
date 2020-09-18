@@ -18,32 +18,32 @@
     "lint": "eslint .",
     "prepare": "yarn compile",
     "test": "jest",
-    "type-coverage": "type-coverage --is 100 --strict --ignore-catch --cache"
+    "type-coverage": "type-coverage"
   },
   "dependencies": {
-    "@flyerhq/react-native-keyboard-accessory-view": "^1.4.1",
+    "@flyerhq/react-native-keyboard-accessory-view": "^1.5.0",
     "react-native-image-viewing": "^0.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.4",
+    "@babel/core": "^7.11.6",
     "@babel/runtime": "^7.11.2",
     "@react-native-community/eslint-config": "^2.0.0",
     "@testing-library/react-native": "^7.0.2",
-    "@types/jest": "^26.0.10",
-    "@types/react-native": "^0.63.8",
+    "@types/jest": "^26.0.14",
+    "@types/react-native": "^0.63.18",
     "@types/react-test-renderer": "^16.9.3",
     "babel-jest": "^26.3.0",
     "copyfiles": "^2.3.0",
-    "eslint": "^7.7.0",
-    "eslint-plugin-jest": "^23.20.0",
+    "eslint": "^7.9.0",
+    "eslint-plugin-jest": "^24.0.1",
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "jest": "^26.4.2",
     "metro-react-native-babel-preset": "^0.63.0",
     "react": "^16.13.1",
     "react-native": "^0.63.2",
-    "react-native-safe-area-context": "^3.1.7",
+    "react-native-safe-area-context": "^3.1.8",
     "react-test-renderer": "^16.13.1",
-    "type-coverage": "^2.10.0",
+    "type-coverage": "^2.13.0",
     "typescript": "^4.0.2"
   },
   "peerDependencies": {
@@ -84,6 +84,9 @@
     ]
   },
   "typeCoverage": {
-    "is": 100
+    "cache": true,
+    "ignoreCatch": true,
+    "is": 100,
+    "strict": true
   }
 }

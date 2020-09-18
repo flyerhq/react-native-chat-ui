@@ -238,8 +238,8 @@ PODS:
   - React-jsinspector (0.63.2)
   - react-native-document-picker (3.5.4):
     - React
-  - react-native-safe-area-context (3.1.7):
-    - React
+  - react-native-safe-area-context (3.1.8):
+    - React-Core
   - React-RCTActionSheet (0.63.2):
     - React-Core/RCTActionSheetHeaders (= 0.63.2)
   - React-RCTAnimation (0.63.2):
@@ -302,12 +302,12 @@ PODS:
     - React-jsi (= 0.63.2)
   - RNFileViewer (2.1.1):
     - React
-  - RNImageCropPicker (0.33.2):
+  - RNImageCropPicker (0.35.0):
     - React-Core
     - React-RCTImage
-    - RNImageCropPicker/QBImagePickerController (= 0.33.2)
+    - RNImageCropPicker/QBImagePickerController (= 0.35.0)
     - TOCropViewController
-  - RNImageCropPicker/QBImagePickerController (0.33.2):
+  - RNImageCropPicker/QBImagePickerController (0.35.0):
     - React-Core
     - React-RCTImage
     - TOCropViewController
@@ -475,7 +475,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 8ca588cc921e70590820ce72b8789b02c67cce38
   React-jsinspector: b14e62ebe7a66e9231e9581279909f2fc3db6606
   react-native-document-picker: 4921045c5c6c78243010f784eae0a3f4b2af7799
-  react-native-safe-area-context: 955ecfce672683b495d9294d2f154a9ad1d9796b
+  react-native-safe-area-context: 79fea126c6830c85f65947c223a5e3058a666937
   React-RCTActionSheet: 910163b6b09685a35c4ebbc52b66d1bfbbe39fc5
   React-RCTAnimation: 9a883bbe1e9d2e158d4fb53765ed64c8dc2200c6
   React-RCTBlob: 39cf0ece1927996c4466510e25d2105f67010e13
@@ -487,7 +487,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 4d2e726957f4087449739b595f107c0d4b6c2d2d
   ReactCommon: a0a1edbebcac5e91338371b72ffc66aa822792ce
   RNFileViewer: db62d60dd19007c54b2c959b5e675a46d59f8a43
-  RNImageCropPicker: 82f4caef16a37c07cbb0171be95aa5584f99bd9d
+  RNImageCropPicker: 89352ad050ea8dd9bc1728802c477f5b38cd7b4c
   TOCropViewController: 2a1ae1242600b1f2d996fd91a5268b2309a33b5c
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
