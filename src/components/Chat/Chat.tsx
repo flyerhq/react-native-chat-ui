@@ -23,7 +23,7 @@ export interface ChatProps extends InputProps {
 }
 
 export const Chat = ({
-  attachmentUploading,
+  isAttachmentUploading,
   messages,
   onAttachmentPress,
   onFilePress,
@@ -103,7 +103,7 @@ export const Chat = ({
           {...panHandlers}
         />
         <Input
-          attachmentUploading={attachmentUploading}
+          isAttachmentUploading={isAttachmentUploading}
           onAttachmentPress={onAttachmentPress}
           onContentBottomInsetUpdate={setContentBottomInset}
           onSendPress={handleSendPress}

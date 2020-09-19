@@ -120,4 +120,22 @@ describe('input', () => {
     fireEvent.press(button)
     expect(onAttachmentPress).toHaveBeenCalledTimes(1)
   })
+
+  it('shows activity indicator when attachment is uploading', () => {
+    expect.assertions(1)
+    const isAttachmentUploading = true
+    const onSendPress = jest.fn()
+    const { getByTestId } = render(
+      <UserContext.Provider value={user}>
+        <Input
+          attachmentCircularActivityIndicatorProps={{ size: undefined }}
+          isAttachmentUploading={isAttachmentUploading}
+          onSendPress={onSendPress}
+        />
+      </UserContext.Provider>
+    )
+
+    const indicator = getByTestId('CircularActivityIndicator')
+    expect(indicator).toBeDefined()
+  })
 })

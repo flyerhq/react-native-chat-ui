@@ -16,12 +16,16 @@ import {
 } from '../../types'
 import { UserContext, uuidv4 } from '../../utils'
 import { AttachmentButton } from '../AttachmentButton'
-import { CircularSpinner } from '../CircularSpinner'
+import {
+  CircularActivityIndicator,
+  CircularActivityIndicatorProps,
+} from '../CircularActivityIndicator'
 import { SendButton } from '../SendButton'
 import styles from './styles'
 
 export interface InputProps {
-  attachmentUploading?: boolean
+  attachmentCircularActivityIndicatorProps?: CircularActivityIndicatorProps
+  isAttachmentUploading?: boolean
   onAttachmentPress?: (sendAttachment: SendAttachmentCallback) => void
   onContentBottomInsetUpdate?: (contentBottomInset: number) => void
   onFilePress?: (file: MessageType.File) => void
@@ -31,7 +35,8 @@ export interface InputProps {
 }
 
 export const Input = ({
-  attachmentUploading,
+  attachmentCircularActivityIndicatorProps,
+  isAttachmentUploading,
   onAttachmentPress,
   onContentBottomInsetUpdate,
   onSendPress,
@@ -106,8 +111,11 @@ export const Input = ({
     >
       <View style={styles.container}>
         {user &&
-          (attachmentUploading ? (
-            <CircularSpinner size={22} style={styles.spinner} />
+          (isAttachmentUploading ? (
+            <CircularActivityIndicator
+              size={22}
+              {...attachmentCircularActivityIndicatorProps}
+            />
           ) : (
             <AttachmentButton
               onPress={onAttachmentPress?.bind(null, handleSendAttachment)}
