@@ -1,5 +1,6 @@
 export * from './AttachmentButton'
 export * from './Chat'
+export * from './CircularActivityIndicator'
 export * from './ImageMessage'
 export * from './Input'
 export * from './Message'

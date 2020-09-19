@@ -16,10 +16,16 @@ import {
 } from '../../types'
 import { UserContext, uuidv4 } from '../../utils'
 import { AttachmentButton } from '../AttachmentButton'
+import {
+  CircularActivityIndicator,
+  CircularActivityIndicatorProps,
+} from '../CircularActivityIndicator'
 import { SendButton } from '../SendButton'
 import styles from './styles'
 
 export interface InputProps {
+  attachmentCircularActivityIndicatorProps?: CircularActivityIndicatorProps
+  isAttachmentUploading?: boolean
   onAttachmentPress?: (sendAttachment: SendAttachmentCallback) => void
   onContentBottomInsetUpdate?: (contentBottomInset: number) => void
   onFilePress?: (file: MessageType.File) => void
@@ -29,6 +35,8 @@ export interface InputProps {
 }
 
 export const Input = ({
+  attachmentCircularActivityIndicatorProps,
+  isAttachmentUploading,
   onAttachmentPress,
   onContentBottomInsetUpdate,
   onSendPress,
@@ -102,11 +110,17 @@ export const Input = ({
       style={styles.keyboardAccessoryView}
     >
       <View style={styles.container}>
-        {user && (
-          <AttachmentButton
-            onPress={onAttachmentPress?.bind(null, handleSendAttachment)}
-          />
-        )}
+        {user &&
+          (isAttachmentUploading ? (
+            <CircularActivityIndicator
+              size={22}
+              {...attachmentCircularActivityIndicatorProps}
+            />
+          ) : (
+            <AttachmentButton
+              onPress={onAttachmentPress?.bind(null, handleSendAttachment)}
+            />
+          ))}
         <TextInput
           multiline
           placeholder='Your message here'
