@@ -35,7 +35,7 @@
     "babel-jest": "^26.3.0",
     "copyfiles": "^2.3.0",
     "eslint": "^7.9.0",
-    "eslint-plugin-jest": "^24.0.1",
+    "eslint-plugin-jest": "^24.0.2",
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "jest": "^26.4.2",
     "metro-react-native-babel-preset": "^0.63.0",
