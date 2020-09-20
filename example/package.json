@@ -26,7 +26,7 @@
     "@babel/runtime": "^7.11.2",
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/jest": "^26.0.14",
-    "@types/react-native": "^0.63.18",
+    "@types/react-native": "^0.63.19",
     "@types/react-test-renderer": "^16.9.3",
     "@types/uuid": "^8.3.0",
     "babel-jest": "^26.3.0",
@@ -36,7 +36,7 @@
     "jest": "^26.4.2",
     "metro-react-native-babel-preset": "^0.63.0",
     "react-test-renderer": "^16.13.1",
-    "typescript": "^4.0.2",
+    "typescript": "^4.0.3",
     "uuid": "^8.3.0"
   },
   "jest": {
