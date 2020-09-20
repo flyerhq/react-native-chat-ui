@@ -29,6 +29,9 @@ build/
 .gradle
 local.properties
 *.iml
+/android/gradlew
+/android/gradlew.bat
+/android/gradle/
 
 # Visual Studio Code
 #
