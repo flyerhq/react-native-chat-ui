@@ -11,7 +11,6 @@ import FileViewer from 'react-native-file-viewer'
 import ImagePicker from 'react-native-image-crop-picker'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import data from './messages.json'
-import users from './users.json'
 
 const App = () => {
   const [messages, setMessages] = useState(data as MessageType.Any[])
@@ -78,7 +77,7 @@ const App = () => {
           width: response.width,
         })
       }
-    } catch (err) {}
+    } catch {}
   }
 
   const handleSendPress = (message: MessageType.Any) => {
@@ -93,7 +92,10 @@ const App = () => {
         onAttachmentPress={handleAttachmentPress}
         onFilePress={handleFilePress}
         onSendPress={handleSendPress}
-        user={users[0]}
+        user={{
+          id: '06c33e8b-e835-4736-80f4-63f44b66666c',
+          name: 'Alex',
+        }}
       />
     </SafeAreaProvider>
   )

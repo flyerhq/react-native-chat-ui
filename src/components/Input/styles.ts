@@ -13,7 +13,7 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     lineHeight: 20,
-    maxHeight: 200,
+    maxHeight: 100,
     // Fixes default paddings
     paddingBottom: 0,
     paddingHorizontal: 16,

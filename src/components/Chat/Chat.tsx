@@ -61,12 +61,14 @@ export const Chat = ({
     item: MessageType.Any
     index: number
   }) => {
+    const messageWidth = Math.floor(Math.min(size.width * 0.77, 440))
     const previousMessageSameAuthor =
       messages[index - 1]?.authorId === item.authorId
 
     return (
       <Message
         message={item}
+        messageWidth={messageWidth}
         onFilePress={onFilePress}
         onImagePress={(url) => {
           setImageViewIndex(images.findIndex((image) => image.uri === url))
@@ -78,7 +80,6 @@ export const Chat = ({
             })
           )
         }}
-        parentComponentSize={size}
         previousMessageSameAuthor={previousMessageSameAuthor}
       />
     )

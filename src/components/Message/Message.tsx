@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { View } from 'react-native'
-import { MessageType, Size } from '../../types'
+import { MessageType } from '../../types'
 import { UserContext } from '../../utils'
 import { FileMessage } from '../FileMessage'
 import { ImageMessage } from '../ImageMessage'
@@ -9,21 +9,20 @@ import styles from './styles'
 
 export interface MessageProps {
   message: MessageType.Any
+  messageWidth: number
   onFilePress?: (file: MessageType.File) => void
   onImagePress: (url: string) => void
-  parentComponentSize: Size
   previousMessageSameAuthor: boolean
 }
 
 export const Message = ({
   message,
+  messageWidth,
   onFilePress,
   onImagePress,
-  parentComponentSize,
   previousMessageSameAuthor,
 }: MessageProps) => {
   const user = React.useContext(UserContext)
-  const messageWidth = Math.min(parentComponentSize.width * 0.77, 440)
   const { container, contentContainer } = styles({
     message,
     messageWidth,
