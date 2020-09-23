@@ -1,16 +1,27 @@
 import { StyleSheet } from 'react-native'
-import { Size } from '../../types'
 
-const styles = ({ messageWidth, size }: { messageWidth: number; size: Size }) =>
+const styles = ({
+  aspectRatio,
+  messageWidth,
+}: {
+  aspectRatio: number
+  messageWidth: number
+}) =>
   StyleSheet.create({
     background: {
       flex: 1,
     },
     image: {
-      aspectRatio: size.height > 0 ? size.width / size.height : 1,
+      aspectRatio,
       maxHeight: messageWidth,
       minWidth: 170,
       width: messageWidth,
+    },
+    minimizedImage: {
+      borderRadius: 20,
+      height: 80,
+      margin: 8,
+      width: 80,
     },
   })
 

@@ -6,7 +6,7 @@ import { ImageMessage } from '../ImageMessage'
 
 describe('text message', () => {
   it('gets image size and renders', () => {
-    expect.assertions(4)
+    expect.assertions(5)
     const getSizeMock = jest.spyOn(Image, 'getSize')
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     getSizeMock.mockImplementation(() => {})
@@ -27,6 +27,14 @@ describe('text message', () => {
     expect(successImageComponent.props).toHaveProperty(
       'style.aspectRatio',
       size.width / size.height
+    )
+    act(() => {
+      success(size.width, size.width * 10 + 1)
+    })
+    const successMinimizedImageComponent = getByRole('image')
+    expect(successMinimizedImageComponent.props).toHaveProperty(
+      'style.width',
+      80
     )
     act(() => {
       error(new Error())

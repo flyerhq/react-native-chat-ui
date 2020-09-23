@@ -20,7 +20,12 @@ export const ImageMessage = ({
     height: defaultHeight,
     width: defaultWidth,
   })
-  const { background, image } = styles({ messageWidth, size })
+  const aspectRatio = size.height > 0 ? size.width / size.height : 1
+  const isMinimized = aspectRatio < 0.1 || aspectRatio > 10
+  const { background, image, minimizedImage } = styles({
+    aspectRatio,
+    messageWidth,
+  })
 
   React.useEffect(() => {
     if (defaultHeight <= 0 || defaultWidth <= 0)
@@ -35,20 +40,28 @@ export const ImageMessage = ({
     onPress(message.url)
   }
 
-  return (
+  const renderImage = () => {
+    return (
+      <TouchableWithoutFeedback onPress={handlePress}>
+        <Image
+          accessibilityRole='image'
+          resizeMode={isMinimized ? 'cover' : 'contain'}
+          source={{ uri: message.url }}
+          style={isMinimized ? minimizedImage : image}
+        />
+      </TouchableWithoutFeedback>
+    )
+  }
+
+  return isMinimized ? (
+    renderImage()
+  ) : (
     <ImageBackground
       blurRadius={26}
       source={{ uri: message.url }}
       style={background}
     >
-      <TouchableWithoutFeedback onPress={handlePress}>
-        <Image
-          accessibilityRole='image'
-          resizeMode='contain'
-          source={{ uri: message.url }}
-          style={image}
-        />
-      </TouchableWithoutFeedback>
+      {renderImage()}
     </ImageBackground>
   )
 }
