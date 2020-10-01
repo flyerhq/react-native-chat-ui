@@ -2,8 +2,12 @@
 const casual = require('casual')
 const fs = require('fs')
 const { v4: uuidv4 } = require('uuid')
-const users = require('../src/users.json')
 /* eslint-enable @typescript-eslint/no-var-requires */
+
+const users = [
+  { id: '06c33e8b-e835-4736-80f4-63f44b66666c', name: 'Alex' },
+  { id: '8c72d647-8c5d-4248-b195-e24a4372ea3d', name: 'Daria' },
+]
 
 let numberOfMessages = 10
 const arg = process.argv.slice(2)[0]
