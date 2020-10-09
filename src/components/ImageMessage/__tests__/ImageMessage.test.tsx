@@ -34,13 +34,13 @@ describe('text message', () => {
     const successMinimizedImageComponent = getByRole('image')
     expect(successMinimizedImageComponent.props).toHaveProperty(
       'style.width',
-      80
+      64
     )
     act(() => {
       error(new Error())
     })
     const errorImageComponent = getByRole('image')
-    expect(errorImageComponent.props).toHaveProperty('style.aspectRatio', 1)
+    expect(errorImageComponent.props).toHaveProperty('style.width', 64)
     getSizeMock.mockRestore()
   })
 

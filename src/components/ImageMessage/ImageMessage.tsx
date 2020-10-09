@@ -28,19 +28,18 @@ export const ImageMessage = ({
     height: defaultHeight,
     width: defaultWidth,
   })
-  const aspectRatio = size.height > 0 ? size.width / size.height : 1
+  const aspectRatio = size.width / (size.height || 1)
   const isMinimized = aspectRatio < 0.1 || aspectRatio > 10
   const {
     background,
-    container,
     image,
     minimizedImage,
-    name,
+    minimizedImageContainer,
+    nameText,
     sizeText,
     textContainer,
   } = styles({
     aspectRatio,
-    isMinimized,
     message,
     messageWidth,
     user,
@@ -55,9 +54,7 @@ export const ImageMessage = ({
       )
   }, [defaultHeight, defaultWidth, message.url])
 
-  const handlePress = () => {
-    onPress(message.url)
-  }
+  const handlePress = () => onPress(message.url)
 
   const renderImage = () => {
     return (
@@ -70,35 +67,27 @@ export const ImageMessage = ({
     )
   }
 
-  const renderImageContainer = () => {
-    return (
-      <TouchableWithoutFeedback onPress={handlePress}>
-        {isMinimized ? (
-          <View style={container}>
-            {renderImage()}
-            <View style={textContainer}>
-              <Text accessibilityRole='text' style={name}>
-                {message.imageName}
-              </Text>
-              <Text style={sizeText}>{formatBytes(message.size)}</Text>
-            </View>
-          </View>
-        ) : (
-          renderImage()
-        )}
-      </TouchableWithoutFeedback>
-    )
-  }
-
   return isMinimized ? (
-    renderImageContainer()
+    <View style={minimizedImageContainer}>
+      <TouchableWithoutFeedback onPress={handlePress}>
+        {renderImage()}
+      </TouchableWithoutFeedback>
+      <View style={textContainer}>
+        <Text accessibilityRole='text' style={nameText}>
+          {message.imageName}
+        </Text>
+        <Text style={sizeText}>{formatBytes(message.size)}</Text>
+      </View>
+    </View>
   ) : (
     <ImageBackground
       blurRadius={26}
       source={{ uri: message.url }}
       style={background}
     >
-      {renderImageContainer()}
+      <TouchableWithoutFeedback onPress={handlePress}>
+        {renderImage()}
+      </TouchableWithoutFeedback>
     </ImageBackground>
   )
 }

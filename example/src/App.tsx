@@ -74,7 +74,7 @@ const App = () => {
         sendAttachment({
           height: response.height,
           imageName:
-            'image' + response.path.substring(response.path.lastIndexOf('.')),
+            response.filename ?? response.path?.split('/').pop() ?? '🖼',
           size: response.size,
           url: `data:${response.mime};base64,${response.data}`,
           width: response.width,
