@@ -4,7 +4,7 @@ import { Image } from 'react-native'
 import { imageMessage, size } from '../../../../jest/fixtures'
 import { ImageMessage } from '../ImageMessage'
 
-describe('text message', () => {
+describe('image message', () => {
   it('gets image size and renders', () => {
     expect.assertions(5)
     const getSizeMock = jest.spyOn(Image, 'getSize')
