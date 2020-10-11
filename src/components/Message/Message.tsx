@@ -13,6 +13,18 @@ export interface MessageProps {
   onFilePress?: (file: MessageType.File) => void
   onImagePress: (url: string) => void
   previousMessageSameAuthor: boolean
+  renderFileMessage?: (
+    message: MessageType.File,
+    messageWidth: number
+  ) => React.ReactNode
+  renderImageMessage?: (
+    message: MessageType.Image,
+    messageWidth: number
+  ) => React.ReactNode
+  renderTextMessage?: (
+    message: MessageType.Text,
+    messageWidth: number
+  ) => React.ReactNode
 }
 
 export const Message = ({
@@ -21,6 +33,9 @@ export const Message = ({
   onFilePress,
   onImagePress,
   previousMessageSameAuthor,
+  renderFileMessage,
+  renderImageMessage,
+  renderTextMessage,
 }: MessageProps) => {
   const user = React.useContext(UserContext)
   const { container, contentContainer } = styles({
@@ -33,9 +48,15 @@ export const Message = ({
   const renderMessage = () => {
     switch (message.type) {
       case 'file':
-        return <FileMessage message={message} onPress={onFilePress} />
+        return renderFileMessage ? (
+          renderFileMessage(message, messageWidth)
+        ) : (
+          <FileMessage message={message} onPress={onFilePress} />
+        )
       case 'image':
-        return (
+        return renderImageMessage ? (
+          renderImageMessage(message, messageWidth)
+        ) : (
           <ImageMessage
             message={message}
             messageWidth={messageWidth}
@@ -43,7 +64,11 @@ export const Message = ({
           />
         )
       case 'text':
-        return <TextMessage message={message} messageWidth={messageWidth} />
+        return renderTextMessage ? (
+          renderTextMessage(message, messageWidth)
+        ) : (
+          <TextMessage message={message} messageWidth={messageWidth} />
+        )
     }
   }
 

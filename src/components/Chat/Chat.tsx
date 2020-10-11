@@ -19,6 +19,18 @@ import styles from './styles'
 
 export interface ChatProps extends InputProps {
   messages: MessageType.Any[]
+  renderFileMessage?: (
+    message: MessageType.File,
+    messageWidth: number
+  ) => React.ReactNode
+  renderImageMessage?: (
+    message: MessageType.Image,
+    messageWidth: number
+  ) => React.ReactNode
+  renderTextMessage?: (
+    message: MessageType.Text,
+    messageWidth: number
+  ) => React.ReactNode
   user: User
 }
 
@@ -28,6 +40,9 @@ export const Chat = ({
   onAttachmentPress,
   onFilePress,
   onSendPress,
+  renderFileMessage,
+  renderImageMessage,
+  renderTextMessage,
   textInputProps,
   user,
 }: ChatProps) => {
@@ -43,6 +58,22 @@ export const Chat = ({
     .reverse()
 
   const list = React.useRef<FlatList<MessageType.Any>>(null)
+
+  const handleImagePress = (url: string) => {
+    setImageViewIndex(images.findIndex((image) => image.uri === url))
+    setIsImageViewVisible(true)
+    setStackEntry(
+      StatusBar.pushStackEntry({
+        barStyle: 'light-content',
+        animated: true,
+      })
+    )
+  }
+
+  const handleRequestClose = () => {
+    setIsImageViewVisible(false)
+    StatusBar.popStackEntry(stackEntry)
+  }
 
   const handleSendPress = (message: MessageType.Any) => {
     onSendPress(message)
@@ -67,20 +98,16 @@ export const Chat = ({
 
     return (
       <Message
-        message={item}
-        messageWidth={messageWidth}
-        onFilePress={onFilePress}
-        onImagePress={(url) => {
-          setImageViewIndex(images.findIndex((image) => image.uri === url))
-          setIsImageViewVisible(true)
-          setStackEntry(
-            StatusBar.pushStackEntry({
-              barStyle: 'light-content',
-              animated: true,
-            })
-          )
+        {...{
+          message: item,
+          messageWidth,
+          onFilePress,
+          onImagePress: handleImagePress,
+          previousMessageSameAuthor,
+          renderFileMessage,
+          renderImageMessage,
+          renderTextMessage,
         }}
-        previousMessageSameAuthor={previousMessageSameAuthor}
       />
     )
   }
@@ -104,25 +131,24 @@ export const Chat = ({
           {...panHandlers}
         />
         <Input
-          isAttachmentUploading={isAttachmentUploading}
-          onAttachmentPress={onAttachmentPress}
-          onContentBottomInsetUpdate={setContentBottomInset}
-          onSendPress={handleSendPress}
-          panResponderPositionY={positionY}
-          textInputProps={textInputProps}
+          {...{
+            isAttachmentUploading,
+            onAttachmentPress,
+            onContentBottomInsetUpdate: setContentBottomInset,
+            onSendPress: handleSendPress,
+            panResponderPositionY: positionY,
+            textInputProps,
+          }}
         />
         <ImageView
-          images={images}
-          imageIndex={imageViewIndex}
-          // TODO: Tapping on a close button results in the next warning:
-          // `An update to ImageViewing inside a test was not wrapped in act(...).`
-          onRequestClose={
-            /* istanbul ignore next */ () => {
-              setIsImageViewVisible(false)
-              StatusBar.popStackEntry(stackEntry)
-            }
-          }
-          visible={isImageViewVisible}
+          {...{
+            images,
+            imageIndex: imageViewIndex,
+            // TODO: Tapping on a close button results in the next warning:
+            // `An update to ImageViewing inside a test was not wrapped in act(...).`
+            onRequestClose: handleRequestClose,
+            visible: isImageViewVisible,
+          }}
         />
       </SafeAreaView>
     </UserContext.Provider>
