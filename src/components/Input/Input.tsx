@@ -115,7 +115,6 @@ export const Input = ({
         {user &&
           (isAttachmentUploading ? (
             <CircularActivityIndicator
-              size={22}
               {...attachmentCircularActivityIndicatorProps}
             />
           ) : (

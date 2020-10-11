@@ -44,7 +44,7 @@ const styles = ({
       fontSize: 12,
       fontWeight: '500',
       lineHeight: 16,
-      marginTop: 2,
+      marginTop: 4,
     },
     textContainer: {
       flexShrink: 1,

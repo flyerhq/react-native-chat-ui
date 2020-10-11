@@ -43,7 +43,7 @@ export const Message = ({
           />
         )
       case 'text':
-        return <TextMessage message={message} />
+        return <TextMessage message={message} messageWidth={messageWidth} />
     }
   }
 
