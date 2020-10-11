@@ -78,24 +78,26 @@ export const Input = ({
     const isFileParams = (
       arg: SendFileCallbackParams | SendImageCallbackParams
     ): arg is SendFileCallbackParams => {
-      return 'name' in arg
+      return 'fileName' in arg
     }
 
     if (isFileParams(params)) {
-      const { mimeType, name, size, url } = params
+      const { mimeType, fileName, size, url } = params
       onSendPress({
         ...defaultMessageParams(),
         mimeType,
-        name,
+        fileName,
         size,
         type: 'file',
         url,
       })
     } else {
-      const { height, url, width } = params
+      const { height, imageName, size, url, width } = params
       onSendPress({
         ...defaultMessageParams(),
         height,
+        imageName,
+        size,
         type: 'image',
         url,
         width,

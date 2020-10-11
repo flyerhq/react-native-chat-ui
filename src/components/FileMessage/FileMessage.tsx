@@ -32,7 +32,7 @@ export const FileMessage = ({ message, onPress }: FileMessageProps) => {
         </View>
         <View style={textContainer}>
           <Text accessibilityRole='text' style={name}>
-            {message.name}
+            {message.fileName}
           </Text>
           <Text style={size}>{formatBytes(message.size)}</Text>
         </View>

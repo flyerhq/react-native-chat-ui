@@ -50,7 +50,7 @@ const App = () => {
       })
       sendAttachment({
         mimeType: response.type,
-        name: response.name,
+        fileName: response.name,
         size: response.size,
         url: response.uri,
       })
@@ -73,6 +73,9 @@ const App = () => {
       if (response.data) {
         sendAttachment({
           height: response.height,
+          imageName:
+            response.filename ?? response.path?.split('/').pop() ?? '🖼',
+          size: response.size,
           url: `data:${response.mime};base64,${response.data}`,
           width: response.width,
         })
