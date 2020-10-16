@@ -5,37 +5,39 @@ import {
 import * as React from 'react'
 import {
   FlatList,
+  FlatListProps,
   SafeAreaView,
   StatusBar,
   StatusBarProps,
+  StyleSheet,
   View,
 } from 'react-native'
 import ImageView from 'react-native-image-viewing'
 import { MessageType, User } from '../../types'
-import { UserContext } from '../../utils'
-import { Input, InputProps } from '../Input'
-import { Message } from '../Message'
+import { unwrap, UserContext } from '../../utils'
+import { Input, InputAdditionalProps, InputTopLevelProps } from '../Input'
+import {
+  Message,
+  MessageAdditionalProps,
+  MessageTopLevelProps,
+} from '../Message'
 import styles from './styles'
 
-export interface ChatProps extends InputProps {
+export type TopLevelProps = InputTopLevelProps & MessageTopLevelProps
+
+export interface ChatProps extends TopLevelProps {
+  flatListProps?: FlatListProps<MessageType.Any[]>
+  inputProps?: InputAdditionalProps
+  messageProps: MessageAdditionalProps
   messages: MessageType.Any[]
-  renderFileMessage?: (
-    message: MessageType.File,
-    messageWidth: number
-  ) => React.ReactNode
-  renderImageMessage?: (
-    message: MessageType.Image,
-    messageWidth: number
-  ) => React.ReactNode
-  renderTextMessage?: (
-    message: MessageType.Text,
-    messageWidth: number
-  ) => React.ReactNode
   user: User
 }
 
 export const Chat = ({
+  flatListProps,
+  inputProps,
   isAttachmentUploading,
+  messageProps,
   messages,
   onAttachmentPress,
   onFilePress,
@@ -99,6 +101,7 @@ export const Chat = ({
     return (
       <Message
         {...{
+          ...unwrap(messageProps),
           message: item,
           messageWidth,
           onFilePress,
@@ -116,22 +119,32 @@ export const Chat = ({
     <UserContext.Provider value={user}>
       <SafeAreaView style={styles.container} onLayout={onLayout}>
         <FlatList
-          ref={list}
-          contentContainerStyle={{ paddingTop: contentBottomInset }}
-          style={styles.list}
-          data={messages}
-          renderItem={renderItem}
-          automaticallyAdjustContentInsets={false}
-          inverted
-          keyboardDismissMode='interactive'
-          keyExtractor={keyExtractor}
-          scrollIndicatorInsets={{ top: contentBottomInset }}
-          ListFooterComponent={<View />}
-          ListFooterComponentStyle={styles.footer}
-          {...panHandlers}
+          {...{
+            automaticallyAdjustContentInsets: false,
+            ListFooterComponent: <View />,
+            ListFooterComponentStyle: styles.footer,
+            style: styles.list,
+            ...{ flatListProps },
+            contentContainerStyle: StyleSheet.flatten([
+              flatListProps?.contentContainerStyle,
+              { paddingTop: contentBottomInset },
+            ]),
+            data: messages,
+            inverted: true,
+            keyboardDismissMode: 'interactive',
+            keyExtractor,
+            ref: list,
+            renderItem,
+            scrollIndicatorInsets: StyleSheet.flatten([
+              flatListProps?.scrollIndicatorInsets,
+              { top: contentBottomInset },
+            ]),
+            ...panHandlers,
+          }}
         />
         <Input
           {...{
+            ...unwrap(inputProps),
             isAttachmentUploading,
             onAttachmentPress,
             onContentBottomInsetUpdate: setContentBottomInset,

@@ -18,6 +18,8 @@ export const getTextSizeInBytes = (text: string) => {
   return new Blob([text]).size
 }
 
+export const unwrap = <T>(prop: T) => prop ?? {}
+
 export const uuidv4 = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
     const r = Math.floor(Math.random() * 16)

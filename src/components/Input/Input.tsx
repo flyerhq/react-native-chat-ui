@@ -14,8 +14,11 @@ import {
   SendFileCallbackParams,
   SendImageCallbackParams,
 } from '../../types'
-import { UserContext, uuidv4 } from '../../utils'
-import { AttachmentButton } from '../AttachmentButton'
+import { unwrap, UserContext, uuidv4 } from '../../utils'
+import {
+  AttachmentButton,
+  AttachmentButtonAdditionalProps,
+} from '../AttachmentButton'
 import {
   CircularActivityIndicator,
   CircularActivityIndicatorProps,
@@ -23,18 +26,24 @@ import {
 import { SendButton } from '../SendButton'
 import styles from './styles'
 
-export interface InputProps {
-  attachmentCircularActivityIndicatorProps?: CircularActivityIndicatorProps
+export interface InputTopLevelProps {
   isAttachmentUploading?: boolean
   onAttachmentPress?: (sendAttachment: SendAttachmentCallback) => void
-  onContentBottomInsetUpdate?: (contentBottomInset: number) => void
-  onFilePress?: (file: MessageType.File) => void
   onSendPress: (message: MessageType.Any) => void
-  panResponderPositionY?: Animated.Value
   textInputProps?: TextInputProps
 }
 
+export interface InputAdditionalProps {
+  attachmentButtonProps?: AttachmentButtonAdditionalProps
+  attachmentCircularActivityIndicatorProps?: CircularActivityIndicatorProps
+  onContentBottomInsetUpdate?: (contentBottomInset: number) => void
+  panResponderPositionY?: Animated.Value
+}
+
+export type InputProps = InputTopLevelProps & InputAdditionalProps
+
 export const Input = ({
+  attachmentButtonProps,
   attachmentCircularActivityIndicatorProps,
   isAttachmentUploading,
   onAttachmentPress,
@@ -107,9 +116,11 @@ export const Input = ({
 
   return (
     <KeyboardAccessoryView
-      onContentBottomInsetUpdate={onContentBottomInsetUpdate}
-      panResponderPositionY={panResponderPositionY}
-      style={styles.keyboardAccessoryView}
+      {...{
+        onContentBottomInsetUpdate,
+        panResponderPositionY,
+        style: styles.keyboardAccessoryView,
+      }}
     >
       <View style={styles.container}>
         {user &&
@@ -119,7 +130,10 @@ export const Input = ({
             />
           ) : (
             <AttachmentButton
-              onPress={onAttachmentPress?.bind(null, handleSendAttachment)}
+              {...{
+                ...unwrap(attachmentButtonProps),
+                onPress: onAttachmentPress?.bind(null, handleSendAttachment),
+              }}
             />
           ))}
         <TextInput
