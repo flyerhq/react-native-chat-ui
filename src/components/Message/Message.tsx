@@ -7,12 +7,8 @@ import { ImageMessage } from '../ImageMessage'
 import { TextMessage } from '../TextMessage'
 import styles from './styles'
 
-export interface MessageProps {
-  message: MessageType.Any
-  messageWidth: number
+export interface MessageTopLevelProps {
   onFilePress?: (file: MessageType.File) => void
-  onImagePress: (url: string) => void
-  previousMessageSameAuthor: boolean
   renderFileMessage?: (
     message: MessageType.File,
     messageWidth: number
@@ -25,6 +21,13 @@ export interface MessageProps {
     message: MessageType.Text,
     messageWidth: number
   ) => React.ReactNode
+}
+
+export interface MessageProps extends MessageTopLevelProps {
+  message: MessageType.Any
+  messageWidth: number
+  onImagePress: (url: string) => void
+  previousMessageSameAuthor: boolean
 }
 
 export const Message = ({

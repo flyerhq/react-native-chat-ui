@@ -6,9 +6,12 @@ import {
   TouchableOpacityProps,
 } from 'react-native'
 
-export interface AttachmentButtonProps {
-  onPress?: () => void
+export interface AttachmentButtonAdditionalProps {
   touchableOpacityProps?: TouchableOpacityProps
+}
+
+export interface AttachmentButtonProps extends AttachmentButtonAdditionalProps {
+  onPress?: () => void
 }
 
 export const AttachmentButton = ({

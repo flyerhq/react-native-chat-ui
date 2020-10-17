@@ -1,4 +1,4 @@
-import { formatBytes, getTextSizeInBytes, uuidv4 } from '..'
+import { formatBytes, getTextSizeInBytes, unwrap, uuidv4 } from '..'
 
 describe('formatBytes', () => {
   it('formats bytes correctly when the size is 0', () => {
@@ -23,6 +23,19 @@ describe('getTextSizeInBytes', () => {
     expect.assertions(1)
     const text = '🤔 🤓'
     expect(getTextSizeInBytes(text)).toStrictEqual(9)
+  })
+})
+
+describe('unwrap', () => {
+  it('returns an empty object', () => {
+    expect.assertions(1)
+    expect(unwrap(undefined)).toStrictEqual({})
+  })
+
+  it('returns a provided prop', () => {
+    expect.assertions(1)
+    const prop = 'prop'
+    expect(unwrap(prop)).toStrictEqual(prop)
   })
 })
 
