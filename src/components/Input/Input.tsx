@@ -36,11 +36,12 @@ export interface InputTopLevelProps {
 export interface InputAdditionalProps {
   attachmentButtonProps?: AttachmentButtonAdditionalProps
   attachmentCircularActivityIndicatorProps?: CircularActivityIndicatorProps
+}
+
+export interface InputProps extends InputTopLevelProps, InputAdditionalProps {
   onContentBottomInsetUpdate?: (contentBottomInset: number) => void
   panResponderPositionY?: Animated.Value
 }
-
-export type InputProps = InputTopLevelProps & InputAdditionalProps
 
 export const Input = ({
   attachmentButtonProps,
@@ -130,10 +131,8 @@ export const Input = ({
             />
           ) : (
             <AttachmentButton
-              {...{
-                ...unwrap(attachmentButtonProps),
-                onPress: onAttachmentPress?.bind(null, handleSendAttachment),
-              }}
+              {...unwrap(attachmentButtonProps)}
+              onPress={onAttachmentPress?.bind(null, handleSendAttachment)}
             />
           ))}
         <TextInput

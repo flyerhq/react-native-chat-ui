@@ -16,19 +16,14 @@ import ImageView from 'react-native-image-viewing'
 import { MessageType, User } from '../../types'
 import { unwrap, UserContext } from '../../utils'
 import { Input, InputAdditionalProps, InputTopLevelProps } from '../Input'
-import {
-  Message,
-  MessageAdditionalProps,
-  MessageTopLevelProps,
-} from '../Message'
+import { Message, MessageTopLevelProps } from '../Message'
 import styles from './styles'
 
-export type TopLevelProps = InputTopLevelProps & MessageTopLevelProps
+export type ChatTopLevelProps = InputTopLevelProps & MessageTopLevelProps
 
-export interface ChatProps extends TopLevelProps {
+export interface ChatProps extends ChatTopLevelProps {
   flatListProps?: FlatListProps<MessageType.Any[]>
   inputProps?: InputAdditionalProps
-  messageProps: MessageAdditionalProps
   messages: MessageType.Any[]
   user: User
 }
@@ -37,7 +32,6 @@ export const Chat = ({
   flatListProps,
   inputProps,
   isAttachmentUploading,
-  messageProps,
   messages,
   onAttachmentPress,
   onFilePress,
@@ -72,6 +66,9 @@ export const Chat = ({
     )
   }
 
+  // TODO: Tapping on a close button results in the next warning:
+  // `An update to ImageViewing inside a test was not wrapped in act(...).`
+  /* istanbul ignore next */
   const handleRequestClose = () => {
     setIsImageViewVisible(false)
     StatusBar.popStackEntry(stackEntry)
@@ -88,7 +85,7 @@ export const Chat = ({
   const keyExtractor = (item: MessageType.Any) => item.id
 
   const renderItem = ({
-    item,
+    item: message,
     index,
   }: {
     item: MessageType.Any
@@ -96,13 +93,12 @@ export const Chat = ({
   }) => {
     const messageWidth = Math.floor(Math.min(size.width * 0.77, 440))
     const previousMessageSameAuthor =
-      messages[index - 1]?.authorId === item.authorId
+      messages[index - 1]?.authorId === message.authorId
 
     return (
       <Message
         {...{
-          ...unwrap(messageProps),
-          message: item,
+          message,
           messageWidth,
           onFilePress,
           onImagePress: handleImagePress,
@@ -119,28 +115,26 @@ export const Chat = ({
     <UserContext.Provider value={user}>
       <SafeAreaView style={styles.container} onLayout={onLayout}>
         <FlatList
-          {...{
-            automaticallyAdjustContentInsets: false,
-            ListFooterComponent: <View />,
-            ListFooterComponentStyle: styles.footer,
-            style: styles.list,
-            ...{ flatListProps },
-            contentContainerStyle: StyleSheet.flatten([
-              flatListProps?.contentContainerStyle,
-              { paddingTop: contentBottomInset },
-            ]),
-            data: messages,
-            inverted: true,
-            keyboardDismissMode: 'interactive',
-            keyExtractor,
-            ref: list,
-            renderItem,
-            scrollIndicatorInsets: StyleSheet.flatten([
-              flatListProps?.scrollIndicatorInsets,
-              { top: contentBottomInset },
-            ]),
-            ...panHandlers,
+          automaticallyAdjustContentInsets={false}
+          ListFooterComponent={<View />}
+          ListFooterComponentStyle={styles.footer}
+          style={styles.list}
+          {...unwrap(flatListProps)}
+          contentContainerStyle={StyleSheet.flatten([
+            flatListProps?.contentContainerStyle,
+            { paddingTop: contentBottomInset },
+          ])}
+          data={messages}
+          inverted
+          keyboardDismissMode='interactive'
+          keyExtractor={keyExtractor}
+          ref={list}
+          renderItem={renderItem}
+          scrollIndicatorInsets={{
+            ...unwrap(flatListProps?.scrollIndicatorInsets),
+            top: contentBottomInset,
           }}
+          {...panHandlers}
         />
         <Input
           {...{
@@ -154,14 +148,10 @@ export const Chat = ({
           }}
         />
         <ImageView
-          {...{
-            images,
-            imageIndex: imageViewIndex,
-            // TODO: Tapping on a close button results in the next warning:
-            // `An update to ImageViewing inside a test was not wrapped in act(...).`
-            onRequestClose: handleRequestClose,
-            visible: isImageViewVisible,
-          }}
+          images={images}
+          imageIndex={imageViewIndex}
+          onRequestClose={handleRequestClose}
+          visible={isImageViewVisible}
         />
       </SafeAreaView>
     </UserContext.Provider>

@@ -9,6 +9,7 @@ import {
 export interface AttachmentButtonAdditionalProps {
   touchableOpacityProps?: TouchableOpacityProps
 }
+
 export interface AttachmentButtonProps extends AttachmentButtonAdditionalProps {
   onPress?: () => void
 }
