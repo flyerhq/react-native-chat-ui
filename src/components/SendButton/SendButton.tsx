@@ -6,9 +6,12 @@ import {
   TouchableOpacityProps,
 } from 'react-native'
 
-export interface SendButtonProps {
-  onPress: () => void
+export interface SendButtonPropsAdditionalProps {
   touchableOpacityProps?: TouchableOpacityProps
+}
+
+export interface SendButtonProps extends SendButtonPropsAdditionalProps {
+  onPress: () => void
 }
 
 export const SendButton = ({

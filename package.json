@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@flyerhq/react-native-keyboard-accessory-view": "^1.5.1",
-    "@flyerhq/react-native-link-preview": "^1.0.1",
+    "@flyerhq/react-native-link-preview": "^1.0.2",
     "react-native-image-viewing": "^0.2.0",
     "react-native-parsed-text": "^0.0.22"
   },
