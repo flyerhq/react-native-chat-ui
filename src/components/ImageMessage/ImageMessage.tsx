@@ -31,7 +31,6 @@ export const ImageMessage = ({
   const aspectRatio = size.width / (size.height || 1)
   const isMinimized = aspectRatio < 0.1 || aspectRatio > 10
   const {
-    background,
     image,
     minimizedImage,
     minimizedImageContainer,
@@ -80,11 +79,7 @@ export const ImageMessage = ({
       </View>
     </View>
   ) : (
-    <ImageBackground
-      blurRadius={26}
-      source={{ uri: message.url }}
-      style={background}
-    >
+    <ImageBackground blurRadius={26} source={{ uri: message.url }} style={{}}>
       <TouchableWithoutFeedback onPress={handlePress}>
         {renderImage()}
       </TouchableWithoutFeedback>

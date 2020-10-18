@@ -13,9 +13,6 @@ const styles = ({
   user?: User
 }) =>
   StyleSheet.create({
-    background: {
-      flex: 1,
-    },
     image: {
       aspectRatio,
       maxHeight: messageWidth,
