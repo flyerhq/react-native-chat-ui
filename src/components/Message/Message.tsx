@@ -1,5 +1,6 @@
+import dayjs from 'dayjs'
 import * as React from 'react'
-import { View } from 'react-native'
+import { Text, View } from 'react-native'
 import { MessageType } from '../../types'
 import { UserContext } from '../../utils'
 import { FileMessage } from '../FileMessage'
@@ -28,6 +29,7 @@ export interface MessageProps extends MessageTopLevelProps {
   messageWidth: number
   onImagePress: (url: string) => void
   previousMessageSameAuthor: boolean
+  previousMessageWithinTimeRange: boolean
 }
 
 export const Message = ({
@@ -36,15 +38,17 @@ export const Message = ({
   onFilePress,
   onImagePress,
   previousMessageSameAuthor,
+  previousMessageWithinTimeRange,
   renderFileMessage,
   renderImageMessage,
   renderTextMessage,
 }: MessageProps) => {
   const user = React.useContext(UserContext)
-  const { container, contentContainer } = styles({
+  const { container, contentContainer, statusContainer, time } = styles({
     message,
     messageWidth,
     previousMessageSameAuthor,
+    previousMessageWithinTimeRange,
     user,
   })
 
@@ -78,6 +82,13 @@ export const Message = ({
   return (
     <View style={container}>
       <View style={contentContainer}>{renderMessage()}</View>
+      {!previousMessageWithinTimeRange && (
+        <View style={statusContainer}>
+          <Text style={time}>
+            {dayjs.unix(message.timestamp).format('h:mm a')}
+          </Text>
+        </View>
+      )}
     </View>
   )
 }

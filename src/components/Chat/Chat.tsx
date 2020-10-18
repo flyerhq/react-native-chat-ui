@@ -2,6 +2,8 @@ import {
   useComponentSize,
   usePanResponder,
 } from '@flyerhq/react-native-keyboard-accessory-view'
+import dayjs from 'dayjs'
+import calendar from 'dayjs/plugin/calendar'
 import * as React from 'react'
 import {
   FlatList,
@@ -10,6 +12,7 @@ import {
   StatusBar,
   StatusBarProps,
   StyleSheet,
+  Text,
   View,
 } from 'react-native'
 import ImageView from 'react-native-image-viewing'
@@ -18,6 +21,8 @@ import { unwrap, UserContext } from '../../utils'
 import { Input, InputAdditionalProps, InputTopLevelProps } from '../Input'
 import { Message, MessageTopLevelProps } from '../Message'
 import styles from './styles'
+
+dayjs.extend(calendar)
 
 export type ChatTopLevelProps = InputTopLevelProps & MessageTopLevelProps
 
@@ -92,22 +97,64 @@ export const Chat = ({
     index: number
   }) => {
     const messageWidth = Math.floor(Math.min(size.width * 0.77, 440))
-    const previousMessageSameAuthor =
-      messages[index - 1]?.authorId === message.authorId
+    // TODO: Update the logic after pagination is introduced
+    const isFirst = index === 0
+    const isLast = index === messages.length - 1
+    const previousMessage = messages[index - 1]
+    const nextMessage = messages[index + 1]
+
+    let nextMessageDifferentDay = false
+    let nextMessageSameAuthor = false
+    let previousMessageSameAuthor = false
+    let previousMessageWithinTimeRange = false
+
+    if (!isLast) {
+      nextMessageDifferentDay = !dayjs
+        .unix(message.timestamp)
+        .isSame(dayjs.unix(nextMessage.timestamp), 'day')
+      nextMessageSameAuthor = nextMessage.authorId === message.authorId
+    }
+
+    if (!isFirst) {
+      previousMessageSameAuthor = previousMessage.authorId === message.authorId
+      previousMessageWithinTimeRange =
+        previousMessageSameAuthor &&
+        previousMessage.timestamp - message.timestamp < 3600
+    }
 
     return (
-      <Message
-        {...{
-          message,
-          messageWidth,
-          onFilePress,
-          onImagePress: handleImagePress,
-          previousMessageSameAuthor,
-          renderFileMessage,
-          renderImageMessage,
-          renderTextMessage,
-        }}
-      />
+      <>
+        <Message
+          {...{
+            message,
+            messageWidth,
+            onFilePress,
+            onImagePress: handleImagePress,
+            previousMessageSameAuthor,
+            previousMessageWithinTimeRange,
+            renderFileMessage,
+            renderImageMessage,
+            renderTextMessage,
+          }}
+        />
+        {(nextMessageDifferentDay || isLast) && (
+          <Text
+            style={StyleSheet.flatten([
+              styles.dateDivider,
+              { marginTop: nextMessageSameAuthor ? 24 : 16 },
+            ])}
+          >
+            {dayjs.unix(message.timestamp).calendar(undefined, {
+              sameDay: '[Today]',
+              nextDay: 'DD MMMM',
+              nextWeek: 'DD MMMM',
+              lastDay: '[Yesterday]',
+              lastWeek: 'DD MMMM',
+              sameElse: 'DD MMMM',
+            })}
+          </Text>
+        )}
+      </>
     )
   }
 
