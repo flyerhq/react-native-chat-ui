@@ -106,20 +106,23 @@ export const Chat = ({
     let nextMessageDifferentDay = false
     let nextMessageSameAuthor = false
     let previousMessageSameAuthor = false
-    let previousMessageWithinTimeRange = false
+    let shouldRenderTime = !!message.timestamp
 
     if (!isLast) {
-      nextMessageDifferentDay = !dayjs
-        .unix(message.timestamp)
-        .isSame(dayjs.unix(nextMessage.timestamp), 'day')
+      nextMessageDifferentDay =
+        !!message.timestamp &&
+        !dayjs
+          .unix(message.timestamp)
+          .isSame(dayjs.unix(nextMessage.timestamp), 'day')
       nextMessageSameAuthor = nextMessage.authorId === message.authorId
     }
 
     if (!isFirst) {
       previousMessageSameAuthor = previousMessage.authorId === message.authorId
-      previousMessageWithinTimeRange =
-        previousMessageSameAuthor &&
-        previousMessage.timestamp - message.timestamp < 3600
+      shouldRenderTime =
+        !!message.timestamp &&
+        (!previousMessageSameAuthor ||
+          previousMessage.timestamp - message.timestamp >= 60)
     }
 
     return (
@@ -131,13 +134,13 @@ export const Chat = ({
             onFilePress,
             onImagePress: handleImagePress,
             previousMessageSameAuthor,
-            previousMessageWithinTimeRange,
             renderFileMessage,
             renderImageMessage,
             renderTextMessage,
+            shouldRenderTime,
           }}
         />
-        {(nextMessageDifferentDay || isLast) && (
+        {(nextMessageDifferentDay || (isLast && message.timestamp)) && (
           <Text
             style={StyleSheet.flatten([
               styles.dateDivider,

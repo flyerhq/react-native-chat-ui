@@ -12,7 +12,7 @@ export const fileMessage: MessageType.File = {
 }
 
 export const imageMessage: MessageType.Image = {
-  authorId: 'userId',
+  authorId: 'image-userId',
   height: 100,
   id: 'image-uuidv4',
   imageName: 'imageName',

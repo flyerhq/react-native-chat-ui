@@ -29,7 +29,7 @@ export interface MessageProps extends MessageTopLevelProps {
   messageWidth: number
   onImagePress: (url: string) => void
   previousMessageSameAuthor: boolean
-  previousMessageWithinTimeRange: boolean
+  shouldRenderTime: boolean
 }
 
 export const Message = ({
@@ -38,17 +38,16 @@ export const Message = ({
   onFilePress,
   onImagePress,
   previousMessageSameAuthor,
-  previousMessageWithinTimeRange,
   renderFileMessage,
   renderImageMessage,
   renderTextMessage,
+  shouldRenderTime,
 }: MessageProps) => {
   const user = React.useContext(UserContext)
   const { container, contentContainer, statusContainer, time } = styles({
     message,
     messageWidth,
     previousMessageSameAuthor,
-    previousMessageWithinTimeRange,
     user,
   })
 
@@ -82,7 +81,7 @@ export const Message = ({
   return (
     <View style={container}>
       <View style={contentContainer}>{renderMessage()}</View>
-      {!previousMessageWithinTimeRange && (
+      {shouldRenderTime && (
         <View style={statusContainer}>
           <Text style={time}>
             {dayjs.unix(message.timestamp).format('h:mm a')}

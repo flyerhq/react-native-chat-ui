@@ -5,21 +5,18 @@ const styles = ({
   message,
   messageWidth,
   previousMessageSameAuthor,
-  previousMessageWithinTimeRange,
   user,
 }: {
   message: MessageType.Any
   messageWidth: number
   previousMessageSameAuthor: boolean
-  previousMessageWithinTimeRange: boolean
   user?: User
 }) =>
   StyleSheet.create({
     container: {
       alignSelf: user?.id === message.authorId ? 'flex-end' : 'flex-start',
       flex: 1,
-      marginBottom:
-        previousMessageSameAuthor || previousMessageWithinTimeRange ? 8 : 16,
+      marginBottom: previousMessageSameAuthor ? 8 : 16,
       marginHorizontal: 24,
     },
     contentContainer: {

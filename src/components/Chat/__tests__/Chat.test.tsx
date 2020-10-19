@@ -11,7 +11,7 @@ import { Chat } from '../Chat'
 describe('chat', () => {
   it('renders image preview', async () => {
     expect.assertions(1)
-    const messages = [textMessage, fileMessage, imageMessage]
+    const messages = [textMessage, imageMessage, fileMessage]
     const onSendPress = jest.fn()
     const { getByRole, getByText } = render(
       <Chat messages={messages} onSendPress={onSendPress} user={user} />
@@ -42,7 +42,7 @@ describe('chat', () => {
 
   it('opens file on a file message tap', () => {
     expect.assertions(1)
-    const messages = [textMessage, fileMessage, imageMessage]
+    const messages = [fileMessage, textMessage, imageMessage]
     const onSendPress = jest.fn()
     const onFilePress = jest.fn()
     const { getByLabelText } = render(
