@@ -1,3 +1,5 @@
+import { PreviewData } from '@flyerhq/react-native-link-preview'
+
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace MessageType {
   export type Any = File | Image | Text
@@ -26,6 +28,7 @@ export namespace MessageType {
   }
 
   export interface Text extends Base {
+    previewData?: PreviewData
     text: string
     type: 'text'
   }

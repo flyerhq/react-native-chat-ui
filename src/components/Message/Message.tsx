@@ -5,10 +5,10 @@ import { MessageType } from '../../types'
 import { UserContext } from '../../utils'
 import { FileMessage } from '../FileMessage'
 import { ImageMessage } from '../ImageMessage'
-import { TextMessage } from '../TextMessage'
+import { TextMessage, TextMessageTopLevelProps } from '../TextMessage'
 import styles from './styles'
 
-export interface MessageTopLevelProps {
+export interface MessageTopLevelProps extends TextMessageTopLevelProps {
   onFilePress?: (file: MessageType.File) => void
   renderFileMessage?: (
     message: MessageType.File,
@@ -37,6 +37,7 @@ export const Message = ({
   messageWidth,
   onFilePress,
   onImagePress,
+  onPreviewDataFetched,
   previousMessageSameAuthor,
   renderFileMessage,
   renderImageMessage,
@@ -64,16 +65,24 @@ export const Message = ({
           renderImageMessage(message, messageWidth)
         ) : (
           <ImageMessage
-            message={message}
-            messageWidth={messageWidth}
-            onPress={onImagePress}
+            {...{
+              message,
+              messageWidth,
+              onPress: onImagePress,
+            }}
           />
         )
       case 'text':
         return renderTextMessage ? (
           renderTextMessage(message, messageWidth)
         ) : (
-          <TextMessage message={message} messageWidth={messageWidth} />
+          <TextMessage
+            {...{
+              message,
+              messageWidth,
+              onPreviewDataFetched,
+            }}
+          />
         )
     }
   }

@@ -10,20 +10,37 @@ import { MessageType } from '../../types'
 import { UserContext } from '../../utils'
 import styles from './styles'
 
-export interface TextMessageProps {
+export interface TextMessageTopLevelProps {
+  onPreviewDataFetched?: ({
+    message,
+    previewData,
+  }: {
+    message: MessageType.Text
+    previewData: PreviewData
+  }) => void
+}
+
+export interface TextMessageProps extends TextMessageTopLevelProps {
   message: MessageType.Text
   messageWidth: number
 }
 
-export const TextMessage = ({ message, messageWidth }: TextMessageProps) => {
+export const TextMessage = ({
+  message,
+  messageWidth,
+  onPreviewDataFetched,
+}: TextMessageProps) => {
   const user = React.useContext(UserContext)
-  const [previewData, setPreviewData] = React.useState<
-    PreviewData | undefined
-  >()
+  const [previewData, setPreviewData] = React.useState(message.previewData)
   const { descriptionText, titleText, text } = styles({
     message,
     user,
   })
+
+  const handlePreviewDataFetched = (data: PreviewData) => {
+    setPreviewData(data)
+    onPreviewDataFetched?.({ message, previewData: data })
+  }
 
   const handleUrlPress = (url: string) => Linking.openURL(url)
 
@@ -66,7 +83,7 @@ export const TextMessage = ({ message, messageWidth }: TextMessageProps) => {
   return REGEX_LINK.test(message.text) ? (
     <LinkPreview
       containerStyle={{ width: previewData?.image ? messageWidth : undefined }}
-      onPreviewDataFetched={setPreviewData}
+      onPreviewDataFetched={handlePreviewDataFetched}
       previewData={previewData}
       renderDescription={renderPreviewDescription}
       renderText={renderPreviewText}

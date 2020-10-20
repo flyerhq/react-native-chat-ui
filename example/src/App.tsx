@@ -4,6 +4,7 @@ import {
   MessageType,
   SendAttachmentCallback,
 } from '@flyerhq/react-native-chat-ui'
+import { PreviewData } from '@flyerhq/react-native-link-preview'
 import React, { useState } from 'react'
 import { StatusBar } from 'react-native'
 import DocumentPicker from 'react-native-document-picker'
@@ -83,6 +84,19 @@ const App = () => {
     } catch {}
   }
 
+  const handlePreviewDataFetched = ({
+    message,
+    previewData,
+  }: {
+    message: MessageType.Text
+    previewData: PreviewData
+  }) => {
+    const index = messages.findIndex((m) => m.id === message.id)
+    if (index >= 0) {
+      messages[index] = { ...messages[index], previewData } as MessageType.Text
+    }
+  }
+
   const handleSendPress = (message: MessageType.Any) => {
     setMessages([message, ...messages])
   }
@@ -94,6 +108,7 @@ const App = () => {
         messages={messages}
         onAttachmentPress={handleAttachmentPress}
         onFilePress={handleFilePress}
+        onPreviewDataFetched={handlePreviewDataFetched}
         onSendPress={handleSendPress}
         user={{
           id: '06c33e8b-e835-4736-80f4-63f44b66666c',
