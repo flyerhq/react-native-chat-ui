@@ -7,6 +7,7 @@ export namespace MessageType {
   interface Base {
     authorId: string
     id: string
+    status: 'read' | 'sending' | 'sent'
     timestamp: number
   }
 

@@ -11,7 +11,17 @@ import { Chat } from '../Chat'
 describe('chat', () => {
   it('renders image preview', async () => {
     expect.assertions(1)
-    const messages = [textMessage, imageMessage, fileMessage]
+    const messages = [
+      textMessage,
+      imageMessage,
+      fileMessage,
+      {
+        ...textMessage,
+        id: 'new-uuidv4',
+        status: 'sent' as const,
+        timestamp: 1,
+      },
+    ]
     const onSendPress = jest.fn()
     const { getByRole, getByText } = render(
       <Chat messages={messages} onSendPress={onSendPress} user={user} />

@@ -30,9 +30,12 @@ const styles = ({
       maxWidth: messageWidth,
       overflow: 'hidden',
     },
+    status: {
+      tintColor: '#6054c9',
+    },
     statusContainer: {
       alignSelf: 'flex-end',
-      marginRight: 8,
+      flexDirection: 'row',
       marginTop: 8,
     },
     time: {
@@ -40,6 +43,7 @@ const styles = ({
       fontSize: 12,
       fontWeight: '500',
       lineHeight: 16,
+      marginRight: user?.id === message.authorId ? 8 : 16,
     },
   })
 

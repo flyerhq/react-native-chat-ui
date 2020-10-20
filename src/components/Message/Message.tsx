@@ -1,7 +1,7 @@
 import { oneOf } from '@flyerhq/react-native-link-preview'
 import dayjs from 'dayjs'
 import * as React from 'react'
-import { Text, View } from 'react-native'
+import { Image, Text, View } from 'react-native'
 import { MessageType } from '../../types'
 import { UserContext } from '../../utils'
 import { FileMessage } from '../FileMessage'
@@ -46,12 +46,14 @@ export const Message = ({
   shouldRenderTime,
 }: MessageProps) => {
   const user = React.useContext(UserContext)
-  const { container, contentContainer, statusContainer, time } = styles({
-    message,
-    messageWidth,
-    previousMessageSameAuthor,
-    user,
-  })
+  const { container, contentContainer, status, statusContainer, time } = styles(
+    {
+      message,
+      messageWidth,
+      previousMessageSameAuthor,
+      user,
+    }
+  )
 
   const renderMessage = () => {
     switch (message.type) {
@@ -93,6 +95,17 @@ export const Message = ({
           <Text style={time}>
             {dayjs.unix(message.timestamp).format('h:mm a')}
           </Text>
+          {user?.id === message.authorId &&
+            ['read', 'sent'].includes(message.status) && (
+              <Image
+                source={
+                  message.status === 'read'
+                    ? require('../../assets/icon-read.png')
+                    : require('../../assets/icon-sent.png')
+                }
+                style={status}
+              />
+            )}
         </View>
       )}
     </View>

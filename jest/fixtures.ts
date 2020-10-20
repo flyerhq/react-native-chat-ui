@@ -6,6 +6,7 @@ export const fileMessage: MessageType.File = {
   id: 'file-uuidv4',
   mimeType: 'application/pdf',
   size: 15000,
+  status: 'read',
   timestamp: 2000000,
   type: 'file',
   url: 'file:///Users/admin/flyer.pdf',
@@ -17,6 +18,7 @@ export const imageMessage: MessageType.Image = {
   id: 'image-uuidv4',
   imageName: 'imageName',
   size: 15000,
+  status: 'sending',
   timestamp: 0,
   type: 'image',
   url: 'https://avatars1.githubusercontent.com/u/59206044',
@@ -31,6 +33,7 @@ export const size: Size = {
 export const textMessage: MessageType.Text = {
   authorId: 'userId',
   id: 'uuidv4',
+  status: 'sending',
   text: 'text',
   timestamp: 0,
   type: 'text',
