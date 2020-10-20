@@ -54,11 +54,11 @@ export const Chat = ({
   const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
   const [imageViewIndex, setImageViewIndex] = React.useState(0)
   const [stackEntry, setStackEntry] = React.useState<StatusBarProps>({})
-  const list = React.useRef<FlatList<MessageType.Any>>(null)
   const images = messages.reduce<{ uri: string }[]>(
     (acc, curr) => (curr.type === 'image' ? [{ uri: curr.url }, ...acc] : acc),
     []
   )
+  const list = React.useRef<FlatList<MessageType.Any>>(null)
   const messageWidth = Math.floor(Math.min(size.width * 0.77, 440))
 
   const handleImagePress = (url: string) => {
