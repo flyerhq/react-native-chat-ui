@@ -54,12 +54,12 @@ export const Chat = ({
   const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
   const [imageViewIndex, setImageViewIndex] = React.useState(0)
   const [stackEntry, setStackEntry] = React.useState<StatusBarProps>({})
-  const images = messages
-    .filter((message): message is MessageType.Image => message.type === 'image')
-    .map((message) => ({ uri: message.url }))
-    .reverse()
-
   const list = React.useRef<FlatList<MessageType.Any>>(null)
+  const images = messages.reduce<{ uri: string }[]>(
+    (acc, curr) => (curr.type === 'image' ? [{ uri: curr.url }, ...acc] : acc),
+    []
+  )
+  const messageWidth = Math.floor(Math.min(size.width * 0.77, 440))
 
   const handleImagePress = (url: string) => {
     setImageViewIndex(images.findIndex((image) => image.uri === url))
@@ -97,7 +97,6 @@ export const Chat = ({
     item: MessageType.Any
     index: number
   }) => {
-    const messageWidth = Math.floor(Math.min(size.width * 0.77, 440))
     // TODO: Update the logic after pagination is introduced
     const isFirst = index === 0
     const isLast = index === messages.length - 1

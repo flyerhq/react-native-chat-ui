@@ -16,9 +16,7 @@ export const FileMessage = ({ message, onPress }: FileMessageProps) => {
     user,
   })
 
-  const handlePress = () => {
-    onPress?.(message)
-  }
+  const handlePress = () => onPress?.(message)
 
   return (
     <TouchableOpacity
