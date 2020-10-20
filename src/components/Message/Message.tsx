@@ -1,3 +1,4 @@
+import { oneOf } from '@flyerhq/react-native-link-preview'
 import dayjs from 'dayjs'
 import * as React from 'react'
 import { Text, View } from 'react-native'
@@ -55,15 +56,13 @@ export const Message = ({
   const renderMessage = () => {
     switch (message.type) {
       case 'file':
-        return renderFileMessage ? (
-          renderFileMessage(message, messageWidth)
-        ) : (
+        return oneOf(
+          renderFileMessage,
           <FileMessage message={message} onPress={onFilePress} />
-        )
+        )(message, messageWidth)
       case 'image':
-        return renderImageMessage ? (
-          renderImageMessage(message, messageWidth)
-        ) : (
+        return oneOf(
+          renderImageMessage,
           <ImageMessage
             {...{
               message,
@@ -71,11 +70,10 @@ export const Message = ({
               onPress: onImagePress,
             }}
           />
-        )
+        )(message, messageWidth)
       case 'text':
-        return renderTextMessage ? (
-          renderTextMessage(message, messageWidth)
-        ) : (
+        return oneOf(
+          renderTextMessage,
           <TextMessage
             {...{
               message,
@@ -83,7 +81,7 @@ export const Message = ({
               onPreviewDataFetched,
             }}
           />
-        )
+        )(message, messageWidth)
     }
   }
 

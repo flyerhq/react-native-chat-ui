@@ -6,6 +6,9 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "author": "Oleksandr Demchenko <alexdemchenko@yahoo.com>",
+  "contributors": [
+    "Vitalii Danylov <vitaliidanylov1992@gmail.com>"
+  ],
   "license": "MIT",
   "files": [
     "lib"
