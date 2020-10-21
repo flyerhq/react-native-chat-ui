@@ -24,7 +24,7 @@
     "type-coverage": "type-coverage"
   },
   "dependencies": {
-    "@flyerhq/react-native-keyboard-accessory-view": "^1.5.1",
+    "@flyerhq/react-native-keyboard-accessory-view": "^1.6.0",
     "@flyerhq/react-native-link-preview": "^1.0.5",
     "dayjs": "^1.9.1",
     "react-native-image-viewing": "^0.2.0",
