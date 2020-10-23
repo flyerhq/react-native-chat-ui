@@ -5,6 +5,7 @@ import * as React from 'react'
 import {
   FlatList,
   FlatListProps,
+  GestureResponderHandlers,
   SafeAreaView,
   StatusBar,
   StatusBarProps,
@@ -170,14 +171,15 @@ export const Chat = ({
   const renderListFooterComponent = React.useCallback(() => <View />, [])
 
   const renderScrollable = React.useCallback(
-    () => (
+    (panHandlers: GestureResponderHandlers) => (
       <FlatList
         automaticallyAdjustContentInsets={false}
+        initialNumToRender={10}
         ListFooterComponent={renderListFooterComponent}
         ListFooterComponentStyle={styles.footer}
-        style={styles.list}
         maxToRenderPerBatch={6}
-        initialNumToRender={10}
+        showsHorizontalScrollIndicator={false}
+        style={styles.list}
         {...unwrap(flatListProps)}
         data={messages}
         inverted
@@ -185,6 +187,7 @@ export const Chat = ({
         keyExtractor={keyExtractor}
         ref={list}
         renderItem={renderItem}
+        {...panHandlers}
       />
     ),
     [

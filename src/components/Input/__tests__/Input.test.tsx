@@ -5,8 +5,9 @@ import { textMessage, user } from '../../../../jest/fixtures'
 import { UserContext } from '../../../utils'
 import { Input } from '../Input'
 
+const renderScrollable = () => <ScrollView />
+
 describe('input', () => {
-  const renderScrollable = () => <ScrollView />
   it('sends a text message', () => {
     expect.assertions(2)
     const onSendPress = jest.fn()
@@ -37,8 +38,8 @@ describe('input', () => {
         <UserContext.Provider value={user}>
           <Input
             {...{
-              onSendPress: onSendPress,
-              renderScrollable: renderScrollable,
+              onSendPress,
+              renderScrollable,
               textInputProps: { onChangeText, value: newValue },
             }}
           />
@@ -49,8 +50,8 @@ describe('input', () => {
       <UserContext.Provider value={user}>
         <Input
           {...{
-            renderScrollable,
             onSendPress,
+            renderScrollable,
             textInputProps: { onChangeText, value },
           }}
         />

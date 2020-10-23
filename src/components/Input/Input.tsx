@@ -1,6 +1,12 @@
 import { KeyboardAccessoryView } from '@flyerhq/react-native-keyboard-accessory-view'
 import * as React from 'react'
-import { StyleSheet, TextInput, TextInputProps, View } from 'react-native'
+import {
+  GestureResponderHandlers,
+  StyleSheet,
+  TextInput,
+  TextInputProps,
+  View,
+} from 'react-native'
 import {
   MessageType,
   SendAttachmentCallback,
@@ -33,8 +39,7 @@ export interface InputAdditionalProps {
 }
 
 export interface InputProps extends InputTopLevelProps, InputAdditionalProps {
-  onContentBottomInsetUpdate?: (contentBottomInset: number) => void
-  renderScrollable: () => React.ReactNode
+  renderScrollable: (panHandlers: GestureResponderHandlers) => React.ReactNode
 }
 
 export const Input = ({
@@ -42,7 +47,6 @@ export const Input = ({
   attachmentCircularActivityIndicatorProps,
   isAttachmentUploading,
   onAttachmentPress,
-  onContentBottomInsetUpdate,
   onSendPress,
   renderScrollable,
   textInputProps,
@@ -113,7 +117,6 @@ export const Input = ({
   return (
     <KeyboardAccessoryView
       {...{
-        onContentBottomInsetUpdate,
         renderScrollable,
         style: styles.keyboardAccessoryView,
       }}
