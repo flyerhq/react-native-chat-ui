@@ -26,6 +26,7 @@ const styles = ({
           : '#6054c9',
       borderBottomLeftRadius: user?.id === message.authorId ? 20 : 0,
       borderBottomRightRadius: user?.id === message.authorId ? 0 : 20,
+      borderColor: 'transparent',
       borderRadius: 20,
       maxWidth: messageWidth,
       overflow: 'hidden',
@@ -34,6 +35,7 @@ const styles = ({
       tintColor: '#6054c9',
     },
     statusContainer: {
+      alignItems: 'center',
       alignSelf: 'flex-end',
       flexDirection: 'row',
       marginTop: 8,

@@ -4,6 +4,7 @@ import * as React from 'react'
 import { Image, Text, View } from 'react-native'
 import { MessageType } from '../../types'
 import { UserContext } from '../../utils'
+import { CircularActivityIndicator } from '../CircularActivityIndicator'
 import { FileMessage } from '../FileMessage'
 import { ImageMessage } from '../ImageMessage'
 import { TextMessage, TextMessageTopLevelProps } from '../TextMessage'
@@ -95,17 +96,23 @@ export const Message = ({
           <Text style={time}>
             {dayjs.unix(message.timestamp).format('h:mm a')}
           </Text>
-          {user?.id === message.authorId &&
-            ['read', 'sent'].includes(message.status) && (
-              <Image
-                source={
-                  message.status === 'read'
-                    ? require('../../assets/icon-read.png')
-                    : require('../../assets/icon-sent.png')
-                }
-                style={status}
-              />
-            )}
+          {user?.id === message.authorId && (
+            <>
+              {message.status === 'sending' && (
+                <CircularActivityIndicator color='#6054c9' size={12} />
+              )}
+              {['read', 'sent'].includes(message.status) && (
+                <Image
+                  source={
+                    message.status === 'read'
+                      ? require('../../assets/icon-read.png')
+                      : require('../../assets/icon-sent.png')
+                  }
+                  style={status}
+                />
+              )}
+            </>
+          )}
         </View>
       )}
     </View>

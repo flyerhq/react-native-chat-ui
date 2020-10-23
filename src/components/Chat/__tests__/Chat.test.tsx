@@ -35,7 +35,17 @@ describe('chat', () => {
 
   it('sends a text message', () => {
     expect.assertions(1)
-    const messages = [textMessage, fileMessage, imageMessage]
+    const messages = [
+      textMessage,
+      fileMessage,
+      imageMessage,
+      {
+        ...textMessage,
+        id: 'new-uuidv4',
+        status: 'sending' as const,
+        timestamp: 1,
+      },
+    ]
     const onSendPress = jest.fn()
     const { getByLabelText } = render(
       <Chat
