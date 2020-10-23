@@ -1,12 +1,6 @@
 import { KeyboardAccessoryView } from '@flyerhq/react-native-keyboard-accessory-view'
 import * as React from 'react'
-import {
-  Animated,
-  StyleSheet,
-  TextInput,
-  TextInputProps,
-  View,
-} from 'react-native'
+import { StyleSheet, TextInput, TextInputProps, View } from 'react-native'
 import {
   MessageType,
   SendAttachmentCallback,
@@ -40,7 +34,7 @@ export interface InputAdditionalProps {
 
 export interface InputProps extends InputTopLevelProps, InputAdditionalProps {
   onContentBottomInsetUpdate?: (contentBottomInset: number) => void
-  panResponderPositionY?: Animated.Value
+  renderScrollable: () => React.ReactNode
 }
 
 export const Input = ({
@@ -50,7 +44,7 @@ export const Input = ({
   onAttachmentPress,
   onContentBottomInsetUpdate,
   onSendPress,
-  panResponderPositionY,
+  renderScrollable,
   textInputProps,
 }: InputProps) => {
   const user = React.useContext(UserContext)
@@ -59,14 +53,14 @@ export const Input = ({
 
   const value = textInputProps?.value ?? text
 
-  const defaultMessageParams = () => ({
+  const defaultMessageParams = {
     // Buttons only rendered when the user exists, so we can safely force unwrap it
     /* type-coverage:ignore-next-line */ // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     authorId: user!.id,
     id: uuidv4(),
     status: 'sending' as const,
     timestamp: Math.floor(Date.now() / 1000),
-  })
+  }
 
   const handleChangeText = (newText: string) => {
     // Track local state in case `onChangeText` is provided and `value` is not
@@ -76,7 +70,7 @@ export const Input = ({
 
   const handleSend = () => {
     onSendPress({
-      ...defaultMessageParams(),
+      ...defaultMessageParams,
       text: value.trim(),
       type: 'text',
     })
@@ -95,7 +89,7 @@ export const Input = ({
     if (isFileParams(params)) {
       const { mimeType, fileName, size, url } = params
       onSendPress({
-        ...defaultMessageParams(),
+        ...defaultMessageParams,
         mimeType,
         fileName,
         size,
@@ -105,7 +99,7 @@ export const Input = ({
     } else {
       const { height, imageName, size, url, width } = params
       onSendPress({
-        ...defaultMessageParams(),
+        ...defaultMessageParams,
         height,
         imageName,
         size,
@@ -120,7 +114,7 @@ export const Input = ({
     <KeyboardAccessoryView
       {...{
         onContentBottomInsetUpdate,
-        panResponderPositionY,
+        renderScrollable,
         style: styles.keyboardAccessoryView,
       }}
     >

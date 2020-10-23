@@ -1,16 +1,23 @@
 import { fireEvent, render } from '@testing-library/react-native'
 import * as React from 'react'
+import { ScrollView } from 'react-native'
 import { textMessage, user } from '../../../../jest/fixtures'
 import { UserContext } from '../../../utils'
 import { Input } from '../Input'
 
 describe('input', () => {
+  const renderScrollable = () => <ScrollView />
   it('sends a text message', () => {
     expect.assertions(2)
     const onSendPress = jest.fn()
     const { getByPlaceholderText, getByLabelText } = render(
       <UserContext.Provider value={user}>
-        <Input onSendPress={onSendPress} />
+        <Input
+          {...{
+            onSendPress,
+            renderScrollable,
+          }}
+        />
       </UserContext.Provider>
     )
     const textInput = getByPlaceholderText('Your message here')
@@ -29,8 +36,11 @@ describe('input', () => {
       rerender(
         <UserContext.Provider value={user}>
           <Input
-            onSendPress={onSendPress}
-            textInputProps={{ onChangeText, value: newValue }}
+            {...{
+              onSendPress: onSendPress,
+              renderScrollable: renderScrollable,
+              textInputProps: { onChangeText, value: newValue },
+            }}
           />
         </UserContext.Provider>
       )
@@ -38,8 +48,11 @@ describe('input', () => {
     const { getByPlaceholderText, getByLabelText, rerender } = render(
       <UserContext.Provider value={user}>
         <Input
-          onSendPress={onSendPress}
-          textInputProps={{ onChangeText, value }}
+          {...{
+            renderScrollable,
+            onSendPress,
+            textInputProps: { onChangeText, value },
+          }}
         />
       </UserContext.Provider>
     )
@@ -57,7 +70,13 @@ describe('input', () => {
     const onChangeText = jest.fn()
     const { getByPlaceholderText, getByLabelText } = render(
       <UserContext.Provider value={user}>
-        <Input onSendPress={onSendPress} textInputProps={{ onChangeText }} />
+        <Input
+          {...{
+            onSendPress,
+            renderScrollable,
+            textInputProps: { onChangeText },
+          }}
+        />
       </UserContext.Provider>
     )
     const textInput = getByPlaceholderText('Your message here')
@@ -74,7 +93,13 @@ describe('input', () => {
     const value = 'value'
     const { getByPlaceholderText, getByLabelText } = render(
       <UserContext.Provider value={user}>
-        <Input onSendPress={onSendPress} textInputProps={{ value }} />
+        <Input
+          {...{
+            onSendPress,
+            renderScrollable,
+            textInputProps: { value },
+          }}
+        />
       </UserContext.Provider>
     )
     const textInput = getByPlaceholderText('Your message here')
@@ -91,7 +116,13 @@ describe('input', () => {
     const defaultValue = 'defaultValue'
     const { getByPlaceholderText, getByLabelText } = render(
       <UserContext.Provider value={user}>
-        <Input onSendPress={onSendPress} textInputProps={{ defaultValue }} />
+        <Input
+          {...{
+            onSendPress,
+            renderScrollable,
+            textInputProps: { defaultValue },
+          }}
+        />
       </UserContext.Provider>
     )
     const textInput = getByPlaceholderText('Your message here')
@@ -111,8 +142,11 @@ describe('input', () => {
     const { getByLabelText } = render(
       <UserContext.Provider value={user}>
         <Input
-          onAttachmentPress={onAttachmentPress}
-          onSendPress={onSendPress}
+          {...{
+            onAttachmentPress,
+            renderScrollable,
+            onSendPress,
+          }}
         />
       </UserContext.Provider>
     )
@@ -128,9 +162,12 @@ describe('input', () => {
     const { getByTestId } = render(
       <UserContext.Provider value={user}>
         <Input
-          attachmentCircularActivityIndicatorProps={{ size: undefined }}
-          isAttachmentUploading={isAttachmentUploading}
-          onSendPress={onSendPress}
+          {...{
+            attachmentCircularActivityIndicatorProps: { size: undefined },
+            isAttachmentUploading,
+            renderScrollable,
+            onSendPress,
+          }}
         />
       </UserContext.Provider>
     )

@@ -1,7 +1,4 @@
-import {
-  useComponentSize,
-  usePanResponder,
-} from '@flyerhq/react-native-keyboard-accessory-view'
+import { useComponentSize } from '@flyerhq/react-native-keyboard-accessory-view'
 import dayjs from 'dayjs'
 import calendar from 'dayjs/plugin/calendar'
 import * as React from 'react'
@@ -49,8 +46,6 @@ export const Chat = ({
   user,
 }: ChatProps) => {
   const { onLayout, size } = useComponentSize()
-  const { panHandlers, positionY } = usePanResponder()
-  const [contentBottomInset, setContentBottomInset] = React.useState(0)
   const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
   const [imageViewIndex, setImageViewIndex] = React.useState(0)
   const [stackEntry, setStackEntry] = React.useState<StatusBarProps>({})
@@ -61,16 +56,19 @@ export const Chat = ({
   const list = React.useRef<FlatList<MessageType.Any>>(null)
   const messageWidth = Math.floor(Math.min(size.width * 0.77, 440))
 
-  const handleImagePress = (url: string) => {
-    setImageViewIndex(images.findIndex((image) => image.uri === url))
-    setIsImageViewVisible(true)
-    setStackEntry(
-      StatusBar.pushStackEntry({
-        barStyle: 'light-content',
-        animated: true,
-      })
-    )
-  }
+  const handleImagePress = React.useCallback(
+    (url: string) => {
+      setImageViewIndex(images.findIndex((image) => image.uri === url))
+      setIsImageViewVisible(true)
+      setStackEntry(
+        StatusBar.pushStackEntry({
+          barStyle: 'light-content',
+          animated: true,
+        })
+      )
+    },
+    [images]
+  )
 
   // TODO: Tapping on a close button results in the next warning:
   // `An update to ImageViewing inside a test was not wrapped in act(...).`
@@ -84,117 +82,130 @@ export const Chat = ({
     onSendPress(message)
     list.current?.scrollToOffset({
       animated: true,
-      offset: -contentBottomInset,
+      offset: 0,
     })
   }
 
-  const keyExtractor = (item: MessageType.Any) => item.id
+  const keyExtractor = React.useCallback((item: MessageType.Any) => item.id, [])
 
-  const renderItem = ({
-    item: message,
-    index,
-  }: {
-    item: MessageType.Any
-    index: number
-  }) => {
-    // TODO: Update the logic after pagination is introduced
-    const isFirst = index === 0
-    const isLast = index === messages.length - 1
-    const previousMessage = messages[index - 1]
-    const nextMessage = messages[index + 1]
+  const renderItem = React.useCallback(
+    ({ item: message, index }: { item: MessageType.Any; index: number }) => {
+      // TODO: Update the logic after pagination is introduced
+      const isFirst = index === 0
+      const isLast = index === messages.length - 1
+      const previousMessage = messages[index - 1]
+      const nextMessage = messages[index + 1]
 
-    let nextMessageDifferentDay = false
-    let nextMessageSameAuthor = false
-    let previousMessageSameAuthor = false
-    let shouldRenderTime = !!message.timestamp
+      let nextMessageDifferentDay = false
+      let nextMessageSameAuthor = false
+      let previousMessageSameAuthor = false
+      let shouldRenderTime = !!message.timestamp
 
-    if (!isLast) {
-      nextMessageDifferentDay =
-        !!message.timestamp &&
-        !dayjs
-          .unix(message.timestamp)
-          .isSame(dayjs.unix(nextMessage.timestamp), 'day')
-      nextMessageSameAuthor = nextMessage.authorId === message.authorId
-    }
+      if (!isLast) {
+        nextMessageDifferentDay =
+          !!message.timestamp &&
+          !dayjs
+            .unix(message.timestamp)
+            .isSame(dayjs.unix(nextMessage.timestamp), 'day')
+        nextMessageSameAuthor = nextMessage.authorId === message.authorId
+      }
 
-    if (!isFirst) {
-      previousMessageSameAuthor = previousMessage.authorId === message.authorId
-      shouldRenderTime =
-        !!message.timestamp &&
-        (!previousMessageSameAuthor ||
-          previousMessage.timestamp - message.timestamp >= 60)
-    }
+      if (!isFirst) {
+        previousMessageSameAuthor =
+          previousMessage.authorId === message.authorId
+        shouldRenderTime =
+          !!message.timestamp &&
+          (!previousMessageSameAuthor ||
+            previousMessage.timestamp - message.timestamp >= 60)
+      }
 
-    return (
-      <>
-        <Message
-          {...{
-            message,
-            messageWidth,
-            onFilePress,
-            onImagePress: handleImagePress,
-            onPreviewDataFetched,
-            previousMessageSameAuthor,
-            renderFileMessage,
-            renderImageMessage,
-            renderTextMessage,
-            shouldRenderTime,
-          }}
-        />
-        {(nextMessageDifferentDay || (isLast && message.timestamp)) && (
-          <Text
-            style={StyleSheet.flatten([
-              styles.dateDivider,
-              { marginTop: nextMessageSameAuthor ? 24 : 16 },
-            ])}
-          >
-            {dayjs.unix(message.timestamp).calendar(undefined, {
-              sameDay: '[Today]',
-              nextDay: 'DD MMMM',
-              nextWeek: 'DD MMMM',
-              lastDay: '[Yesterday]',
-              lastWeek: 'DD MMMM',
-              sameElse: 'DD MMMM',
-            })}
-          </Text>
-        )}
-      </>
-    )
-  }
+      return (
+        <>
+          <Message
+            {...{
+              message,
+              messageWidth,
+              onFilePress,
+              onImagePress: handleImagePress,
+              onPreviewDataFetched,
+              previousMessageSameAuthor,
+              renderFileMessage,
+              renderImageMessage,
+              renderTextMessage,
+              shouldRenderTime,
+            }}
+          />
+          {(nextMessageDifferentDay || (isLast && message.timestamp)) && (
+            <Text
+              style={StyleSheet.flatten([
+                styles.dateDivider,
+                { marginTop: nextMessageSameAuthor ? 24 : 16 },
+              ])}
+            >
+              {dayjs.unix(message.timestamp).calendar(undefined, {
+                sameDay: '[Today]',
+                nextDay: 'DD MMMM',
+                nextWeek: 'DD MMMM',
+                lastDay: '[Yesterday]',
+                lastWeek: 'DD MMMM',
+                sameElse: 'DD MMMM',
+              })}
+            </Text>
+          )}
+        </>
+      )
+    },
+    [
+      handleImagePress,
+      messageWidth,
+      messages,
+      onFilePress,
+      onPreviewDataFetched,
+      renderFileMessage,
+      renderImageMessage,
+      renderTextMessage,
+    ]
+  )
+
+  const renderListFooterComponent = React.useCallback(() => <View />, [])
+
+  const renderScrollable = React.useCallback(
+    () => (
+      <FlatList
+        automaticallyAdjustContentInsets={false}
+        ListFooterComponent={renderListFooterComponent}
+        ListFooterComponentStyle={styles.footer}
+        style={styles.list}
+        maxToRenderPerBatch={6}
+        initialNumToRender={10}
+        {...unwrap(flatListProps)}
+        data={messages}
+        inverted
+        keyboardDismissMode='interactive'
+        keyExtractor={keyExtractor}
+        ref={list}
+        renderItem={renderItem}
+      />
+    ),
+    [
+      flatListProps,
+      keyExtractor,
+      messages,
+      renderItem,
+      renderListFooterComponent,
+    ]
+  )
 
   return (
     <UserContext.Provider value={user}>
       <SafeAreaView style={styles.container} onLayout={onLayout}>
-        <FlatList
-          automaticallyAdjustContentInsets={false}
-          ListFooterComponent={<View />}
-          ListFooterComponentStyle={styles.footer}
-          style={styles.list}
-          {...unwrap(flatListProps)}
-          contentContainerStyle={StyleSheet.flatten([
-            flatListProps?.contentContainerStyle,
-            { paddingTop: contentBottomInset },
-          ])}
-          data={messages}
-          inverted
-          keyboardDismissMode='interactive'
-          keyExtractor={keyExtractor}
-          ref={list}
-          renderItem={renderItem}
-          scrollIndicatorInsets={{
-            ...unwrap(flatListProps?.scrollIndicatorInsets),
-            top: contentBottomInset,
-          }}
-          {...panHandlers}
-        />
         <Input
           {...{
             ...unwrap(inputProps),
             isAttachmentUploading,
             onAttachmentPress,
-            onContentBottomInsetUpdate: setContentBottomInset,
             onSendPress: handleSendPress,
-            panResponderPositionY: positionY,
+            renderScrollable,
             textInputProps,
           }}
         />
