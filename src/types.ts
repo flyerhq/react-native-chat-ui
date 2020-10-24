@@ -7,8 +7,9 @@ export namespace MessageType {
   interface Base {
     authorId: string
     id: string
-    status: 'read' | 'sending' | 'sent'
+    status?: 'error' | 'read' | 'sending' | 'sent'
     timestamp: number
+    type: 'file' | 'image' | 'text'
   }
 
   export interface File extends Base {

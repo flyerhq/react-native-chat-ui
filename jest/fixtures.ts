@@ -33,7 +33,6 @@ export const size: Size = {
 export const textMessage: MessageType.Text = {
   authorId: 'userId',
   id: 'uuidv4',
-  status: 'sending',
   text: 'text',
   timestamp: 0,
   type: 'text',

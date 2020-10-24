@@ -101,7 +101,7 @@ export const Message = ({
               {message.status === 'sending' && (
                 <CircularActivityIndicator color='#6054c9' size={12} />
               )}
-              {['read', 'sent'].includes(message.status) && (
+              {(message.status === 'read' || message.status === 'sent') && (
                 <Image
                   source={
                     message.status === 'read'

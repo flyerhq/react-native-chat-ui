@@ -62,7 +62,6 @@ export const Input = ({
     /* type-coverage:ignore-next-line */ // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     authorId: user!.id,
     id: uuidv4(),
-    status: 'sending' as const,
     timestamp: Math.floor(Date.now() / 1000),
   }
 

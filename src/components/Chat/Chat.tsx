@@ -94,15 +94,15 @@ export const Chat = ({
       // TODO: Update the logic after pagination is introduced
       const isFirst = index === 0
       const isLast = index === messages.length - 1
-      const previousMessage = messages[index - 1]
-      const nextMessage = messages[index + 1]
+      const previousMessage = isFirst ? undefined : messages[index - 1]
+      const nextMessage = isLast ? undefined : messages[index + 1]
 
       let nextMessageDifferentDay = false
       let nextMessageSameAuthor = false
       let previousMessageSameAuthor = false
       let shouldRenderTime = !!message.timestamp
 
-      if (!isLast) {
+      if (nextMessage) {
         nextMessageDifferentDay =
           !!message.timestamp &&
           !dayjs
@@ -111,7 +111,7 @@ export const Chat = ({
         nextMessageSameAuthor = nextMessage.authorId === message.authorId
       }
 
-      if (!isFirst) {
+      if (previousMessage) {
         previousMessageSameAuthor =
           previousMessage.authorId === message.authorId
         shouldRenderTime =

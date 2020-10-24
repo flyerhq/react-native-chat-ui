@@ -12,6 +12,8 @@ const styles = ({
     container: {
       alignItems: 'center',
       flexDirection: 'row',
+      padding: 16,
+      paddingRight: 24,
     },
     iconContainer: {
       alignItems: 'center',
@@ -20,7 +22,6 @@ const styles = ({
       borderRadius: 21,
       height: 42,
       justifyContent: 'center',
-      margin: 16,
       width: 42,
     },
     name: {
@@ -38,8 +39,7 @@ const styles = ({
     },
     textContainer: {
       flexShrink: 1,
-      marginRight: 24,
-      marginVertical: 16,
+      marginLeft: 16,
     },
   })
 

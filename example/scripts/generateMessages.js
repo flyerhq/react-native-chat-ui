@@ -25,6 +25,7 @@ const messages = [...Array(numberOfMessages)].map((_, index) => {
   const data = {
     authorId,
     id: uuidv4(),
+    status: 'read',
     text,
     timestamp,
     type: 'text',
