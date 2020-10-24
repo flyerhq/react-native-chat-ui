@@ -91,14 +91,15 @@ const App = () => {
     message: MessageType.Text
     previewData: PreviewData
   }) => {
-    const index = messages.findIndex((m) => m.id === message.id)
-    if (index >= 0) {
-      messages[index] = { ...messages[index], previewData } as MessageType.Text
-    }
+    setMessages(
+      messages.map<MessageType.Any>((m) =>
+        m.id === message.id ? { ...m, previewData } : m
+      )
+    )
   }
 
   const handleSendPress = (message: MessageType.Any) => {
-    setMessages([message, ...messages])
+    setMessages([{ ...message, status: 'read' }, ...messages])
   }
 
   return (
