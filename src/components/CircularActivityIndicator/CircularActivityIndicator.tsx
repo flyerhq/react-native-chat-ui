@@ -10,13 +10,13 @@ import {
 import styles from './styles'
 
 export interface CircularActivityIndicatorProps {
-  color?: ColorValue
+  color: ColorValue
   size?: number
   style?: StyleProp<ViewStyle>
 }
 
 export const CircularActivityIndicator = ({
-  color = '#ffffff',
+  color,
   size = 24,
   style,
 }: CircularActivityIndicatorProps) => {
