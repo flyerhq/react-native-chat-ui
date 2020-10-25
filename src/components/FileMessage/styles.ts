@@ -1,11 +1,13 @@
 import { StyleSheet } from 'react-native'
-import { MessageType, User } from '../../types'
+import { MessageType, Theme, User } from '../../types'
 
 const styles = ({
   message,
+  theme,
   user,
 }: {
   message: MessageType.File
+  theme: Theme
   user?: User
 }) =>
   StyleSheet.create({
@@ -24,19 +26,20 @@ const styles = ({
       justifyContent: 'center',
       width: 42,
     },
-    name: {
-      color: user?.id === message.authorId ? '#fff' : '#2e2c2c',
-      fontSize: 16,
-      fontWeight: '500',
-      lineHeight: 20,
-    },
-    size: {
-      color: user?.id === message.authorId ? '#ffffff66' : '#2e2c2c66',
-      fontSize: 12,
-      fontWeight: '500',
-      lineHeight: 16,
-      marginTop: 4,
-    },
+    name: StyleSheet.flatten([
+      theme.fonts.caption,
+      {
+        color:
+          user?.id === message.authorId ? theme.colors.primaryText : '#2e2c2c',
+      },
+    ]),
+    size: StyleSheet.flatten([
+      theme.fonts.caption,
+      {
+        color: user?.id === message.authorId ? '#ffffff66' : '#2e2c2c66',
+        marginTop: 4,
+      },
+    ]),
     textContainer: {
       flexShrink: 1,
       marginLeft: 16,

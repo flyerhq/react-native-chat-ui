@@ -14,7 +14,7 @@ import {
   SendFileCallbackParams,
   SendImageCallbackParams,
 } from '../../types'
-import { unwrap, UserContext, uuidv4 } from '../../utils'
+import { ThemeContext, unwrap, UserContext, uuidv4 } from '../../utils'
 import {
   AttachmentButton,
   AttachmentButtonAdditionalProps,
@@ -52,6 +52,8 @@ export const Input = ({
   textInputProps,
 }: InputProps) => {
   const user = React.useContext(UserContext)
+  const theme = React.useContext(ThemeContext)
+  const { container, input, keyboardAccessoryView } = styles({ theme })
   // Use `defaultValue` if provided
   const [text, setText] = React.useState(textInputProps?.defaultValue ?? '')
 
@@ -117,14 +119,17 @@ export const Input = ({
     <KeyboardAccessoryView
       {...{
         renderScrollable,
-        style: styles.keyboardAccessoryView,
+        style: keyboardAccessoryView,
       }}
     >
-      <View style={styles.container}>
+      <View style={container}>
         {user &&
           (isAttachmentUploading ? (
             <CircularActivityIndicator
-              {...attachmentCircularActivityIndicatorProps}
+              {...{
+                ...attachmentCircularActivityIndicatorProps,
+                color: theme.colors.background,
+              }}
             />
           ) : (
             <AttachmentButton
@@ -139,7 +144,7 @@ export const Input = ({
           underlineColorAndroid='transparent'
           {...textInputProps}
           // Keep our implementation but allow user to use these `TextInputProps`
-          style={StyleSheet.flatten([styles.input, textInputProps?.style])}
+          style={StyleSheet.flatten([input, textInputProps?.style])}
           onChangeText={handleChangeText}
           value={value}
         />

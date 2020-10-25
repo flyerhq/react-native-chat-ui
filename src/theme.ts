@@ -2,26 +2,26 @@ import { Theme } from './types'
 
 export const defaultTheme: Theme = {
   colors: {
-    background: '#fff',
+    background: '#ffffff',
     caption: '#9e9cab',
     error: '#ff6767',
     inputBackground: '#1d1d21',
     primary: '#6f61e8',
-    primaryText: '#fff',
+    primaryText: '#ffffff',
     secondary: '#f7f7f8',
     secondaryText: '#1d1d21',
   },
   fonts: {
     body1: {
       fontFamily: 'Avenir',
-      fontWeight: '500',
       fontSize: 16,
+      fontWeight: '500',
       lineHeight: 22,
     },
     body2: {
       fontFamily: 'Avenir',
-      fontWeight: '400',
       fontSize: 14,
+      fontWeight: '400',
       lineHeight: 20,
     },
     caption: {
@@ -32,8 +32,8 @@ export const defaultTheme: Theme = {
     },
     subtitle: {
       fontFamily: 'Avenir',
-      fontWeight: '800',
       fontSize: 16,
+      fontWeight: 'bold',
       lineHeight: 22,
     },
   },

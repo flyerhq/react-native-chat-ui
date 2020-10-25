@@ -16,7 +16,7 @@ export interface CircularActivityIndicatorProps {
 }
 
 export const CircularActivityIndicator = ({
-  color = '#fff',
+  color = '#ffffff',
   size = 24,
   style,
 }: CircularActivityIndicatorProps) => {

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { MessageType } from '../../types'
-import { formatBytes, UserContext } from '../../utils'
+import { formatBytes, ThemeContext, UserContext } from '../../utils'
 import styles from './styles'
 
 export interface FileMessageProps {
@@ -11,8 +11,10 @@ export interface FileMessageProps {
 
 export const FileMessage = ({ message, onPress }: FileMessageProps) => {
   const user = React.useContext(UserContext)
+  const theme = React.useContext(ThemeContext)
   const { container, iconContainer, name, size, textContainer } = styles({
     message,
+    theme,
     user,
   })
 

@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native'
 import { MessageType, Size } from '../../types'
-import { formatBytes, UserContext } from '../../utils'
+import { formatBytes, ThemeContext, UserContext } from '../../utils'
 import styles from './styles'
 
 export interface ImageMessageProps {
@@ -22,6 +22,7 @@ export const ImageMessage = ({
   onPress,
 }: ImageMessageProps) => {
   const user = React.useContext(UserContext)
+  const theme = React.useContext(ThemeContext)
   const defaultHeight = message.height ?? 0
   const defaultWidth = message.width ?? 0
   const [size, setSize] = React.useState<Size>({
@@ -41,6 +42,7 @@ export const ImageMessage = ({
     aspectRatio,
     message,
     messageWidth,
+    theme,
     user,
   })
 
