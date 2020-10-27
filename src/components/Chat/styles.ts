@@ -4,6 +4,7 @@ import { Theme } from '../../types'
 export default ({ theme }: { theme: Theme }) =>
   StyleSheet.create({
     container: {
+      backgroundColor: theme.colors.background,
       flex: 1,
     },
     dateDivider: StyleSheet.flatten([
