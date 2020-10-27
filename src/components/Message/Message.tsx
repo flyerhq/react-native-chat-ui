@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import * as React from 'react'
 import { Image, Text, View } from 'react-native'
 import { MessageType } from '../../types'
-import { UserContext } from '../../utils'
+import { ThemeContext, UserContext } from '../../utils'
 import { CircularActivityIndicator } from '../CircularActivityIndicator'
 import { FileMessage } from '../FileMessage'
 import { ImageMessage } from '../ImageMessage'
@@ -46,12 +46,14 @@ export const Message = ({
   renderTextMessage,
   shouldRenderTime,
 }: MessageProps) => {
+  const theme = React.useContext(ThemeContext)
   const user = React.useContext(UserContext)
   const { container, contentContainer, status, statusContainer, time } = styles(
     {
       message,
       messageWidth,
       previousMessageSameAuthor,
+      theme,
       user,
     }
   )
@@ -99,7 +101,10 @@ export const Message = ({
           {user?.id === message.authorId && (
             <>
               {message.status === 'sending' && (
-                <CircularActivityIndicator color='#6054c9' size={12} />
+                <CircularActivityIndicator
+                  color={theme.colors.primary}
+                  size={12}
+                />
               )}
               {(message.status === 'read' || message.status === 'sent') && (
                 <Image

@@ -1,15 +1,17 @@
 import { StyleSheet } from 'react-native'
-import { MessageType, User } from '../../types'
+import { MessageType, Theme, User } from '../../types'
 
 const styles = ({
   message,
   messageWidth,
   previousMessageSameAuthor,
+  theme,
   user,
 }: {
   message: MessageType.Any
   messageWidth: number
   previousMessageSameAuthor: boolean
+  theme: Theme
   user?: User
 }) =>
   StyleSheet.create({
@@ -22,8 +24,8 @@ const styles = ({
     contentContainer: {
       backgroundColor:
         user?.id !== message.authorId || message.type === 'image'
-          ? '#f7f7f8'
-          : '#6054c9',
+          ? theme.colors.secondary
+          : theme.colors.primary,
       borderBottomLeftRadius: user?.id === message.authorId ? 20 : 0,
       borderBottomRightRadius: user?.id === message.authorId ? 0 : 20,
       borderColor: 'transparent',
@@ -32,7 +34,7 @@ const styles = ({
       overflow: 'hidden',
     },
     status: {
-      tintColor: '#6054c9',
+      tintColor: theme.colors.primary,
     },
     statusContainer: {
       alignItems: 'center',
@@ -40,13 +42,13 @@ const styles = ({
       flexDirection: 'row',
       marginTop: 8,
     },
-    time: {
-      color: '#9e9cab',
-      fontSize: 12,
-      fontWeight: '500',
-      lineHeight: 16,
-      marginRight: user?.id === message.authorId ? 8 : 16,
-    },
+    time: StyleSheet.flatten([
+      theme.fonts.caption,
+      {
+        color: theme.colors.caption,
+        marginRight: user?.id === message.authorId ? 8 : 16,
+      },
+    ]),
   })
 
 export default styles

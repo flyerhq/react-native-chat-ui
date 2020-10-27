@@ -1,15 +1,17 @@
 import { StyleSheet } from 'react-native'
-import { MessageType, User } from '../../types'
+import { MessageType, Theme, User } from '../../types'
 
 const styles = ({
   aspectRatio,
   message,
   messageWidth,
+  theme,
   user,
 }: {
   aspectRatio: number
   message: MessageType.Image
   messageWidth: number
+  theme: Theme
   user?: User
 }) =>
   StyleSheet.create({
@@ -27,22 +29,31 @@ const styles = ({
     },
     minimizedImageContainer: {
       alignItems: 'center',
-      backgroundColor: user?.id === message.authorId ? '#6054c9' : '#f7f7f8',
+      backgroundColor:
+        user?.id === message.authorId
+          ? theme.colors.primary
+          : theme.colors.secondary,
       flexDirection: 'row',
     },
-    nameText: {
-      color: user?.id === message.authorId ? '#fff' : '#2e2c2c',
-      fontSize: 16,
-      fontWeight: '500',
-      lineHeight: 20,
-    },
-    sizeText: {
-      color: user?.id === message.authorId ? '#ffffff66' : '#2e2c2c66',
-      fontSize: 12,
-      fontWeight: '500',
-      lineHeight: 16,
-      marginTop: 4,
-    },
+    nameText: StyleSheet.flatten([
+      theme.fonts.body1,
+      {
+        color:
+          user?.id === message.authorId
+            ? theme.colors.primaryText
+            : theme.colors.secondaryText,
+      },
+    ]),
+    sizeText: StyleSheet.flatten([
+      theme.fonts.caption,
+      {
+        color:
+          user?.id === message.authorId
+            ? `${String(theme.colors.primaryText)}80`
+            : theme.colors.caption,
+        marginTop: 4,
+      },
+    ]),
     textContainer: {
       flexShrink: 1,
       marginRight: 24,

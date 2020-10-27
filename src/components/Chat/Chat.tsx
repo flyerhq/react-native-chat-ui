@@ -14,8 +14,9 @@ import {
   View,
 } from 'react-native'
 import ImageView from 'react-native-image-viewing'
-import { MessageType, User } from '../../types'
-import { unwrap, UserContext } from '../../utils'
+import { defaultTheme } from '../../theme'
+import { MessageType, Theme, User } from '../../types'
+import { ThemeContext, unwrap, UserContext } from '../../utils'
 import { Input, InputAdditionalProps, InputTopLevelProps } from '../Input'
 import { Message, MessageTopLevelProps } from '../Message'
 import styles from './styles'
@@ -28,6 +29,7 @@ export interface ChatProps extends ChatTopLevelProps {
   flatListProps?: FlatListProps<MessageType.Any[]>
   inputProps?: InputAdditionalProps
   messages: MessageType.Any[]
+  theme?: Theme
   user: User
 }
 
@@ -44,8 +46,14 @@ export const Chat = ({
   renderImageMessage,
   renderTextMessage,
   textInputProps,
+  theme,
   user,
 }: ChatProps) => {
+  const themeValue = theme ?? defaultTheme
+  const { container, dateDivider, flatList, footer } = styles({
+    theme: themeValue,
+  })
+
   const { onLayout, size } = useComponentSize()
   const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
   const [imageViewIndex, setImageViewIndex] = React.useState(0)
@@ -139,7 +147,7 @@ export const Chat = ({
           {(nextMessageDifferentDay || (isLast && message.timestamp)) && (
             <Text
               style={StyleSheet.flatten([
-                styles.dateDivider,
+                dateDivider,
                 { marginTop: nextMessageSameAuthor ? 24 : 16 },
               ])}
             >
@@ -157,6 +165,7 @@ export const Chat = ({
       )
     },
     [
+      dateDivider,
       handleImagePress,
       messageWidth,
       messages,
@@ -176,10 +185,10 @@ export const Chat = ({
         automaticallyAdjustContentInsets={false}
         initialNumToRender={10}
         ListFooterComponent={renderListFooterComponent}
-        ListFooterComponentStyle={styles.footer}
+        ListFooterComponentStyle={footer}
         maxToRenderPerBatch={6}
         showsHorizontalScrollIndicator={false}
-        style={styles.list}
+        style={flatList}
         {...unwrap(flatListProps)}
         data={messages}
         inverted
@@ -191,7 +200,9 @@ export const Chat = ({
       />
     ),
     [
+      flatList,
       flatListProps,
+      footer,
       keyExtractor,
       messages,
       renderItem,
@@ -200,25 +211,27 @@ export const Chat = ({
   )
 
   return (
-    <UserContext.Provider value={user}>
-      <SafeAreaView style={styles.container} onLayout={onLayout}>
-        <Input
-          {...{
-            ...unwrap(inputProps),
-            isAttachmentUploading,
-            onAttachmentPress,
-            onSendPress: handleSendPress,
-            renderScrollable,
-            textInputProps,
-          }}
-        />
-        <ImageView
-          images={images}
-          imageIndex={imageViewIndex}
-          onRequestClose={handleRequestClose}
-          visible={isImageViewVisible}
-        />
-      </SafeAreaView>
-    </UserContext.Provider>
+    <ThemeContext.Provider value={themeValue}>
+      <UserContext.Provider value={user}>
+        <SafeAreaView style={container} onLayout={onLayout}>
+          <Input
+            {...{
+              ...unwrap(inputProps),
+              isAttachmentUploading,
+              onAttachmentPress,
+              onSendPress: handleSendPress,
+              renderScrollable,
+              textInputProps,
+            }}
+          />
+          <ImageView
+            images={images}
+            imageIndex={imageViewIndex}
+            onRequestClose={handleRequestClose}
+            visible={isImageViewVisible}
+          />
+        </SafeAreaView>
+      </UserContext.Provider>
+    </ThemeContext.Provider>
   )
 }

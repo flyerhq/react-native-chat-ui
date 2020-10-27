@@ -1,11 +1,13 @@
 import { StyleSheet } from 'react-native'
-import { MessageType, User } from '../../types'
+import { MessageType, Theme, User } from '../../types'
 
 const styles = ({
   message,
+  theme,
   user,
 }: {
   message: MessageType.File
+  theme: Theme
   user?: User
 }) =>
   StyleSheet.create({
@@ -15,28 +17,42 @@ const styles = ({
       padding: 16,
       paddingRight: 24,
     },
+    icon: {
+      tintColor:
+        user?.id === message.authorId
+          ? theme.colors.primaryText
+          : theme.colors.primary,
+    },
     iconContainer: {
       alignItems: 'center',
       backgroundColor:
-        user?.id === message.authorId ? '#ffffff33' : '#2e2c2c33',
+        user?.id === message.authorId
+          ? `${String(theme.colors.primaryText)}33`
+          : `${String(theme.colors.primary)}33`,
       borderRadius: 21,
       height: 42,
       justifyContent: 'center',
       width: 42,
     },
-    name: {
-      color: user?.id === message.authorId ? '#fff' : '#2e2c2c',
-      fontSize: 16,
-      fontWeight: '500',
-      lineHeight: 20,
-    },
-    size: {
-      color: user?.id === message.authorId ? '#ffffff66' : '#2e2c2c66',
-      fontSize: 12,
-      fontWeight: '500',
-      lineHeight: 16,
-      marginTop: 4,
-    },
+    name: StyleSheet.flatten([
+      theme.fonts.body1,
+      {
+        color:
+          user?.id === message.authorId
+            ? theme.colors.primaryText
+            : theme.colors.secondaryText,
+      },
+    ]),
+    size: StyleSheet.flatten([
+      theme.fonts.caption,
+      {
+        color:
+          user?.id === message.authorId
+            ? `${String(theme.colors.primaryText)}80`
+            : theme.colors.caption,
+        marginTop: 4,
+      },
+    ]),
     textContainer: {
       flexShrink: 1,
       marginLeft: 16,

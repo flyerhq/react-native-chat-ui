@@ -7,7 +7,7 @@ import * as React from 'react'
 import { Linking, StyleSheet, Text } from 'react-native'
 import ParsedText from 'react-native-parsed-text'
 import { MessageType } from '../../types'
-import { UserContext } from '../../utils'
+import { ThemeContext, UserContext } from '../../utils'
 import styles from './styles'
 
 export interface TextMessageTopLevelProps {
@@ -30,10 +30,12 @@ export const TextMessage = ({
   messageWidth,
   onPreviewDataFetched,
 }: TextMessageProps) => {
+  const theme = React.useContext(ThemeContext)
   const user = React.useContext(UserContext)
   const [previewData, setPreviewData] = React.useState(message.previewData)
   const { descriptionText, titleText, text } = styles({
     message,
+    theme,
     user,
   })
 

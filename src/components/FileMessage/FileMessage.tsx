@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { MessageType } from '../../types'
-import { formatBytes, UserContext } from '../../utils'
+import { formatBytes, ThemeContext, UserContext } from '../../utils'
 import styles from './styles'
 
 export interface FileMessageProps {
@@ -10,9 +10,11 @@ export interface FileMessageProps {
 }
 
 export const FileMessage = ({ message, onPress }: FileMessageProps) => {
+  const theme = React.useContext(ThemeContext)
   const user = React.useContext(UserContext)
-  const { container, iconContainer, name, size, textContainer } = styles({
+  const { container, icon, iconContainer, name, size, textContainer } = styles({
     message,
+    theme,
     user,
   })
 
@@ -26,7 +28,10 @@ export const FileMessage = ({ message, onPress }: FileMessageProps) => {
     >
       <View style={container}>
         <View style={iconContainer}>
-          <Image source={require('../../assets/icon-document.png')} />
+          <Image
+            source={require('../../assets/icon-document.png')}
+            style={icon}
+          />
         </View>
         <View style={textContainer}>
           <Text accessibilityRole='text' style={name}>

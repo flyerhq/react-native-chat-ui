@@ -1,4 +1,5 @@
 import { PreviewData } from '@flyerhq/react-native-link-preview'
+import { ColorValue, StyleProp, TextStyle } from 'react-native'
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace MessageType {
@@ -66,6 +67,31 @@ export interface SendImageCallbackParams {
 export interface Size {
   height: number
   width: number
+}
+
+export interface Theme {
+  colors: ThemeColors
+  fonts: ThemeFonts
+}
+
+export interface ThemeColors {
+  background: ColorValue
+  caption: ColorValue
+  error: ColorValue
+  inputBackground: ColorValue
+  inputText: ColorValue
+  primary: ColorValue
+  primaryText: ColorValue
+  secondary: ColorValue
+  secondaryText: ColorValue
+}
+
+export interface ThemeFonts {
+  body1: StyleProp<TextStyle>
+  body2: StyleProp<TextStyle>
+  caption: StyleProp<TextStyle>
+  subtitle1: StyleProp<TextStyle>
+  subtitle2: StyleProp<TextStyle>
 }
 
 export interface User {
