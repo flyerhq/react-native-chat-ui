@@ -49,9 +49,9 @@ export const Chat = ({
   theme,
   user,
 }: ChatProps) => {
-  const themeProviderValue = theme ?? defaultTheme
+  const themeValue = theme ?? defaultTheme
   const { container, dateDivider, flatList, footer } = styles({
-    theme: themeProviderValue,
+    theme: themeValue,
   })
 
   const { onLayout, size } = useComponentSize()
@@ -211,7 +211,7 @@ export const Chat = ({
   )
 
   return (
-    <ThemeContext.Provider value={themeProviderValue}>
+    <ThemeContext.Provider value={themeValue}>
       <UserContext.Provider value={user}>
         <SafeAreaView style={container} onLayout={onLayout}>
           <Input

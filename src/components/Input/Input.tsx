@@ -129,7 +129,7 @@ export const Input = ({
             <CircularActivityIndicator
               {...{
                 ...attachmentCircularActivityIndicatorProps,
-                color: theme.colors.primaryText,
+                color: theme.colors.inputText,
               }}
             />
           ) : (
