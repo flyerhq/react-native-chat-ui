@@ -15,22 +15,28 @@ const styles = ({
       theme.fonts.body2,
       {
         color:
-          user?.id === message.authorId ? theme.colors.primaryText : '#2e2c2c',
+          user?.id === message.authorId
+            ? theme.colors.primaryText
+            : theme.colors.secondaryText,
         marginTop: 4,
       },
     ]),
     titleText: StyleSheet.flatten([
-      theme.fonts.subtitle,
+      theme.fonts.subtitle1,
       {
         color:
-          user?.id === message.authorId ? theme.colors.primaryText : '#2e2c2c',
+          user?.id === message.authorId
+            ? theme.colors.primaryText
+            : theme.colors.secondaryText,
       },
     ]),
     text: StyleSheet.flatten([
       theme.fonts.body1,
       {
         color:
-          user?.id === message.authorId ? theme.colors.primaryText : '#2e2c2c',
+          user?.id === message.authorId
+            ? theme.colors.primaryText
+            : theme.colors.secondaryText,
       },
     ]),
   })

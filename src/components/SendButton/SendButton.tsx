@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native'
+import { ThemeContext } from '../../utils'
 
 export interface SendButtonPropsAdditionalProps {
   touchableOpacityProps?: TouchableOpacityProps
@@ -18,6 +19,8 @@ export const SendButton = ({
   onPress,
   touchableOpacityProps,
 }: SendButtonProps) => {
+  const theme = React.useContext(ThemeContext)
+
   const handlePress = (event: GestureResponderEvent) => {
     onPress()
     touchableOpacityProps?.onPress?.(event)
@@ -30,7 +33,10 @@ export const SendButton = ({
       {...touchableOpacityProps}
       onPress={handlePress}
     >
-      <Image source={require('../../assets/icon-send.png')} />
+      <Image
+        source={require('../../assets/icon-send.png')}
+        style={{ tintColor: theme.colors.inputText }}
+      />
     </TouchableOpacity>
   )
 }

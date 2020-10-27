@@ -17,26 +17,39 @@ const styles = ({
       padding: 16,
       paddingRight: 24,
     },
+    icon: {
+      tintColor:
+        user?.id === message.authorId
+          ? theme.colors.primaryText
+          : theme.colors.primary,
+    },
     iconContainer: {
       alignItems: 'center',
       backgroundColor:
-        user?.id === message.authorId ? '#ffffff33' : '#2e2c2c33',
+        user?.id === message.authorId
+          ? `${String(theme.colors.primaryText)}33`
+          : `${String(theme.colors.primary)}33`,
       borderRadius: 21,
       height: 42,
       justifyContent: 'center',
       width: 42,
     },
     name: StyleSheet.flatten([
-      theme.fonts.caption,
+      theme.fonts.body1,
       {
         color:
-          user?.id === message.authorId ? theme.colors.primaryText : '#2e2c2c',
+          user?.id === message.authorId
+            ? theme.colors.primaryText
+            : theme.colors.secondaryText,
       },
     ]),
     size: StyleSheet.flatten([
       theme.fonts.caption,
       {
-        color: user?.id === message.authorId ? '#ffffff66' : '#2e2c2c66',
+        color:
+          user?.id === message.authorId
+            ? `${String(theme.colors.primaryText)}80`
+            : theme.colors.caption,
         marginTop: 4,
       },
     ]),

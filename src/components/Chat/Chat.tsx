@@ -50,9 +50,10 @@ export const Chat = ({
   user,
 }: ChatProps) => {
   const themeProviderValue = theme ?? defaultTheme
-  const { container, dateDivider, footer, flatList } = styles({
+  const { container, dateDivider, flatList, footer } = styles({
     theme: themeProviderValue,
   })
+
   const { onLayout, size } = useComponentSize()
   const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
   const [imageViewIndex, setImageViewIndex] = React.useState(0)

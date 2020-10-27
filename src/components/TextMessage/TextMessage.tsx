@@ -30,8 +30,8 @@ export const TextMessage = ({
   messageWidth,
   onPreviewDataFetched,
 }: TextMessageProps) => {
-  const user = React.useContext(UserContext)
   const theme = React.useContext(ThemeContext)
+  const user = React.useContext(UserContext)
   const [previewData, setPreviewData] = React.useState(message.previewData)
   const { descriptionText, titleText, text } = styles({
     message,

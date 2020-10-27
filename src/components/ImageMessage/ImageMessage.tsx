@@ -21,8 +21,8 @@ export const ImageMessage = ({
   messageWidth,
   onPress,
 }: ImageMessageProps) => {
-  const user = React.useContext(UserContext)
   const theme = React.useContext(ThemeContext)
+  const user = React.useContext(UserContext)
   const defaultHeight = message.height ?? 0
   const defaultWidth = message.width ?? 0
   const [size, setSize] = React.useState<Size>({

@@ -12,7 +12,7 @@ export default ({ theme }: { theme: Theme }) =>
     input: StyleSheet.flatten([
       theme.fonts.body1,
       {
-        color: theme.colors.primaryText,
+        color: theme.colors.inputText,
         flex: 1,
         maxHeight: 100,
         // Fixes default paddings for Android

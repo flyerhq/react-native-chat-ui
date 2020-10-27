@@ -79,6 +79,7 @@ export interface ThemeColors {
   caption: ColorValue
   error: ColorValue
   inputBackground: ColorValue
+  inputText: ColorValue
   primary: ColorValue
   primaryText: ColorValue
   secondary: ColorValue
@@ -89,7 +90,8 @@ export interface ThemeFonts {
   body1: StyleProp<TextStyle>
   body2: StyleProp<TextStyle>
   caption: StyleProp<TextStyle>
-  subtitle: StyleProp<TextStyle>
+  subtitle1: StyleProp<TextStyle>
+  subtitle2: StyleProp<TextStyle>
 }
 
 export interface User {

@@ -10,9 +10,9 @@ export interface FileMessageProps {
 }
 
 export const FileMessage = ({ message, onPress }: FileMessageProps) => {
-  const user = React.useContext(UserContext)
   const theme = React.useContext(ThemeContext)
-  const { container, iconContainer, name, size, textContainer } = styles({
+  const user = React.useContext(UserContext)
+  const { container, icon, iconContainer, name, size, textContainer } = styles({
     message,
     theme,
     user,
@@ -28,7 +28,10 @@ export const FileMessage = ({ message, onPress }: FileMessageProps) => {
     >
       <View style={container}>
         <View style={iconContainer}>
-          <Image source={require('../../assets/icon-document.png')} />
+          <Image
+            source={require('../../assets/icon-document.png')}
+            style={icon}
+          />
         </View>
         <View style={textContainer}>
           <Text accessibilityRole='text' style={name}>

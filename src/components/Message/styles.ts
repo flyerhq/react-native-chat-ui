@@ -25,7 +25,7 @@ const styles = ({
       backgroundColor:
         user?.id !== message.authorId || message.type === 'image'
           ? theme.colors.secondary
-          : '#6054c9',
+          : theme.colors.primary,
       borderBottomLeftRadius: user?.id === message.authorId ? 20 : 0,
       borderBottomRightRadius: user?.id === message.authorId ? 0 : 20,
       borderColor: 'transparent',
@@ -34,7 +34,7 @@ const styles = ({
       overflow: 'hidden',
     },
     status: {
-      tintColor: '#6054c9',
+      tintColor: theme.colors.primary,
     },
     statusContainer: {
       alignItems: 'center',

@@ -6,6 +6,7 @@ export const defaultTheme: Theme = {
     caption: '#9e9cab',
     error: '#ff6767',
     inputBackground: '#1d1d21',
+    inputText: '#ffffff',
     primary: '#6f61e8',
     primaryText: '#ffffff',
     secondary: '#f7f7f8',
@@ -30,11 +31,17 @@ export const defaultTheme: Theme = {
       fontWeight: '500',
       lineHeight: 16,
     },
-    subtitle: {
+    subtitle1: {
       fontFamily: 'Avenir',
       fontSize: 16,
-      fontWeight: 'bold',
+      fontWeight: '800',
       lineHeight: 22,
+    },
+    subtitle2: {
+      fontFamily: 'Avenir',
+      fontSize: 12,
+      fontWeight: '800',
+      lineHeight: 16,
     },
   },
 }

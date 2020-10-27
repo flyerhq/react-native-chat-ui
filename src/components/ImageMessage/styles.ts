@@ -30,20 +30,27 @@ const styles = ({
     minimizedImageContainer: {
       alignItems: 'center',
       backgroundColor:
-        user?.id === message.authorId ? '#6054c9' : theme.colors.secondary,
+        user?.id === message.authorId
+          ? theme.colors.primary
+          : theme.colors.secondary,
       flexDirection: 'row',
     },
     nameText: StyleSheet.flatten([
-      theme.fonts.caption,
+      theme.fonts.body1,
       {
         color:
-          user?.id === message.authorId ? theme.colors.primaryText : '#2e2c2c',
+          user?.id === message.authorId
+            ? theme.colors.primaryText
+            : theme.colors.secondaryText,
       },
     ]),
     sizeText: StyleSheet.flatten([
       theme.fonts.caption,
       {
-        color: user?.id === message.authorId ? '#ffffff66' : '#2e2c2c66',
+        color:
+          user?.id === message.authorId
+            ? `${String(theme.colors.primaryText)}80`
+            : theme.colors.caption,
         marginTop: 4,
       },
     ]),

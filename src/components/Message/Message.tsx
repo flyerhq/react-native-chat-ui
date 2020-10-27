@@ -46,8 +46,8 @@ export const Message = ({
   renderTextMessage,
   shouldRenderTime,
 }: MessageProps) => {
-  const user = React.useContext(UserContext)
   const theme = React.useContext(ThemeContext)
+  const user = React.useContext(UserContext)
   const { container, contentContainer, status, statusContainer, time } = styles(
     {
       message,
@@ -101,7 +101,10 @@ export const Message = ({
           {user?.id === message.authorId && (
             <>
               {message.status === 'sending' && (
-                <CircularActivityIndicator color='#6054c9' size={12} />
+                <CircularActivityIndicator
+                  color={theme.colors.primary}
+                  size={12}
+                />
               )}
               {(message.status === 'read' || message.status === 'sent') && (
                 <Image

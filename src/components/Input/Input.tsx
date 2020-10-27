@@ -51,9 +51,10 @@ export const Input = ({
   renderScrollable,
   textInputProps,
 }: InputProps) => {
-  const user = React.useContext(UserContext)
   const theme = React.useContext(ThemeContext)
+  const user = React.useContext(UserContext)
   const { container, input, keyboardAccessoryView } = styles({ theme })
+
   // Use `defaultValue` if provided
   const [text, setText] = React.useState(textInputProps?.defaultValue ?? '')
 
@@ -128,7 +129,7 @@ export const Input = ({
             <CircularActivityIndicator
               {...{
                 ...attachmentCircularActivityIndicatorProps,
-                color: theme.colors.background,
+                color: theme.colors.primaryText,
               }}
             />
           ) : (
@@ -140,7 +141,7 @@ export const Input = ({
         <TextInput
           multiline
           placeholder='Your message here'
-          placeholderTextColor='#fffc'
+          placeholderTextColor={`${String(theme.colors.inputText)}80`}
           underlineColorAndroid='transparent'
           {...textInputProps}
           // Keep our implementation but allow user to use these `TextInputProps`
