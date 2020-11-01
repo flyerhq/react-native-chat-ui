@@ -21,4 +21,9 @@ export default ({ theme }: { theme: Theme }) =>
     footer: {
       height: 16,
     },
+    keyboardAccessoryView: {
+      backgroundColor: theme.colors.inputBackground,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+    },
   })

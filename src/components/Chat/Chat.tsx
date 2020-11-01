@@ -1,4 +1,7 @@
-import { useComponentSize } from '@flyerhq/react-native-keyboard-accessory-view'
+import {
+  KeyboardAccessoryView,
+  useComponentSize,
+} from '@flyerhq/react-native-keyboard-accessory-view'
 import dayjs from 'dayjs'
 import calendar from 'dayjs/plugin/calendar'
 import * as React from 'react'
@@ -50,7 +53,13 @@ export const Chat = ({
   user,
 }: ChatProps) => {
   const themeValue = theme ?? defaultTheme
-  const { container, dateDivider, flatList, footer } = styles({
+  const {
+    container,
+    dateDivider,
+    flatList,
+    footer,
+    keyboardAccessoryView,
+  } = styles({
     theme: themeValue,
   })
 
@@ -214,16 +223,23 @@ export const Chat = ({
     <ThemeContext.Provider value={themeValue}>
       <UserContext.Provider value={user}>
         <SafeAreaView style={container} onLayout={onLayout}>
-          <Input
+          <KeyboardAccessoryView
             {...{
-              ...unwrap(inputProps),
-              isAttachmentUploading,
-              onAttachmentPress,
-              onSendPress: handleSendPress,
               renderScrollable,
-              textInputProps,
+              style: keyboardAccessoryView,
             }}
-          />
+          >
+            <Input
+              {...{
+                ...unwrap(inputProps),
+                isAttachmentUploading,
+                onAttachmentPress,
+                onSendPress: handleSendPress,
+                renderScrollable,
+                textInputProps,
+              }}
+            />
+          </KeyboardAccessoryView>
           <ImageView
             images={images}
             imageIndex={imageViewIndex}

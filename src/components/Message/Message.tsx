@@ -34,92 +34,107 @@ export interface MessageProps extends MessageTopLevelProps {
   shouldRenderTime: boolean
 }
 
-export const Message = ({
-  message,
-  messageWidth,
-  onFilePress,
-  onImagePress,
-  onPreviewDataFetched,
-  previousMessageSameAuthor,
-  renderFileMessage,
-  renderImageMessage,
-  renderTextMessage,
-  shouldRenderTime,
-}: MessageProps) => {
-  const theme = React.useContext(ThemeContext)
-  const user = React.useContext(UserContext)
-  const { container, contentContainer, status, statusContainer, time } = styles(
-    {
+export const Message = React.memo(
+  ({
+    message,
+    messageWidth,
+    onFilePress,
+    onImagePress,
+    onPreviewDataFetched,
+    previousMessageSameAuthor,
+    renderFileMessage,
+    renderImageMessage,
+    renderTextMessage,
+    shouldRenderTime,
+  }: MessageProps) => {
+    const theme = React.useContext(ThemeContext)
+    const user = React.useContext(UserContext)
+    const {
+      container,
+      contentContainer,
+      status,
+      statusContainer,
+      time,
+    } = styles({
       message,
       messageWidth,
       previousMessageSameAuthor,
       theme,
       user,
-    }
-  )
+    })
 
-  const renderMessage = () => {
-    switch (message.type) {
-      case 'file':
-        return oneOf(
-          renderFileMessage,
-          <FileMessage message={message} onPress={onFilePress} />
-        )(message, messageWidth)
-      case 'image':
-        return oneOf(
-          renderImageMessage,
-          <ImageMessage
-            {...{
-              message,
-              messageWidth,
-              onPress: onImagePress,
-            }}
-          />
-        )(message, messageWidth)
-      case 'text':
-        return oneOf(
-          renderTextMessage,
-          <TextMessage
-            {...{
-              message,
-              messageWidth,
-              onPreviewDataFetched,
-            }}
-          />
-        )(message, messageWidth)
-    }
+    const renderMessage = React.useCallback(() => {
+      switch (message.type) {
+        case 'file':
+          return oneOf(
+            renderFileMessage,
+            <FileMessage message={message} onPress={onFilePress} />
+          )(message, messageWidth)
+        case 'image':
+          return oneOf(
+            renderImageMessage,
+            <ImageMessage
+              {...{
+                message,
+                messageWidth,
+                onPress: onImagePress,
+              }}
+            />
+          )(message, messageWidth)
+        case 'text':
+          return oneOf(
+            renderTextMessage,
+            <TextMessage
+              {...{
+                message,
+                messageWidth,
+                onPreviewDataFetched,
+              }}
+            />
+          )(message, messageWidth)
+      }
+    }, [
+      message,
+      messageWidth,
+      onFilePress,
+      onImagePress,
+      onPreviewDataFetched,
+      renderFileMessage,
+      renderImageMessage,
+      renderTextMessage,
+    ])
+
+    return (
+      <View style={container}>
+        <View style={contentContainer}>{renderMessage()}</View>
+        {shouldRenderTime && (
+          <View style={statusContainer}>
+            <Text style={time}>
+              {dayjs.unix(message.timestamp).format('h:mm a')}
+            </Text>
+            {user?.id === message.authorId && (
+              <>
+                {message.status === 'sending' && (
+                  <CircularActivityIndicator
+                    color={theme.colors.primary}
+                    size={12}
+                  />
+                )}
+                {(message.status === 'read' || message.status === 'sent') && (
+                  <Image
+                    source={
+                      message.status === 'read'
+                        ? require('../../assets/icon-read.png')
+                        : require('../../assets/icon-sent.png')
+                    }
+                    style={status}
+                  />
+                )}
+              </>
+            )}
+          </View>
+        )}
+      </View>
+    )
   }
-
-  return (
-    <View style={container}>
-      <View style={contentContainer}>{renderMessage()}</View>
-      {shouldRenderTime && (
-        <View style={statusContainer}>
-          <Text style={time}>
-            {dayjs.unix(message.timestamp).format('h:mm a')}
-          </Text>
-          {user?.id === message.authorId && (
-            <>
-              {message.status === 'sending' && (
-                <CircularActivityIndicator
-                  color={theme.colors.primary}
-                  size={12}
-                />
-              )}
-              {(message.status === 'read' || message.status === 'sent') && (
-                <Image
-                  source={
-                    message.status === 'read'
-                      ? require('../../assets/icon-read.png')
-                      : require('../../assets/icon-sent.png')
-                  }
-                  style={status}
-                />
-              )}
-            </>
-          )}
-        </View>
-      )}
-    </View>
-  )
-}
+)
