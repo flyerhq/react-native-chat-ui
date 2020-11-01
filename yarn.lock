@@ -741,10 +741,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@flyerhq/react-native-keyboard-accessory-view@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@flyerhq/react-native-keyboard-accessory-view/-/react-native-keyboard-accessory-view-2.0.0.tgz#91ef85f181ed756ed841432d7b44ee8d6e454e76"
-  integrity sha512-e/ByZbU2WSEudMoTPHCQzm0xRFSRcb5FknEKjfl+B66b+c85SS0uvMAz1Fzm8wlPPiMhAngxw1vfy3dPmRB2Ig==
+"@flyerhq/react-native-keyboard-accessory-view@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@flyerhq/react-native-keyboard-accessory-view/-/react-native-keyboard-accessory-view-2.1.0.tgz#6368c994907fc055ac956df6f671dbeeee909333"
+  integrity sha512-bTR0T224vt1GOPX4vdox/Oi4mcUFbNUuzqgy825p32/bWOa3RRlDR4n18AvPRaS9KwqjNTheQJvHoRsFe/W0rA==
 
 "@flyerhq/react-native-link-preview@^1.0.5":
   version "1.0.5"
