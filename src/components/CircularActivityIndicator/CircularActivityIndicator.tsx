@@ -20,12 +20,12 @@ export const CircularActivityIndicator = ({
   size = 24,
   style,
 }: CircularActivityIndicatorProps) => {
-  const { current } = React.useRef(new Animated.Value(0))
+  const spinValue = React.useRef(new Animated.Value(0)).current
   const { circle } = styles({ color, size })
 
   React.useEffect(() => {
     Animated.loop(
-      Animated.timing(current, {
+      Animated.timing(spinValue, {
         toValue: 1,
         duration: 600,
         easing: Easing.linear,
@@ -41,7 +41,7 @@ export const CircularActivityIndicator = ({
         {
           transform: [
             {
-              rotate: current.interpolate({
+              rotate: spinValue.interpolate({
                 inputRange: [0, 1],
                 outputRange: ['0deg', '360deg'],
               }),

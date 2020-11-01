@@ -1,11 +1,5 @@
 import * as React from 'react'
-import {
-  GestureResponderHandlers,
-  StyleSheet,
-  TextInput,
-  TextInputProps,
-  View,
-} from 'react-native'
+import { StyleSheet, TextInput, TextInputProps, View } from 'react-native'
 import {
   MessageType,
   SendAttachmentCallback,
@@ -37,7 +31,7 @@ export interface InputAdditionalProps {
   attachmentCircularActivityIndicatorProps?: CircularActivityIndicatorProps
 }
 
-export interface InputProps extends InputTopLevelProps, InputAdditionalProps {}
+export type InputProps = InputTopLevelProps & InputAdditionalProps
 
 export const Input = ({
   attachmentButtonProps,
