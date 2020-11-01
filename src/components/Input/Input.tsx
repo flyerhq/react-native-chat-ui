@@ -1,4 +1,3 @@
-import { KeyboardAccessoryView } from '@flyerhq/react-native-keyboard-accessory-view'
 import * as React from 'react'
 import {
   GestureResponderHandlers,
@@ -38,9 +37,7 @@ export interface InputAdditionalProps {
   attachmentCircularActivityIndicatorProps?: CircularActivityIndicatorProps
 }
 
-export interface InputProps extends InputTopLevelProps, InputAdditionalProps {
-  renderScrollable: (panHandlers: GestureResponderHandlers) => React.ReactNode
-}
+export interface InputProps extends InputTopLevelProps, InputAdditionalProps {}
 
 export const Input = ({
   attachmentButtonProps,
@@ -48,12 +45,11 @@ export const Input = ({
   isAttachmentUploading,
   onAttachmentPress,
   onSendPress,
-  renderScrollable,
   textInputProps,
 }: InputProps) => {
   const theme = React.useContext(ThemeContext)
   const user = React.useContext(UserContext)
-  const { container, input, keyboardAccessoryView } = styles({ theme })
+  const { container, input } = styles({ theme })
 
   // Use `defaultValue` if provided
   const [text, setText] = React.useState(textInputProps?.defaultValue ?? '')
@@ -117,40 +113,33 @@ export const Input = ({
   }
 
   return (
-    <KeyboardAccessoryView
-      {...{
-        renderScrollable,
-        style: keyboardAccessoryView,
-      }}
-    >
-      <View style={container}>
-        {user &&
-          (isAttachmentUploading ? (
-            <CircularActivityIndicator
-              {...{
-                ...attachmentCircularActivityIndicatorProps,
-                color: theme.colors.inputText,
-              }}
-            />
-          ) : (
-            <AttachmentButton
-              {...unwrap(attachmentButtonProps)}
-              onPress={onAttachmentPress?.bind(null, handleSendAttachment)}
-            />
-          ))}
-        <TextInput
-          multiline
-          placeholder='Your message here'
-          placeholderTextColor={`${String(theme.colors.inputText)}80`}
-          underlineColorAndroid='transparent'
-          {...textInputProps}
-          // Keep our implementation but allow user to use these `TextInputProps`
-          style={StyleSheet.flatten([input, textInputProps?.style])}
-          onChangeText={handleChangeText}
-          value={value}
-        />
-        {user && value.trim() ? <SendButton onPress={handleSend} /> : null}
-      </View>
-    </KeyboardAccessoryView>
+    <View style={container}>
+      {user &&
+        (isAttachmentUploading ? (
+          <CircularActivityIndicator
+            {...{
+              ...attachmentCircularActivityIndicatorProps,
+              color: theme.colors.inputText,
+            }}
+          />
+        ) : (
+          <AttachmentButton
+            {...unwrap(attachmentButtonProps)}
+            onPress={onAttachmentPress?.bind(null, handleSendAttachment)}
+          />
+        ))}
+      <TextInput
+        multiline
+        placeholder='Your message here'
+        placeholderTextColor={`${String(theme.colors.inputText)}80`}
+        underlineColorAndroid='transparent'
+        {...textInputProps}
+        // Keep our implementation but allow user to use these `TextInputProps`
+        style={StyleSheet.flatten([input, textInputProps?.style])}
+        onChangeText={handleChangeText}
+        value={value}
+      />
+      {user && value.trim() ? <SendButton onPress={handleSend} /> : null}
+    </View>
   )
 }

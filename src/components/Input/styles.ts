@@ -21,9 +21,4 @@ export default ({ theme }: { theme: Theme }) =>
         paddingTop: 0,
       },
     ]),
-    keyboardAccessoryView: {
-      backgroundColor: theme.colors.inputBackground,
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
-    },
   })
