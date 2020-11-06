@@ -6,7 +6,7 @@ import {
 } from '@flyerhq/react-native-chat-ui'
 import { PreviewData } from '@flyerhq/react-native-link-preview'
 import React, { useState } from 'react'
-import { StatusBar } from 'react-native'
+import { Button, StatusBar } from 'react-native'
 import DocumentPicker from 'react-native-document-picker'
 import FileViewer from 'react-native-file-viewer'
 import ImagePicker from 'react-native-image-crop-picker'
@@ -111,6 +111,7 @@ const App = () => {
         onFilePress={handleFilePress}
         onPreviewDataFetched={handlePreviewDataFetched}
         onSendPress={handleSendPress}
+        locale='fr'
         user={{
           id: '06c33e8b-e835-4736-80f4-63f44b66666c',
           name: 'Alex',

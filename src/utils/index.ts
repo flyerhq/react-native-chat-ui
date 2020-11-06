@@ -1,7 +1,8 @@
+import dayjs from 'dayjs'
 import * as React from 'react'
 import Blob from 'react-native/Libraries/Blob/Blob'
 import { defaultTheme } from '../theme'
-import { Theme, User } from '../types'
+import { Locale, Theme, User } from '../types'
 
 export const ThemeContext = React.createContext<Theme>(defaultTheme)
 export const UserContext = React.createContext<User | undefined>(undefined)
@@ -26,4 +27,15 @@ export const uuidv4 = () => {
     const v = c === 'x' ? r : (r % 4) + 8
     return v.toString(16)
   })
+}
+
+export const initLocale = (locale?: Locale) => {
+  const locales = {
+    en: require('dayjs/locale/en'),
+    pl: require('dayjs/locale/pl'),
+    de: require('dayjs/locale/de'),
+    fr: require('dayjs/locale/fr'),
+  }
+  locale ? locales[locale] : locales.en
+  dayjs.locale(locale)
 }

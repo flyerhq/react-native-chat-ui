@@ -18,8 +18,8 @@ import {
 } from 'react-native'
 import ImageView from 'react-native-image-viewing'
 import { defaultTheme } from '../../theme'
-import { MessageType, Theme, User } from '../../types'
-import { ThemeContext, unwrap, UserContext } from '../../utils'
+import { Locale, MessageType, Theme, User } from '../../types'
+import { initLocale, ThemeContext, unwrap, UserContext } from '../../utils'
 import { Input, InputAdditionalProps, InputTopLevelProps } from '../Input'
 import { Message, MessageTopLevelProps } from '../Message'
 import styles from './styles'
@@ -31,6 +31,7 @@ export type ChatTopLevelProps = InputTopLevelProps & MessageTopLevelProps
 export interface ChatProps extends ChatTopLevelProps {
   flatListProps?: FlatListProps<MessageType.Any[]>
   inputProps?: InputAdditionalProps
+  locale?: Locale
   messages: MessageType.Any[]
   theme?: Theme
   user: User
@@ -40,6 +41,7 @@ export const Chat = ({
   flatListProps,
   inputProps,
   isAttachmentUploading,
+  locale,
   messages,
   onAttachmentPress,
   onFilePress,
@@ -73,6 +75,10 @@ export const Chat = ({
   )
   const list = React.useRef<FlatList<MessageType.Any>>(null)
   const messageWidth = Math.floor(Math.min(size.width * 0.77, 440))
+
+  React.useEffect(() => {
+    initLocale(locale)
+  }, [locale])
 
   const handleImagePress = React.useCallback(
     (url: string) => {
