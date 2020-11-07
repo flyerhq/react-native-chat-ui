@@ -11,6 +11,7 @@ import { TextMessage, TextMessageTopLevelProps } from '../TextMessage'
 import styles from './styles'
 
 export interface MessageTopLevelProps extends TextMessageTopLevelProps {
+  messageTimeFormat?: string
   onFilePress?: (file: MessageType.File) => void
   renderFileMessage?: (
     message: MessageType.File,
@@ -37,6 +38,7 @@ export interface MessageProps extends MessageTopLevelProps {
 export const Message = React.memo(
   ({
     message,
+    messageTimeFormat = 'h:mm a',
     messageWidth,
     onFilePress,
     onImagePress,
@@ -110,7 +112,7 @@ export const Message = React.memo(
         {shouldRenderTime && (
           <View style={statusContainer}>
             <Text style={time}>
-              {dayjs.unix(message.timestamp).format('h:mm a')}
+              {dayjs.unix(message.timestamp).format(messageTimeFormat)}
             </Text>
             {user?.id === message.authorId && (
               <>

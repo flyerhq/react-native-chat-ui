@@ -1,7 +1,12 @@
 import * as React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { MessageType } from '../../types'
-import { formatBytes, ThemeContext, UserContext } from '../../utils'
+import {
+  formatBytes,
+  L10nContext,
+  ThemeContext,
+  UserContext,
+} from '../../utils'
 import styles from './styles'
 
 export interface FileMessageProps {
@@ -10,6 +15,7 @@ export interface FileMessageProps {
 }
 
 export const FileMessage = ({ message, onPress }: FileMessageProps) => {
+  const l10n = React.useContext(L10nContext)
   const theme = React.useContext(ThemeContext)
   const user = React.useContext(UserContext)
   const { container, icon, iconContainer, name, size, textContainer } = styles({
@@ -22,8 +28,8 @@ export const FileMessage = ({ message, onPress }: FileMessageProps) => {
 
   return (
     <TouchableOpacity
+      accessibilityLabel={l10n.fileButtonAccessibilityLabel}
       accessibilityRole='button'
-      accessibilityLabel='Open a file'
       onPress={handlePress}
     >
       <View style={container}>
@@ -34,9 +40,7 @@ export const FileMessage = ({ message, onPress }: FileMessageProps) => {
           />
         </View>
         <View style={textContainer}>
-          <Text accessibilityRole='text' style={name}>
-            {message.fileName}
-          </Text>
+          <Text style={name}>{message.fileName}</Text>
           <Text style={size}>{formatBytes(message.size)}</Text>
         </View>
       </View>

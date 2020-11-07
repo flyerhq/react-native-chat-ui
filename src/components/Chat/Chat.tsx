@@ -17,9 +17,16 @@ import {
   View,
 } from 'react-native'
 import ImageView from 'react-native-image-viewing'
+import { l10n } from '../../l10n'
 import { defaultTheme } from '../../theme'
-import { Locale, MessageType, Theme, User } from '../../types'
-import { initLocale, ThemeContext, unwrap, UserContext } from '../../utils'
+import { MessageType, Theme, User } from '../../types'
+import {
+  initLocale,
+  L10nContext,
+  ThemeContext,
+  unwrap,
+  UserContext,
+} from '../../utils'
 import { Input, InputAdditionalProps, InputTopLevelProps } from '../Input'
 import { Message, MessageTopLevelProps } from '../Message'
 import styles from './styles'
@@ -29,20 +36,23 @@ dayjs.extend(calendar)
 export type ChatTopLevelProps = InputTopLevelProps & MessageTopLevelProps
 
 export interface ChatProps extends ChatTopLevelProps {
+  dateDividerFormat?: string
   flatListProps?: FlatListProps<MessageType.Any[]>
   inputProps?: InputAdditionalProps
-  locale?: Locale
+  locale?: keyof typeof l10n
   messages: MessageType.Any[]
   theme?: Theme
   user: User
 }
 
 export const Chat = ({
+  dateDividerFormat = 'DD MMMM',
   flatListProps,
   inputProps,
   isAttachmentUploading,
-  locale,
+  locale = 'en',
   messages,
+  messageTimeFormat,
   onAttachmentPress,
   onFilePress,
   onPreviewDataFetched,
@@ -148,6 +158,7 @@ export const Chat = ({
           <Message
             {...{
               message,
+              messageTimeFormat,
               messageWidth,
               onFilePress,
               onImagePress: handleImagePress,
@@ -167,12 +178,12 @@ export const Chat = ({
               ])}
             >
               {dayjs.unix(message.timestamp).calendar(undefined, {
-                sameDay: '[Today]',
-                nextDay: 'DD MMMM',
-                nextWeek: 'DD MMMM',
-                lastDay: '[Yesterday]',
-                lastWeek: 'DD MMMM',
-                sameElse: 'DD MMMM',
+                sameDay: `[${l10n[locale].today}]`,
+                nextDay: dateDividerFormat,
+                nextWeek: dateDividerFormat,
+                lastDay: `[${l10n[locale].yesterday}]`,
+                lastWeek: dateDividerFormat,
+                sameElse: dateDividerFormat,
               })}
             </Text>
           )}
@@ -181,7 +192,10 @@ export const Chat = ({
     },
     [
       dateDivider,
+      dateDividerFormat,
       handleImagePress,
+      locale,
+      messageTimeFormat,
       messageWidth,
       messages,
       onFilePress,
@@ -226,34 +240,36 @@ export const Chat = ({
   )
 
   return (
-    <ThemeContext.Provider value={themeValue}>
-      <UserContext.Provider value={user}>
-        <SafeAreaView style={container} onLayout={onLayout}>
-          <KeyboardAccessoryView
-            {...{
-              renderScrollable,
-              style: keyboardAccessoryView,
-            }}
-          >
-            <Input
+    <UserContext.Provider value={user}>
+      <ThemeContext.Provider value={themeValue}>
+        <L10nContext.Provider value={l10n[locale]}>
+          <SafeAreaView style={container} onLayout={onLayout}>
+            <KeyboardAccessoryView
               {...{
-                ...unwrap(inputProps),
-                isAttachmentUploading,
-                onAttachmentPress,
-                onSendPress: handleSendPress,
                 renderScrollable,
-                textInputProps,
+                style: keyboardAccessoryView,
               }}
+            >
+              <Input
+                {...{
+                  ...unwrap(inputProps),
+                  isAttachmentUploading,
+                  onAttachmentPress,
+                  onSendPress: handleSendPress,
+                  renderScrollable,
+                  textInputProps,
+                }}
+              />
+            </KeyboardAccessoryView>
+            <ImageView
+              images={images}
+              imageIndex={imageViewIndex}
+              onRequestClose={handleRequestClose}
+              visible={isImageViewVisible}
             />
-          </KeyboardAccessoryView>
-          <ImageView
-            images={images}
-            imageIndex={imageViewIndex}
-            onRequestClose={handleRequestClose}
-            visible={isImageViewVisible}
-          />
-        </SafeAreaView>
-      </UserContext.Provider>
-    </ThemeContext.Provider>
+          </SafeAreaView>
+        </L10nContext.Provider>
+      </ThemeContext.Provider>
+    </UserContext.Provider>
   )
 }

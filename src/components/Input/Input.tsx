@@ -7,7 +7,13 @@ import {
   SendFileCallbackParams,
   SendImageCallbackParams,
 } from '../../types'
-import { ThemeContext, unwrap, UserContext, uuidv4 } from '../../utils'
+import {
+  L10nContext,
+  ThemeContext,
+  unwrap,
+  UserContext,
+  uuidv4,
+} from '../../utils'
 import {
   AttachmentButton,
   AttachmentButtonAdditionalProps,
@@ -41,6 +47,7 @@ export const Input = ({
   onSendPress,
   textInputProps,
 }: InputProps) => {
+  const l10n = React.useContext(L10nContext)
   const theme = React.useContext(ThemeContext)
   const user = React.useContext(UserContext)
   const { container, input } = styles({ theme })
@@ -124,7 +131,7 @@ export const Input = ({
         ))}
       <TextInput
         multiline
-        placeholder='Your message here'
+        placeholder={l10n.inputPlaceholder}
         placeholderTextColor={`${String(theme.colors.inputText)}80`}
         underlineColorAndroid='transparent'
         {...textInputProps}

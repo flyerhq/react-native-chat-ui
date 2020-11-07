@@ -95,7 +95,6 @@ export const TextMessage = ({
     />
   ) : (
     <Text
-      accessibilityRole='text'
       style={StyleSheet.flatten([
         text,
         { marginHorizontal: 24, marginVertical: 16 },
