@@ -61,19 +61,16 @@ export const Chat = ({
   renderImageMessage,
   renderTextMessage,
   textInputProps,
-  theme,
+  theme = defaultTheme,
   user,
 }: ChatProps) => {
-  const themeValue = theme ?? defaultTheme
   const {
     container,
     dateDivider,
     flatList,
     footer,
     keyboardAccessoryView,
-  } = styles({
-    theme: themeValue,
-  })
+  } = styles({ theme })
 
   const { onLayout, size } = useComponentSize()
   const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
@@ -241,7 +238,7 @@ export const Chat = ({
 
   return (
     <UserContext.Provider value={user}>
-      <ThemeContext.Provider value={themeValue}>
+      <ThemeContext.Provider value={theme}>
         <L10nContext.Provider value={l10n[locale]}>
           <SafeAreaView style={container} onLayout={onLayout}>
             <KeyboardAccessoryView
