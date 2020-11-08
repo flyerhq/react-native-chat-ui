@@ -39,6 +39,7 @@ export interface ChatProps extends ChatTopLevelProps {
   dateDividerFormat?: string
   flatListProps?: FlatListProps<MessageType.Any[]>
   inputProps?: InputAdditionalProps
+  l10nOverride?: Partial<Record<keyof typeof l10n[keyof typeof l10n], string>>
   locale?: keyof typeof l10n
   messages: MessageType.Any[]
   theme?: Theme
@@ -50,6 +51,7 @@ export const Chat = ({
   flatListProps,
   inputProps,
   isAttachmentUploading,
+  l10nOverride,
   locale = 'en',
   messages,
   messageTimeFormat,
@@ -239,7 +241,7 @@ export const Chat = ({
   return (
     <UserContext.Provider value={user}>
       <ThemeContext.Provider value={theme}>
-        <L10nContext.Provider value={l10n[locale]}>
+        <L10nContext.Provider value={{ ...l10n[locale], ...l10nOverride }}>
           <SafeAreaView style={container} onLayout={onLayout}>
             <KeyboardAccessoryView
               {...{
