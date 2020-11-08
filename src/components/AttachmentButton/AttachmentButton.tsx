@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native'
-import { ThemeContext } from '../../utils'
+import { L10nContext, ThemeContext } from '../../utils'
 
 export interface AttachmentButtonAdditionalProps {
   touchableOpacityProps?: TouchableOpacityProps
@@ -19,6 +19,7 @@ export const AttachmentButton = ({
   onPress,
   touchableOpacityProps,
 }: AttachmentButtonProps) => {
+  const l10n = React.useContext(L10nContext)
   const theme = React.useContext(ThemeContext)
 
   const handlePress = (event: GestureResponderEvent) => {
@@ -28,8 +29,8 @@ export const AttachmentButton = ({
 
   return (
     <TouchableOpacity
+      accessibilityLabel={l10n.attachmentButtonAccessibilityLabel}
       accessibilityRole='button'
-      accessibilityLabel='Add an attachment'
       {...touchableOpacityProps}
       onPress={handlePress}
     >

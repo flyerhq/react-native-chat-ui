@@ -164,7 +164,10 @@ describe('input', () => {
       <UserContext.Provider value={user}>
         <Input
           {...{
-            attachmentCircularActivityIndicatorProps: { size: undefined },
+            attachmentCircularActivityIndicatorProps: {
+              color: 'white',
+              size: undefined,
+            },
             isAttachmentUploading,
             renderScrollable,
             onSendPress,

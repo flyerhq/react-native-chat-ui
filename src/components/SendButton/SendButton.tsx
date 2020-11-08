@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native'
-import { ThemeContext } from '../../utils'
+import { L10nContext, ThemeContext } from '../../utils'
 
 export interface SendButtonPropsAdditionalProps {
   touchableOpacityProps?: TouchableOpacityProps
@@ -19,6 +19,7 @@ export const SendButton = ({
   onPress,
   touchableOpacityProps,
 }: SendButtonProps) => {
+  const l10n = React.useContext(L10nContext)
   const theme = React.useContext(ThemeContext)
 
   const handlePress = (event: GestureResponderEvent) => {
@@ -28,8 +29,8 @@ export const SendButton = ({
 
   return (
     <TouchableOpacity
+      accessibilityLabel={l10n.sendButtonAccessibilityLabel}
       accessibilityRole='button'
-      accessibilityLabel='Send a message'
       {...touchableOpacityProps}
       onPress={handlePress}
     >

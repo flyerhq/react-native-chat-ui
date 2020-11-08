@@ -1,8 +1,13 @@
+import dayjs from 'dayjs'
 import * as React from 'react'
 import Blob from 'react-native/Libraries/Blob/Blob'
+import { l10n } from '../l10n'
 import { defaultTheme } from '../theme'
 import { Theme, User } from '../types'
 
+export const L10nContext = React.createContext<typeof l10n[keyof typeof l10n]>(
+  l10n.en
+)
 export const ThemeContext = React.createContext<Theme>(defaultTheme)
 export const UserContext = React.createContext<User | undefined>(undefined)
 
@@ -17,6 +22,16 @@ export const formatBytes = (size: number, fractionDigits = 2) => {
 }
 
 export const getTextSizeInBytes = (text: string) => new Blob([text]).size
+
+export const initLocale = (locale?: keyof typeof l10n) => {
+  const locales: { [key in keyof typeof l10n]: unknown } = {
+    en: require('dayjs/locale/en'),
+    pl: require('dayjs/locale/pl'),
+  }
+
+  locale ? locales[locale] : locales.en
+  dayjs.locale(locale)
+}
 
 export const unwrap = <T>(prop: T) => prop ?? {}
 

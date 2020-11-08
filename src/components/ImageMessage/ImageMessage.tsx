@@ -74,9 +74,7 @@ export const ImageMessage = ({
         {renderImage()}
       </TouchableWithoutFeedback>
       <View style={textContainer}>
-        <Text accessibilityRole='text' style={nameText}>
-          {message.imageName}
-        </Text>
+        <Text style={nameText}>{message.imageName}</Text>
         <Text style={sizeText}>{formatBytes(message.size)}</Text>
       </View>
     </View>
