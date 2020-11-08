@@ -57,6 +57,7 @@ export const TextMessage = ({
   const renderPreviewText = (previewText: string) => {
     return (
       <ParsedText
+        accessibilityRole='link'
         parse={[
           {
             onPress: handleUrlPress,
@@ -91,7 +92,11 @@ export const TextMessage = ({
       renderText={renderPreviewText}
       renderTitle={renderPreviewTitle}
       text={message.text}
-      touchableWithoutFeedbackProps={{ disabled: true }}
+      touchableWithoutFeedbackProps={{
+        accessibilityRole: undefined,
+        accessible: false,
+        disabled: true,
+      }}
     />
   ) : (
     <Text

@@ -6,6 +6,7 @@ import {
   textMessage,
   user,
 } from '../../../../jest/fixtures'
+import { l10n } from '../../../l10n'
 import { Chat } from '../Chat'
 
 describe('chat', () => {
@@ -55,7 +56,7 @@ describe('chat', () => {
         user={user}
       />
     )
-    const button = getByLabelText('Send a message')
+    const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
     expect(onSendPress).toHaveBeenCalledWith(textMessage)
   })
@@ -74,7 +75,7 @@ describe('chat', () => {
       />
     )
 
-    const button = getByLabelText('Open a file')
+    const button = getByLabelText(l10n.en.fileButtonAccessibilityLabel)
     fireEvent.press(button)
     expect(onFilePress).toHaveBeenCalledWith(fileMessage)
   })

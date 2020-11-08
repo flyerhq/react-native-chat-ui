@@ -2,6 +2,7 @@ import { fireEvent, render } from '@testing-library/react-native'
 import * as React from 'react'
 import { ScrollView } from 'react-native'
 import { textMessage, user } from '../../../../jest/fixtures'
+import { l10n } from '../../../l10n'
 import { UserContext } from '../../../utils'
 import { Input } from '../Input'
 
@@ -21,9 +22,9 @@ describe('input', () => {
         />
       </UserContext.Provider>
     )
-    const textInput = getByPlaceholderText('Your message')
+    const textInput = getByPlaceholderText(l10n.en.inputPlaceholder)
     fireEvent.changeText(textInput, 'text')
-    const button = getByLabelText('Send a message')
+    const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
     expect(onSendPress).toHaveBeenCalledWith(textMessage)
     expect(textInput.props).toHaveProperty('value', '')
@@ -57,9 +58,9 @@ describe('input', () => {
         />
       </UserContext.Provider>
     )
-    const textInput = getByPlaceholderText('Your message')
+    const textInput = getByPlaceholderText(l10n.en.inputPlaceholder)
     fireEvent.changeText(textInput, 'text')
-    const button = getByLabelText('Send a message')
+    const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
     expect(onSendPress).toHaveBeenCalledWith(textMessage)
     expect(textInput.props).toHaveProperty('value', 'text')
@@ -80,9 +81,9 @@ describe('input', () => {
         />
       </UserContext.Provider>
     )
-    const textInput = getByPlaceholderText('Your message')
+    const textInput = getByPlaceholderText(l10n.en.inputPlaceholder)
     fireEvent.changeText(textInput, 'text')
-    const button = getByLabelText('Send a message')
+    const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
     expect(onSendPress).toHaveBeenCalledWith(textMessage)
     expect(textInput.props).toHaveProperty('value', '')
@@ -103,9 +104,9 @@ describe('input', () => {
         />
       </UserContext.Provider>
     )
-    const textInput = getByPlaceholderText('Your message')
+    const textInput = getByPlaceholderText(l10n.en.inputPlaceholder)
     fireEvent.changeText(textInput, 'text')
-    const button = getByLabelText('Send a message')
+    const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
     expect(onSendPress).toHaveBeenCalledWith({ ...textMessage, text: value })
     expect(textInput.props).toHaveProperty('value', value)
@@ -126,8 +127,8 @@ describe('input', () => {
         />
       </UserContext.Provider>
     )
-    const textInput = getByPlaceholderText('Your message')
-    const button = getByLabelText('Send a message')
+    const textInput = getByPlaceholderText(l10n.en.inputPlaceholder)
+    const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
     expect(onSendPress).toHaveBeenCalledWith({
       ...textMessage,
@@ -151,7 +152,7 @@ describe('input', () => {
         />
       </UserContext.Provider>
     )
-    const button = getByLabelText('Add an attachment')
+    const button = getByLabelText(l10n.en.attachmentButtonAccessibilityLabel)
     fireEvent.press(button)
     expect(onAttachmentPress).toHaveBeenCalledTimes(1)
   })
