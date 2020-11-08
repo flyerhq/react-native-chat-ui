@@ -21,7 +21,7 @@ describe('input', () => {
         />
       </UserContext.Provider>
     )
-    const textInput = getByPlaceholderText('Your message here')
+    const textInput = getByPlaceholderText('Your message')
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText('Send a message')
     fireEvent.press(button)
@@ -57,7 +57,7 @@ describe('input', () => {
         />
       </UserContext.Provider>
     )
-    const textInput = getByPlaceholderText('Your message here')
+    const textInput = getByPlaceholderText('Your message')
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText('Send a message')
     fireEvent.press(button)
@@ -80,7 +80,7 @@ describe('input', () => {
         />
       </UserContext.Provider>
     )
-    const textInput = getByPlaceholderText('Your message here')
+    const textInput = getByPlaceholderText('Your message')
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText('Send a message')
     fireEvent.press(button)
@@ -103,7 +103,7 @@ describe('input', () => {
         />
       </UserContext.Provider>
     )
-    const textInput = getByPlaceholderText('Your message here')
+    const textInput = getByPlaceholderText('Your message')
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText('Send a message')
     fireEvent.press(button)
@@ -126,7 +126,7 @@ describe('input', () => {
         />
       </UserContext.Provider>
     )
-    const textInput = getByPlaceholderText('Your message here')
+    const textInput = getByPlaceholderText('Your message')
     const button = getByLabelText('Send a message')
     fireEvent.press(button)
     expect(onSendPress).toHaveBeenCalledWith({
