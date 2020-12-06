@@ -31,4 +31,4 @@ export const l10n = {
     today: 'Сьогодні',
     yesterday: 'Вчора',
   },
-} as const
+}
