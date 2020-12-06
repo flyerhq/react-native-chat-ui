@@ -12,7 +12,7 @@ import styles from './styles'
 
 export interface MessageTopLevelProps extends TextMessageTopLevelProps {
   messageTimeFormat?: string
-  onFilePress?: (file: MessageType.File) => void
+  onFilePress?: (message: MessageType.File) => void
   renderFileMessage?: (
     message: MessageType.File,
     messageWidth: number

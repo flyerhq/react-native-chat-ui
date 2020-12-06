@@ -11,7 +11,7 @@ import styles from './styles'
 
 export interface FileMessageProps {
   message: MessageType.File
-  onPress?: (file: MessageType.File) => void
+  onPress?: (message: MessageType.File) => void
 }
 
 export const FileMessage = ({ message, onPress }: FileMessageProps) => {

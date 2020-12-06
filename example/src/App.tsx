@@ -36,9 +36,9 @@ const App = () => {
     )
   }
 
-  const handleFilePress = async (file: MessageType.File) => {
+  const handleFilePress = async (message: MessageType.File) => {
     try {
-      await FileViewer.open(file.url, { showOpenWithDialog: true })
+      await FileViewer.open(message.url, { showOpenWithDialog: true })
     } catch {}
   }
 
