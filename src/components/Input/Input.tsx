@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { StyleSheet, TextInput, TextInputProps, View } from 'react-native'
+
 import {
   MessageType,
   SendAttachmentCallback,
@@ -59,7 +60,7 @@ export const Input = ({
 
   const defaultMessageParams = {
     // Buttons only rendered when the user exists, so we can safely force unwrap it
-    /* type-coverage:ignore-next-line */ // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    /* type-coverage:ignore-next-line */
     authorId: user!.id,
     id: uuidv4(),
     timestamp: Math.floor(Date.now() / 1000),

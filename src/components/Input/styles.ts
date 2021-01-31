@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+
 import { Theme } from '../../types'
 
 export default ({ theme }: { theme: Theme }) =>

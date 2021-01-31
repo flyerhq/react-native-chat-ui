@@ -1,7 +1,6 @@
 import { PreviewData } from '@flyerhq/react-native-link-preview'
 import { ColorValue, StyleProp, TextStyle } from 'react-native'
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace MessageType {
   export type Any = File | Image | Text
 
@@ -9,7 +8,7 @@ export namespace MessageType {
     authorId: string
     id: string
     status?: 'error' | 'read' | 'sending' | 'sent'
-    timestamp: number
+    timestamp?: number
     type: 'file' | 'image' | 'text'
   }
 

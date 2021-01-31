@@ -6,6 +6,7 @@ import {
 import * as React from 'react'
 import { Linking, StyleSheet, Text } from 'react-native'
 import ParsedText from 'react-native-parsed-text'
+
 import { MessageType } from '../../types'
 import { ThemeContext, UserContext } from '../../utils'
 import styles from './styles'

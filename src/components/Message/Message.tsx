@@ -2,6 +2,7 @@ import { oneOf } from '@flyerhq/react-native-link-preview'
 import dayjs from 'dayjs'
 import * as React from 'react'
 import { Image, Text, View } from 'react-native'
+
 import { MessageType } from '../../types'
 import { ThemeContext, UserContext } from '../../utils'
 import { CircularActivityIndicator } from '../CircularActivityIndicator'
@@ -112,7 +113,9 @@ export const Message = React.memo(
         {shouldRenderTime && (
           <View style={statusContainer}>
             <Text style={time}>
-              {dayjs.unix(message.timestamp).format(messageTimeFormat)}
+              {/* `shouldRenderTime` will only be true if timestamp exists, so we can safely force unwrap it */}
+              {/* type-coverage:ignore-next-line */}
+              {dayjs.unix(message.timestamp!).format(messageTimeFormat)}
             </Text>
             {user?.id === message.authorId && (
               <>

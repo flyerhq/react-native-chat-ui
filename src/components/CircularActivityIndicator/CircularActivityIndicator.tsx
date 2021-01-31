@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ViewStyle,
 } from 'react-native'
+
 import styles from './styles'
 
 export interface CircularActivityIndicatorProps {

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+
 import { MessageType, Theme, User } from '../../types'
 
 const styles = ({

@@ -1,5 +1,6 @@
-import { fireEvent, render, waitFor } from '@testing-library/react-native'
+import { fireEvent, render } from '@testing-library/react-native'
 import * as React from 'react'
+
 import {
   fileMessage,
   imageMessage,
@@ -9,8 +10,10 @@ import {
 import { l10n } from '../../../l10n'
 import { Chat } from '../Chat'
 
+jest.useFakeTimers()
+
 describe('chat', () => {
-  it('renders image preview', async () => {
+  it('renders image preview', () => {
     expect.assertions(1)
     const messages = [
       textMessage,
@@ -29,7 +32,6 @@ describe('chat', () => {
     )
     const button = getByRole('image').parent
     fireEvent.press(button)
-    await waitFor(() => getByText('✕'))
     const closeButton = getByText('✕')
     expect(closeButton).toBeDefined()
   })
@@ -39,12 +41,15 @@ describe('chat', () => {
     const messages = [
       textMessage,
       fileMessage,
-      imageMessage,
+      {
+        ...imageMessage,
+        timestamp: 1,
+      },
       {
         ...textMessage,
         id: 'new-uuidv4',
         status: 'sending' as const,
-        timestamp: 1,
+        timestamp: 2,
       },
     ]
     const onSendPress = jest.fn()

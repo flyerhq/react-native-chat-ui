@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/react-native'
 import * as React from 'react'
 import { ScrollView } from 'react-native'
+
 import { textMessage, user } from '../../../../jest/fixtures'
 import { l10n } from '../../../l10n'
 import { UserContext } from '../../../utils'

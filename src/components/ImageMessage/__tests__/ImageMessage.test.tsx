@@ -1,6 +1,7 @@
 import { act, fireEvent, render } from '@testing-library/react-native'
 import * as React from 'react'
 import { Image } from 'react-native'
+
 import { imageMessage, size } from '../../../../jest/fixtures'
 import { ImageMessage } from '../ImageMessage'
 
@@ -8,7 +9,6 @@ describe('image message', () => {
   it('gets image size and renders', () => {
     expect.assertions(5)
     const getSizeMock = jest.spyOn(Image, 'getSize')
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     getSizeMock.mockImplementation(() => {})
     const message = { ...imageMessage, height: undefined, width: undefined }
     const onPress = jest.fn()

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
+
 import { MessageType } from '../../types'
 import {
   formatBytes,

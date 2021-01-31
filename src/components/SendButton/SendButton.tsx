@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native'
+
 import { L10nContext, ThemeContext } from '../../utils'
 
 export interface SendButtonPropsAdditionalProps {

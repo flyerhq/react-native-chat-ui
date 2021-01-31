@@ -11,6 +11,7 @@ import DocumentPicker from 'react-native-document-picker'
 import FileViewer from 'react-native-file-viewer'
 import ImagePicker from 'react-native-image-crop-picker'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+
 import data from './messages.json'
 
 const App = () => {

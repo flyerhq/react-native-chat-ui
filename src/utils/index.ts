@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import * as React from 'react'
 import Blob from 'react-native/Libraries/Blob/Blob'
+
 import { l10n } from '../l10n'
 import { defaultTheme } from '../theme'
 import { Theme, User } from '../types'

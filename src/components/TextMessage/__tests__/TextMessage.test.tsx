@@ -2,6 +2,7 @@ import * as utils from '@flyerhq/react-native-link-preview/lib/utils'
 import { fireEvent, render, waitFor } from '@testing-library/react-native'
 import * as React from 'react'
 import { Linking } from 'react-native'
+
 import { textMessage } from '../../../../jest/fixtures'
 import { TextMessage } from '../TextMessage'
 

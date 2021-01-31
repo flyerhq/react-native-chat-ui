@@ -17,6 +17,7 @@ import {
   View,
 } from 'react-native'
 import ImageView from 'react-native-image-viewing'
+
 import { l10n } from '../../l10n'
 import { defaultTheme } from '../../theme'
 import { MessageType, Theme, User } from '../../types'
@@ -126,8 +127,8 @@ export const Chat = ({
       // TODO: Update the logic after pagination is introduced
       const isFirst = index === 0
       const isLast = index === messages.length - 1
-      const previousMessage = isFirst ? undefined : messages[index - 1]
       const nextMessage = isLast ? undefined : messages[index + 1]
+      const previousMessage = isFirst ? undefined : messages[index - 1]
 
       let nextMessageDifferentDay = false
       let nextMessageSameAuthor = false
@@ -137,6 +138,7 @@ export const Chat = ({
       if (nextMessage) {
         nextMessageDifferentDay =
           !!message.timestamp &&
+          !!nextMessage.timestamp &&
           !dayjs
             .unix(message.timestamp)
             .isSame(dayjs.unix(nextMessage.timestamp), 'day')
@@ -148,6 +150,7 @@ export const Chat = ({
           previousMessage.authorId === message.authorId
         shouldRenderTime =
           !!message.timestamp &&
+          !!previousMessage.timestamp &&
           (!previousMessageSameAuthor ||
             previousMessage.timestamp - message.timestamp >= 60)
       }
@@ -176,7 +179,9 @@ export const Chat = ({
                 { marginTop: nextMessageSameAuthor ? 24 : 16 },
               ])}
             >
-              {dayjs.unix(message.timestamp).calendar(undefined, {
+              {/* At this point we know that timestamp exists, so we can safely force unwrap it */}
+              {/* type-coverage:ignore-next-line */}
+              {dayjs.unix(message.timestamp!).calendar(undefined, {
                 sameDay: `[${l10n[locale].today}]`,
                 nextDay: dateDividerFormat,
                 nextWeek: dateDividerFormat,

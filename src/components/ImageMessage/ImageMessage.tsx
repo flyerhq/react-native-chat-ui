@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
+
 import { MessageType, Size } from '../../types'
 import { formatBytes, ThemeContext, UserContext } from '../../utils'
 import styles from './styles'

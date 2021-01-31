@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const casual = require('casual')
 const fs = require('fs')
 const { v4: uuidv4 } = require('uuid')
-/* eslint-enable @typescript-eslint/no-var-requires */
 
 const users = [
   { id: '06c33e8b-e835-4736-80f4-63f44b66666c', name: 'Alex' },
