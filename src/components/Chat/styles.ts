@@ -18,6 +18,7 @@ export default ({ theme }: { theme: Theme }) =>
     ]),
     flatList: {
       backgroundColor: theme.colors.background,
+      height: '100%',
     },
     footer: {
       height: 16,
