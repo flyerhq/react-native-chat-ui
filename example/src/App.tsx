@@ -112,10 +112,7 @@ const App = () => {
         onFilePress={handleFilePress}
         onPreviewDataFetched={handlePreviewDataFetched}
         onSendPress={handleSendPress}
-        user={{
-          id: '06c33e8b-e835-4736-80f4-63f44b66666c',
-          name: 'Alex',
-        }}
+        user={{ id: '06c33e8b-e835-4736-80f4-63f44b66666c' }}
       />
     </SafeAreaProvider>
   )

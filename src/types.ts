@@ -94,6 +94,8 @@ export interface ThemeFonts {
 }
 
 export interface User {
+  avatarUrl?: string
+  firstName?: string
   id: string
-  name: string
+  lastName?: string
 }
