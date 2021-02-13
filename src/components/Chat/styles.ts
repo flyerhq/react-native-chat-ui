@@ -16,9 +16,23 @@ export default ({ theme }: { theme: Theme }) =>
         textAlign: 'center',
       },
     ]),
+    emptyComponentContainer: {
+      alignItems: 'center',
+      marginHorizontal: 24,
+    },
+    emptyComponentTitle: {
+      // Ignore because it is object
+      // @ts-ignore
+      ...theme.fonts.body1,
+      textAlign: 'center',
+      color: theme.colors.caption,
+    },
     flatList: {
       backgroundColor: theme.colors.background,
       height: '100%',
+    },
+    flatListContentContainer: {
+      flexGrow: 1,
     },
     footer: {
       height: 16,

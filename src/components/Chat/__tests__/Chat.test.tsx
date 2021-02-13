@@ -84,4 +84,22 @@ describe('chat', () => {
     fireEvent.press(button)
     expect(onFilePress).toHaveBeenCalledWith(fileMessage)
   })
+
+  it('renders empty chat placeholder', () => {
+    expect.assertions(1)
+    const messages = []
+    const onSendPress = jest.fn()
+    const onFilePress = jest.fn()
+    const { getByText } = render(
+      <Chat
+        onFilePress={onFilePress}
+        messages={messages}
+        onSendPress={onSendPress}
+        user={user}
+      />
+    )
+
+    const placeholder = getByText(l10n.en.emptyChatPlaceholder)
+    expect(placeholder).toBeDefined()
+  })
 })

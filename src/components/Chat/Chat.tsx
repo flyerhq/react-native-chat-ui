@@ -70,7 +70,10 @@ export const Chat = ({
   const {
     container,
     dateDivider,
+    emptyComponentContainer,
+    emptyComponentTitle,
     flatList,
+    flatListContentContainer,
     footer,
     keyboardAccessoryView,
   } = styles({ theme })
@@ -210,13 +213,30 @@ export const Chat = ({
     ]
   )
 
+  const renderListEmptyComponent = React.useCallback(
+    () => (
+      <View style={emptyComponentContainer}>
+        <Text style={emptyComponentTitle}>
+          {l10n[locale].emptyChatPlaceholder}
+        </Text>
+      </View>
+    ),
+    [emptyComponentContainer, emptyComponentTitle, locale]
+  )
+
   const renderListFooterComponent = React.useCallback(() => <View />, [])
 
   const renderScrollable = React.useCallback(
     (panHandlers: GestureResponderHandlers) => (
       <FlatList
         automaticallyAdjustContentInsets={false}
+        contentContainerStyle={[
+          flatListContentContainer,
+          // eslint-disable-next-line react-native/no-inline-styles
+          { justifyContent: messages.length !== 0 ? undefined : 'center' },
+        ]}
         initialNumToRender={10}
+        ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
         ListFooterComponentStyle={footer}
         maxToRenderPerBatch={6}
@@ -224,7 +244,7 @@ export const Chat = ({
         style={flatList}
         {...unwrap(flatListProps)}
         data={messages}
-        inverted
+        inverted={messages.length !== 0}
         keyboardDismissMode='interactive'
         keyExtractor={keyExtractor}
         ref={list}
@@ -234,11 +254,13 @@ export const Chat = ({
     ),
     [
       flatList,
+      flatListContentContainer,
       flatListProps,
       footer,
       keyExtractor,
       messages,
       renderItem,
+      renderListEmptyComponent,
       renderListFooterComponent,
     ]
   )

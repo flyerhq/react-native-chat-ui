@@ -1,6 +1,7 @@
 export const l10n = {
   en: {
     attachmentButtonAccessibilityLabel: 'Send media',
+    emptyChatPlaceholder: 'No messages here yet',
     fileButtonAccessibilityLabel: 'File',
     inputPlaceholder: 'Message',
     sendButtonAccessibilityLabel: 'Send',
@@ -9,6 +10,7 @@ export const l10n = {
   },
   pl: {
     attachmentButtonAccessibilityLabel: 'Wyślij multimedia',
+    emptyChatPlaceholder: 'Tu jeszcze nie ma wiadomości',
     fileButtonAccessibilityLabel: 'Plik',
     inputPlaceholder: 'Napisz wiadomość',
     sendButtonAccessibilityLabel: 'Wyślij',
@@ -17,6 +19,7 @@ export const l10n = {
   },
   ru: {
     attachmentButtonAccessibilityLabel: 'Отправить медиа',
+    emptyChatPlaceholder: 'Пока что у вас нет сообщений',
     fileButtonAccessibilityLabel: 'Файл',
     inputPlaceholder: 'Сообщение…',
     sendButtonAccessibilityLabel: 'Отправить',
@@ -25,6 +28,7 @@ export const l10n = {
   },
   uk: {
     attachmentButtonAccessibilityLabel: 'Надіслати медіа',
+    emptyChatPlaceholder: 'Повідомлень ще немає',
     fileButtonAccessibilityLabel: 'Файл',
     inputPlaceholder: 'Повідомлення',
     sendButtonAccessibilityLabel: 'Надіслати',
