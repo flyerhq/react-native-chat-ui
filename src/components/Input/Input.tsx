@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { StyleSheet, TextInput, TextInputProps, View } from 'react-native'
 
+import { MessageType } from '../../types'
 import { L10nContext, ThemeContext, unwrap, UserContext } from '../../utils'
 import {
   AttachmentButton,
@@ -16,7 +17,7 @@ import styles from './styles'
 export interface InputTopLevelProps {
   isAttachmentUploading?: boolean
   onAttachmentPress?: () => void
-  onSendPress: (text: string) => void
+  onSendPress: (message: MessageType.PartialText) => void
   textInputProps?: TextInputProps
 }
 
@@ -52,7 +53,7 @@ export const Input = ({
   }
 
   const handleSend = () => {
-    onSendPress(value.trim())
+    onSendPress({ text: value.trim() })
     setText('')
   }
 

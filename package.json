@@ -1,6 +1,6 @@
 {
   "name": "@flyerhq/react-native-chat-ui",
-  "version": "0.7.0",
+  "version": "0.7.2",
   "description": "React Native Chat UI",
   "homepage": "https://github.com/flyerhq/react-native-chat-ui#readme",
   "main": "lib/index.js",

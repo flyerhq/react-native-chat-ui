@@ -27,7 +27,7 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith('text')
+    expect(onSendPress).toHaveBeenCalledWith({ text: 'text' })
     expect(textInput.props).toHaveProperty('value', '')
   })
 
@@ -63,7 +63,7 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith('text')
+    expect(onSendPress).toHaveBeenCalledWith({ text: 'text' })
     expect(textInput.props).toHaveProperty('value', 'text')
   })
 
@@ -86,7 +86,7 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith('text')
+    expect(onSendPress).toHaveBeenCalledWith({ text: 'text' })
     expect(textInput.props).toHaveProperty('value', '')
   })
 
@@ -109,7 +109,7 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith(value)
+    expect(onSendPress).toHaveBeenCalledWith({ text: value })
     expect(textInput.props).toHaveProperty('value', value)
   })
 
@@ -131,7 +131,7 @@ describe('input', () => {
     const textInput = getByPlaceholderText(l10n.en.inputPlaceholder)
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith(defaultValue)
+    expect(onSendPress).toHaveBeenCalledWith({ text: defaultValue })
     expect(textInput.props).toHaveProperty('value', '')
   })
 

@@ -50,7 +50,7 @@ const App = () => {
       const response = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
       })
-      const message: MessageType.File = {
+      const fileMessage: MessageType.File = {
         authorId: userId,
         id: uuidv4(),
         mimeType: response.type,
@@ -60,7 +60,7 @@ const App = () => {
         type: 'file',
         url: response.uri,
       }
-      addMessage(message)
+      addMessage(fileMessage)
     } catch (err) {
       if (!DocumentPicker.isCancel(err)) {
         // Handle error
@@ -76,7 +76,7 @@ const App = () => {
         mediaType: 'photo',
       })
       if (response.data) {
-        const message: MessageType.Image = {
+        const imageMessage: MessageType.Image = {
           authorId: userId,
           height: response.height,
           id: uuidv4(),
@@ -88,7 +88,7 @@ const App = () => {
           url: `data:${response.mime};base64,${response.data}`,
           width: response.width,
         }
-        addMessage(message)
+        addMessage(imageMessage)
       }
     } catch {}
   }
@@ -107,15 +107,15 @@ const App = () => {
     )
   }
 
-  const handleSendPress = (text: string) => {
-    const message: MessageType.Text = {
+  const handleSendPress = (message: MessageType.PartialText) => {
+    const textMessage: MessageType.Text = {
       authorId: userId,
       id: uuidv4(),
-      text,
+      text: message.text,
       timestamp: Math.floor(Date.now() / 1000),
       type: 'text',
     }
-    addMessage(message)
+    addMessage(textMessage)
   }
 
   return (

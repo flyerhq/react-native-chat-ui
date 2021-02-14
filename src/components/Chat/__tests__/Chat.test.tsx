@@ -63,7 +63,7 @@ describe('chat', () => {
     )
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith('text')
+    expect(onSendPress).toHaveBeenCalledWith({ text: 'text' })
   })
 
   it('opens file on a file message tap', () => {

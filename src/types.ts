@@ -3,6 +3,7 @@ import { ColorValue, StyleProp, TextStyle } from 'react-native'
 
 export namespace MessageType {
   export type Any = File | Image | Text
+  export type PartialAny = PartialFile | PartialImage | PartialText
 
   interface Base {
     authorId: string
@@ -12,26 +13,35 @@ export namespace MessageType {
     type: 'file' | 'image' | 'text'
   }
 
-  export interface File extends Base {
+  export interface PartialFile {
     fileName: string
     mimeType?: string
     size: number
-    type: 'file'
     url: string
   }
 
-  export interface Image extends Base {
+  export interface File extends Base, PartialFile {
+    type: 'file'
+  }
+
+  export interface PartialImage {
     height?: number
     imageName: string
     size: number
-    type: 'image'
     url: string
     width?: number
   }
 
-  export interface Text extends Base {
+  export interface Image extends Base, PartialImage {
+    type: 'image'
+  }
+
+  export interface PartialText {
     previewData?: PreviewData
     text: string
+  }
+
+  export interface Text extends Base, PartialText {
     type: 'text'
   }
 }
