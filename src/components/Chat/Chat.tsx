@@ -115,8 +115,8 @@ export const Chat = ({
     StatusBar.popStackEntry(stackEntry)
   }
 
-  const handleSendPress = (message: MessageType.Any) => {
-    onSendPress(message)
+  const handleSendPress = (text: string) => {
+    onSendPress(text)
     list.current?.scrollToOffset({
       animated: true,
       offset: 0,

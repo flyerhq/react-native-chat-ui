@@ -1,9 +1,5 @@
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import {
-  Chat,
-  MessageType,
-  SendAttachmentCallback,
-} from '@flyerhq/react-native-chat-ui'
+import { Chat, MessageType } from '@flyerhq/react-native-chat-ui'
 import { PreviewData } from '@flyerhq/react-native-link-preview'
 import React, { useState } from 'react'
 import { StatusBar } from 'react-native'
@@ -11,14 +7,16 @@ import DocumentPicker from 'react-native-document-picker'
 import FileViewer from 'react-native-file-viewer'
 import ImagePicker from 'react-native-image-crop-picker'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { v4 as uuidv4 } from 'uuid'
 
 import data from './messages.json'
 
 const App = () => {
-  const [messages, setMessages] = useState(data as MessageType.Any[])
+  const userId = '06c33e8b-e835-4736-80f4-63f44b66666c'
   const { showActionSheetWithOptions } = useActionSheet()
+  const [messages, setMessages] = useState(data as MessageType.Any[])
 
-  const handleAttachmentPress = (sendAttachment: SendAttachmentCallback) => {
+  const handleAttachmentPress = () => {
     showActionSheetWithOptions(
       {
         options: ['Photo', 'File', 'Cancel'],
@@ -27,14 +25,18 @@ const App = () => {
       (buttonIndex) => {
         switch (buttonIndex) {
           case 0:
-            handleImageSelection(sendAttachment)
+            handleImageSelection()
             break
           case 1:
-            handleFileSelection(sendAttachment)
+            handleFileSelection()
             break
         }
       }
     )
+  }
+
+  const addMessage = (message: MessageType.Any) => {
+    setMessages([{ ...message, status: 'read' }, ...messages])
   }
 
   const handleFilePress = async (message: MessageType.File) => {
@@ -43,19 +45,22 @@ const App = () => {
     } catch {}
   }
 
-  const handleFileSelection = async (
-    sendAttachment: SendAttachmentCallback
-  ) => {
+  const handleFileSelection = async () => {
     try {
       const response = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
       })
-      sendAttachment({
+      const message: MessageType.File = {
+        authorId: userId,
+        id: uuidv4(),
         mimeType: response.type,
         fileName: response.name,
         size: response.size,
+        timestamp: Math.floor(Date.now() / 1000),
+        type: 'file',
         url: response.uri,
-      })
+      }
+      addMessage(message)
     } catch (err) {
       if (!DocumentPicker.isCancel(err)) {
         // Handle error
@@ -63,9 +68,7 @@ const App = () => {
     }
   }
 
-  const handleImageSelection = async (
-    sendAttachment: SendAttachmentCallback
-  ) => {
+  const handleImageSelection = async () => {
     try {
       const response = await ImagePicker.openPicker({
         compressImageMaxWidth: 1440,
@@ -73,14 +76,19 @@ const App = () => {
         mediaType: 'photo',
       })
       if (response.data) {
-        sendAttachment({
+        const message: MessageType.Image = {
+          authorId: userId,
           height: response.height,
+          id: uuidv4(),
           imageName:
             response.filename ?? response.path?.split('/').pop() ?? '🖼',
           size: response.size,
+          timestamp: Math.floor(Date.now() / 1000),
+          type: 'image',
           url: `data:${response.mime};base64,${response.data}`,
           width: response.width,
-        })
+        }
+        addMessage(message)
       }
     } catch {}
   }
@@ -99,8 +107,15 @@ const App = () => {
     )
   }
 
-  const handleSendPress = (message: MessageType.Any) => {
-    setMessages([{ ...message, status: 'read' }, ...messages])
+  const handleSendPress = (text: string) => {
+    const message: MessageType.Text = {
+      authorId: userId,
+      id: uuidv4(),
+      text,
+      timestamp: Math.floor(Date.now() / 1000),
+      type: 'text',
+    }
+    addMessage(message)
   }
 
   return (
@@ -112,7 +127,7 @@ const App = () => {
         onFilePress={handleFilePress}
         onPreviewDataFetched={handlePreviewDataFetched}
         onSendPress={handleSendPress}
-        user={{ id: '06c33e8b-e835-4736-80f4-63f44b66666c' }}
+        user={{ id: userId }}
       />
     </SafeAreaProvider>
   )

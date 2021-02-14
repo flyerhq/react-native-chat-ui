@@ -40,5 +40,4 @@ export const textMessage: MessageType.Text = {
 
 export const user: User = {
   id: 'userId',
-  name: 'Alex',
 }

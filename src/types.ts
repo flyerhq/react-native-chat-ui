@@ -36,33 +36,6 @@ export namespace MessageType {
   }
 }
 
-export type SendAttachmentCallback = (
-  payload: SendAttachmentCallbackParams
-) => void
-
-export type SendAttachmentCallbackParams =
-  | SendFileCallbackParams
-  | SendImageCallbackParams
-
-export type SendFileCallback = (payload: SendFileCallbackParams) => void
-
-export interface SendFileCallbackParams {
-  fileName: string
-  mimeType?: string
-  size: number
-  url: string
-}
-
-export type SendImageCallback = (payload: SendImageCallbackParams) => void
-
-export interface SendImageCallbackParams {
-  height?: number
-  imageName: string
-  size: number
-  url: string
-  width?: number
-}
-
 export interface Size {
   height: number
   width: number

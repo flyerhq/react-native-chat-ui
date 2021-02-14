@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react-native'
 import * as React from 'react'
 import { ScrollView } from 'react-native'
 
-import { textMessage, user } from '../../../../jest/fixtures'
+import { user } from '../../../../jest/fixtures'
 import { l10n } from '../../../l10n'
 import { UserContext } from '../../../utils'
 import { Input } from '../Input'
@@ -27,7 +27,7 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith(textMessage)
+    expect(onSendPress).toHaveBeenCalledWith('text')
     expect(textInput.props).toHaveProperty('value', '')
   })
 
@@ -63,7 +63,7 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith(textMessage)
+    expect(onSendPress).toHaveBeenCalledWith('text')
     expect(textInput.props).toHaveProperty('value', 'text')
   })
 
@@ -86,7 +86,7 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith(textMessage)
+    expect(onSendPress).toHaveBeenCalledWith('text')
     expect(textInput.props).toHaveProperty('value', '')
   })
 
@@ -109,7 +109,7 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith({ ...textMessage, text: value })
+    expect(onSendPress).toHaveBeenCalledWith(value)
     expect(textInput.props).toHaveProperty('value', value)
   })
 
@@ -131,10 +131,7 @@ describe('input', () => {
     const textInput = getByPlaceholderText(l10n.en.inputPlaceholder)
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith({
-      ...textMessage,
-      text: defaultValue,
-    })
+    expect(onSendPress).toHaveBeenCalledWith(defaultValue)
     expect(textInput.props).toHaveProperty('value', '')
   })
 
