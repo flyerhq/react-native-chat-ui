@@ -18,7 +18,7 @@
     "react-native": "^0.63.4",
     "react-native-document-picker": "^5.0.0",
     "react-native-file-viewer": "^2.1.4",
-    "react-native-image-crop-picker": "^0.35.3",
+    "react-native-image-crop-picker": "^0.36.0",
     "react-native-safe-area-context": "^3.1.9"
   },
   "devDependencies": {
@@ -26,7 +26,7 @@
     "@babel/runtime": "^7.12.13",
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/jest": "^26.0.20",
-    "@types/react-native": "^0.63.48",
+    "@types/react-native": "^0.63.49",
     "@types/react-test-renderer": "^17.0.1",
     "@types/uuid": "^8.3.0",
     "babel-jest": "^26.6.3",
