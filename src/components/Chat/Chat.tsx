@@ -83,7 +83,7 @@ export const Chat = ({
   const [imageViewIndex, setImageViewIndex] = React.useState(0)
   const [stackEntry, setStackEntry] = React.useState<StatusBarProps>({})
   const images = messages.reduce<{ uri: string }[]>(
-    (acc, curr) => (curr.type === 'image' ? [{ uri: curr.url }, ...acc] : acc),
+    (acc, curr) => (curr.type === 'image' ? [{ uri: curr.uri }, ...acc] : acc),
     []
   )
   const list = React.useRef<FlatList<MessageType.Any>>(null)
@@ -94,8 +94,8 @@ export const Chat = ({
   }, [locale])
 
   const handleImagePress = React.useCallback(
-    (url: string) => {
-      setImageViewIndex(images.findIndex((image) => image.uri === url))
+    (uri: string) => {
+      setImageViewIndex(images.findIndex((image) => image.uri === uri))
       setIsImageViewVisible(true)
       setStackEntry(
         StatusBar.pushStackEntry({

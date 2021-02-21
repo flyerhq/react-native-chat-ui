@@ -17,7 +17,7 @@ describe('image message', () => {
     )
     expect(getSizeMock).toHaveBeenCalledTimes(1)
     const getSizeArgs = getSizeMock.mock.calls[0]
-    expect(getSizeArgs[0]).toBe(imageMessage.url)
+    expect(getSizeArgs[0]).toBe(imageMessage.uri)
     const success = getSizeArgs[1]
     const error = getSizeArgs[2]
     act(() => {
@@ -56,6 +56,6 @@ describe('image message', () => {
     )
     const button = getByRole('image').parent
     fireEvent.press(button)
-    expect(onPress).toHaveBeenCalledWith(imageMessage.url)
+    expect(onPress).toHaveBeenCalledWith(imageMessage.uri)
   })
 })

@@ -31,7 +31,7 @@ export interface MessageTopLevelProps extends TextMessageTopLevelProps {
 export interface MessageProps extends MessageTopLevelProps {
   message: MessageType.Any
   messageWidth: number
-  onImagePress: (url: string) => void
+  onImagePress: (uri: string) => void
   previousMessageSameAuthor: boolean
   shouldRenderTime: boolean
 }

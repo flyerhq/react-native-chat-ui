@@ -41,7 +41,7 @@ const App = () => {
 
   const handleFilePress = async (message: MessageType.File) => {
     try {
-      await FileViewer.open(message.url, { showOpenWithDialog: true })
+      await FileViewer.open(message.uri, { showOpenWithDialog: true })
     } catch {}
   }
 
@@ -58,7 +58,7 @@ const App = () => {
         size: response.size,
         timestamp: Math.floor(Date.now() / 1000),
         type: 'file',
-        url: response.uri,
+        uri: response.uri,
       }
       addMessage(fileMessage)
     } catch (err) {
@@ -85,7 +85,7 @@ const App = () => {
           size: response.size,
           timestamp: Math.floor(Date.now() / 1000),
           type: 'image',
-          url: `data:${response.mime};base64,${response.data}`,
+          uri: `data:${response.mime};base64,${response.data}`,
           width: response.width,
         }
         addMessage(imageMessage)

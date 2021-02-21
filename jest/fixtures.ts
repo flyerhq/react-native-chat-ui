@@ -9,7 +9,7 @@ export const fileMessage: MessageType.File = {
   status: 'read',
   timestamp: 2000000,
   type: 'file',
-  url: 'file:///Users/admin/flyer.pdf',
+  uri: 'file:///Users/admin/flyer.pdf',
 }
 
 export const imageMessage: MessageType.Image = {
@@ -21,7 +21,7 @@ export const imageMessage: MessageType.Image = {
   status: 'sending',
   timestamp: 0,
   type: 'image',
-  url: 'https://avatars1.githubusercontent.com/u/59206044',
+  uri: 'https://avatars1.githubusercontent.com/u/59206044',
   width: 100,
 }
 

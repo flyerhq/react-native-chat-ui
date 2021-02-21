@@ -14,7 +14,7 @@ import styles from './styles'
 export interface ImageMessageProps {
   message: MessageType.Image
   messageWidth: number
-  onPress: (url: string) => void
+  onPress: (uri: string) => void
 }
 
 export const ImageMessage = ({
@@ -50,20 +50,20 @@ export const ImageMessage = ({
   React.useEffect(() => {
     if (defaultHeight <= 0 || defaultWidth <= 0)
       Image.getSize(
-        message.url,
+        message.uri,
         (width, height) => setSize({ height, width }),
         () => setSize({ height: 0, width: 0 })
       )
-  }, [defaultHeight, defaultWidth, message.url])
+  }, [defaultHeight, defaultWidth, message.uri])
 
-  const handlePress = () => onPress(message.url)
+  const handlePress = () => onPress(message.uri)
 
   const renderImage = () => {
     return (
       <Image
         accessibilityRole='image'
         resizeMode={isMinimized ? 'cover' : 'contain'}
-        source={{ uri: message.url }}
+        source={{ uri: message.uri }}
         style={isMinimized ? minimizedImage : image}
       />
     )
@@ -80,7 +80,7 @@ export const ImageMessage = ({
       </View>
     </View>
   ) : (
-    <ImageBackground blurRadius={26} source={{ uri: message.url }} style={{}}>
+    <ImageBackground blurRadius={26} source={{ uri: message.uri }} style={{}}>
       <TouchableWithoutFeedback onPress={handlePress}>
         {renderImage()}
       </TouchableWithoutFeedback>
