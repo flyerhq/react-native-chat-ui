@@ -1,5 +1,10 @@
 import { PreviewData } from '@flyerhq/react-native-link-preview'
-import { ColorValue, StyleProp, TextStyle } from 'react-native'
+import {
+  ColorValue,
+  ImageSourcePropType,
+  StyleProp,
+  TextStyle,
+} from 'react-native'
 
 export namespace MessageType {
   export type Any = File | Image | Text
@@ -52,8 +57,15 @@ export interface Size {
 }
 
 export interface Theme {
+  borders: ThemeBorders
   colors: ThemeColors
   fonts: ThemeFonts
+  icons?: ThemeIcons
+}
+
+export interface ThemeBorders {
+  inputBorderRadius: number
+  messageBorderRadius: number
 }
 
 export interface ThemeColors {
@@ -74,6 +86,14 @@ export interface ThemeFonts {
   caption: StyleProp<TextStyle>
   subtitle1: StyleProp<TextStyle>
   subtitle2: StyleProp<TextStyle>
+}
+
+export interface ThemeIcons {
+  attachmentButtonIcon?: ImageSourcePropType
+  documentIcon?: ImageSourcePropType
+  readIcon?: ImageSourcePropType
+  sendButtonIcon?: ImageSourcePropType
+  sentIcon?: ImageSourcePropType
 }
 
 export interface User {

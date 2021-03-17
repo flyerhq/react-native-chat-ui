@@ -39,7 +39,7 @@ export default ({ theme }: { theme: Theme }) =>
     },
     keyboardAccessoryView: {
       backgroundColor: theme.colors.inputBackground,
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
+      borderTopLeftRadius: theme.borders.inputBorderRadius,
+      borderTopRightRadius: theme.borders.inputBorderRadius,
     },
   })

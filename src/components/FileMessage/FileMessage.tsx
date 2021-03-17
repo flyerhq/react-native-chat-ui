@@ -36,7 +36,10 @@ export const FileMessage = ({ message, onPress }: FileMessageProps) => {
       <View style={container}>
         <View style={iconContainer}>
           <Image
-            source={require('../../assets/icon-document.png')}
+            source={
+              theme.icons?.documentIcon ??
+              require('../../assets/icon-document.png')
+            }
             style={icon}
           />
         </View>

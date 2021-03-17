@@ -27,10 +27,12 @@ const styles = ({
         user?.id !== message.authorId || message.type === 'image'
           ? theme.colors.secondary
           : theme.colors.primary,
-      borderBottomLeftRadius: user?.id === message.authorId ? 20 : 0,
-      borderBottomRightRadius: user?.id === message.authorId ? 0 : 20,
+      borderBottomLeftRadius:
+        user?.id === message.authorId ? theme.borders.messageBorderRadius : 0,
+      borderBottomRightRadius:
+        user?.id === message.authorId ? 0 : theme.borders.messageBorderRadius,
       borderColor: 'transparent',
-      borderRadius: 20,
+      borderRadius: theme.borders.messageBorderRadius,
       maxWidth: messageWidth,
       overflow: 'hidden',
     },
