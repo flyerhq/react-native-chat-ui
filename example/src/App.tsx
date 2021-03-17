@@ -2,11 +2,9 @@ import { useActionSheet } from '@expo/react-native-action-sheet'
 import { Chat, MessageType } from '@flyerhq/react-native-chat-ui'
 import { PreviewData } from '@flyerhq/react-native-link-preview'
 import React, { useState } from 'react'
-import { StatusBar } from 'react-native'
 import DocumentPicker from 'react-native-document-picker'
 import FileViewer from 'react-native-file-viewer'
-import ImagePicker from 'react-native-image-crop-picker'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { launchImageLibrary } from 'react-native-image-picker'
 import { v4 as uuidv4 } from 'uuid'
 
 import data from './messages.json'
@@ -68,29 +66,32 @@ const App = () => {
     }
   }
 
-  const handleImageSelection = async () => {
-    try {
-      const response = await ImagePicker.openPicker({
-        compressImageMaxWidth: 1440,
+  const handleImageSelection = () => {
+    launchImageLibrary(
+      {
         includeBase64: true,
+        maxWidth: 1440,
         mediaType: 'photo',
-      })
-      if (response.data) {
-        const imageMessage: MessageType.Image = {
-          authorId: userId,
-          height: response.height,
-          id: uuidv4(),
-          imageName:
-            response.filename ?? response.path?.split('/').pop() ?? '🖼',
-          size: response.size,
-          timestamp: Math.floor(Date.now() / 1000),
-          type: 'image',
-          uri: `data:${response.mime};base64,${response.data}`,
-          width: response.width,
+        quality: 0.7,
+      },
+      (response) => {
+        if (response.base64) {
+          const imageMessage: MessageType.Image = {
+            authorId: userId,
+            height: response.height,
+            id: uuidv4(),
+            imageName:
+              response.fileName ?? response.uri?.split('/').pop() ?? '🖼',
+            size: response.fileSize ?? 0,
+            timestamp: Math.floor(Date.now() / 1000),
+            type: 'image',
+            uri: `data:image/*;base64,${response.base64}`,
+            width: response.width,
+          }
+          addMessage(imageMessage)
         }
-        addMessage(imageMessage)
       }
-    } catch {}
+    )
   }
 
   const handlePreviewDataFetched = ({
@@ -119,17 +120,14 @@ const App = () => {
   }
 
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle='dark-content' />
-      <Chat
-        messages={messages}
-        onAttachmentPress={handleAttachmentPress}
-        onFilePress={handleFilePress}
-        onPreviewDataFetched={handlePreviewDataFetched}
-        onSendPress={handleSendPress}
-        user={{ id: userId }}
-      />
-    </SafeAreaProvider>
+    <Chat
+      messages={messages}
+      onAttachmentPress={handleAttachmentPress}
+      onFilePress={handleFilePress}
+      onPreviewDataFetched={handlePreviewDataFetched}
+      onSendPress={handleSendPress}
+      user={{ id: userId }}
+    />
   )
 }
 

@@ -19,7 +19,7 @@
     "react-native-document-picker": "^5.0.0",
     "react-native-file-viewer": "^2.1.4",
     "react-native-get-random-values": "^1.6.0",
-    "react-native-image-crop-picker": "^0.36.0",
+    "react-native-image-picker": "^3.3.2",
     "react-native-safe-area-context": "^3.1.9",
     "uuid": "^8.3.2"
   },
