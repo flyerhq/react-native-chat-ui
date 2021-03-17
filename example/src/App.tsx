@@ -14,6 +14,10 @@ const App = () => {
   const { showActionSheetWithOptions } = useActionSheet()
   const [messages, setMessages] = useState(data as MessageType.Any[])
 
+  const addMessage = (message: MessageType.Any) => {
+    setMessages([{ ...message, status: 'read' }, ...messages])
+  }
+
   const handleAttachmentPress = () => {
     showActionSheetWithOptions(
       {
@@ -31,10 +35,6 @@ const App = () => {
         }
       }
     )
-  }
-
-  const addMessage = (message: MessageType.Any) => {
-    setMessages([{ ...message, status: 'read' }, ...messages])
   }
 
   const handleFilePress = async (message: MessageType.File) => {
