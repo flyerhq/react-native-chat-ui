@@ -1,7 +1,7 @@
 import { oneOf } from '@flyerhq/react-native-link-preview'
 import dayjs from 'dayjs'
 import * as React from 'react'
-import { Image, Text, View } from 'react-native'
+import { Image, ImageSourcePropType, Text, View } from 'react-native'
 
 import { MessageType } from '../../types'
 import { ThemeContext, UserContext } from '../../utils'
@@ -107,10 +107,10 @@ export const Message = React.memo(
       renderTextMessage,
     ])
 
-    const readIcon =
+    const readIcon: ImageSourcePropType =
       theme.icons?.readIcon ?? require('../../assets/icon-read.png')
 
-    const sentIcon =
+    const sentIcon: ImageSourcePropType =
       theme.icons?.sentIcon ?? require('../../assets/icon-sent.png')
 
     return (

@@ -1,5 +1,10 @@
 import { PreviewData } from '@flyerhq/react-native-link-preview'
-import { ColorValue, StyleProp, TextStyle } from 'react-native'
+import {
+  ColorValue,
+  ImageSourcePropType,
+  StyleProp,
+  TextStyle,
+} from 'react-native'
 
 export namespace MessageType {
   export type Any = File | Image | Text
@@ -84,11 +89,11 @@ export interface ThemeFonts {
 }
 
 export interface ThemeIcons {
-  attachmentButtonIcon?: NodeRequire
-  documentIcon?: NodeRequire
-  readIcon?: NodeRequire
-  sendButtonIcon?: NodeRequire
-  sentIcon?: NodeRequire
+  attachmentButtonIcon?: ImageSourcePropType
+  documentIcon?: ImageSourcePropType
+  readIcon?: ImageSourcePropType
+  sendButtonIcon?: ImageSourcePropType
+  sentIcon?: ImageSourcePropType
 }
 
 export interface User {
