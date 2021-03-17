@@ -36,7 +36,9 @@ export const SendButton = ({
       onPress={handlePress}
     >
       <Image
-        source={require('../../assets/icon-send.png')}
+        source={
+          theme.icons?.sendButtonIcon ?? require('../../assets/icon-send.png')
+        }
         style={{ tintColor: theme.colors.inputText }}
       />
     </TouchableOpacity>

@@ -52,8 +52,15 @@ export interface Size {
 }
 
 export interface Theme {
+  borders: ThemeBorders
   colors: ThemeColors
   fonts: ThemeFonts
+  icons?: ThemeIcons
+}
+
+export interface ThemeBorders {
+  inputBorderRadius: number
+  messageBorderRadius: number
 }
 
 export interface ThemeColors {
@@ -74,6 +81,14 @@ export interface ThemeFonts {
   caption: StyleProp<TextStyle>
   subtitle1: StyleProp<TextStyle>
   subtitle2: StyleProp<TextStyle>
+}
+
+export interface ThemeIcons {
+  attachmentButtonIcon?: NodeRequire
+  documentIcon?: NodeRequire
+  readIcon?: NodeRequire
+  sendButtonIcon?: NodeRequire
+  sentIcon?: NodeRequire
 }
 
 export interface User {

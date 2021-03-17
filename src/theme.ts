@@ -1,6 +1,10 @@
 import { Theme } from './types'
 
 export const defaultTheme: Theme = {
+  borders: {
+    inputBorderRadius: 20,
+    messageBorderRadius: 20,
+  },
   colors: {
     background: '#ffffff',
     caption: '#9e9cab',
