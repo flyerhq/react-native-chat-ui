@@ -30,7 +30,7 @@ export const l10n = {
     attachmentButtonAccessibilityLabel: 'Отправить медиа',
     emptyChatPlaceholder: 'Пока что у вас нет сообщений',
     fileButtonAccessibilityLabel: 'Файл',
-    inputPlaceholder: 'Сообщение…',
+    inputPlaceholder: 'Сообщение',
     sendButtonAccessibilityLabel: 'Отправить',
     today: 'Сегодня',
     yesterday: 'Вчера',
@@ -42,6 +42,6 @@ export const l10n = {
     inputPlaceholder: 'Повідомлення',
     sendButtonAccessibilityLabel: 'Надіслати',
     today: 'Сьогодні',
-    yesterday: 'Вчора',
+    yesterday: 'Учора',
   },
 }
