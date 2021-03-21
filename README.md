@@ -1,14 +1,36 @@
-# React Native Chat UI
+<h1 align="center">React Native Chat UI</h1>
 
-Actively maintained, community-driven chat UI implementation with an optional [Firebase BaaS](https://github.com/flyerhq/react-native-firebase-chat-core).
+<p align="center">
+  Actively maintained, community-driven chat UI implementation with an optional <a href="https://github.com/flyerhq/react-native-firebase-chat-core">Firebase BaaS</a>.
+</p>
 
-[![npm](https://img.shields.io/npm/v/@flyerhq/react-native-chat-ui)](https://www.npmjs.com/package/@flyerhq/react-native-chat-ui)
-[![build](https://github.com/flyerhq/react-native-chat-ui/workflows/build/badge.svg)](https://github.com/flyerhq/react-native-chat-ui/actions?query=workflow%3Abuild)
-[![Maintainability](https://api.codeclimate.com/v1/badges/cc0aeb07c6674ce204ec/maintainability)](https://codeclimate.com/github/flyerhq/react-native-chat-ui/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/cc0aeb07c6674ce204ec/test_coverage)](https://codeclimate.com/github/flyerhq/react-native-chat-ui/test_coverage)
-[![type-coverage](https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&suffix=%&query=$.typeCoverage.is&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fflyerhq%2Freact-native-chat-ui%2Fmain%2Fpackage.json)](https://github.com/plantain-00/type-coverage)
+<p align="center">
+  <a href="https://www.npmjs.com/package/@flyerhq/react-native-chat-ui">
+    <img alt="NPM" src="https://img.shields.io/npm/v/@flyerhq/react-native-chat-ui" />
+  </a>
+  <a href="https://github.com/flyerhq/react-native-chat-ui/actions?query=workflow%3Abuild">
+    <img alt="Build Status" src="https://github.com/flyerhq/react-native-chat-ui/workflows/build/badge.svg" />
+  </a>
+  <a href="https://codeclimate.com/github/flyerhq/react-native-chat-ui/maintainability">
+    <img alt="Maintainability" src="https://api.codeclimate.com/v1/badges/cc0aeb07c6674ce204ec/maintainability" />
+  </a>
+  <a href="https://codeclimate.com/github/flyerhq/react-native-chat-ui/test_coverage">
+    <img alt="Test Coverage" src="https://api.codeclimate.com/v1/badges/cc0aeb07c6674ce204ec/test_coverage" />
+  </a>
+  <a href="https://github.com/plantain-00/type-coverage">
+    <img alt="Type Coverage" src="https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&suffix=%&query=$.typeCoverage.is&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fflyerhq%2Freact-native-chat-ui%2Fmain%2Fpackage.json" />
+  </a>
+</p>
 
-<img></img>
+<br>
+
+<p align="center">
+  <a href="https://flyer.chat">
+    <img alt="Chat Image" src="https://user-images.githubusercontent.com/14123304/111913228-72fa3280-8a6d-11eb-8838-382a270d66f5.png" />
+  </a>
+</p>
+
+<br>
 
 Flyer Chat is a platform for creating in-app chat experiences using React Native or [Flutter](https://github.com/flyerhq/flutter_chat_ui). This repository contains chat UI implementation for React Native.
 
