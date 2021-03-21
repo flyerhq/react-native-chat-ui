@@ -49,3 +49,14 @@ export const defaultTheme: Theme = {
     },
   },
 }
+
+export const darkTheme: Theme = {
+  ...defaultTheme,
+  colors: {
+    ...defaultTheme.colors,
+    background: '#1f1c38',
+    inputBackground: '#2b2250',
+    secondary: '#2b2250',
+    secondaryText: '#ffffff',
+  },
+}

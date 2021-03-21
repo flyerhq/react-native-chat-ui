@@ -8,6 +8,15 @@ export const l10n = {
     today: 'Today',
     yesterday: 'Yesterday',
   },
+  es: {
+    attachmentButtonAccessibilityLabel: 'Enviar multimedia',
+    emptyChatPlaceholder: 'Aún no hay mensajes',
+    fileButtonAccessibilityLabel: 'Archivo',
+    inputPlaceholder: 'Mensaje',
+    sendButtonAccessibilityLabel: 'Enviar',
+    today: 'Hoy',
+    yesterday: 'Ayer',
+  },
   pl: {
     attachmentButtonAccessibilityLabel: 'Wyślij multimedia',
     emptyChatPlaceholder: 'Tu jeszcze nie ma wiadomości',
