@@ -110,8 +110,8 @@ export const Message = React.memo(
     const readIcon: ImageSourcePropType =
       theme.icons?.readIcon ?? require('../../assets/icon-read.png')
 
-    const sentIcon: ImageSourcePropType =
-      theme.icons?.sentIcon ?? require('../../assets/icon-sent.png')
+    const deliveredIcon: ImageSourcePropType =
+      theme.icons?.deliveredIcon ?? require('../../assets/icon-delivered.png')
 
     return (
       <View style={container}>
@@ -131,9 +131,12 @@ export const Message = React.memo(
                     size={12}
                   />
                 )}
-                {(message.status === 'read' || message.status === 'sent') && (
+                {(message.status === 'read' ||
+                  message.status === 'delivered') && (
                   <Image
-                    source={message.status === 'read' ? readIcon : sentIcon}
+                    source={
+                      message.status === 'read' ? readIcon : deliveredIcon
+                    }
                     style={status}
                   />
                 )}

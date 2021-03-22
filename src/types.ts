@@ -13,7 +13,7 @@ export namespace MessageType {
   interface Base {
     authorId: string
     id: string
-    status?: 'error' | 'read' | 'sending' | 'sent'
+    status?: 'delivered' | 'error' | 'read' | 'sending'
     timestamp?: number
     type: 'file' | 'image' | 'text'
   }
@@ -90,10 +90,10 @@ export interface ThemeFonts {
 
 export interface ThemeIcons {
   attachmentButtonIcon?: ImageSourcePropType
+  deliveredIcon?: ImageSourcePropType
   documentIcon?: ImageSourcePropType
   readIcon?: ImageSourcePropType
   sendButtonIcon?: ImageSourcePropType
-  sentIcon?: ImageSourcePropType
 }
 
 export interface User {

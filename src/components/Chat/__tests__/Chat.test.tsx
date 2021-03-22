@@ -22,7 +22,7 @@ describe('chat', () => {
       {
         ...textMessage,
         id: 'new-uuidv4',
-        status: 'sent' as const,
+        status: 'delivered' as const,
         timestamp: 1,
       },
     ]
