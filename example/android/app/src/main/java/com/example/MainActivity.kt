@@ -1,4 +1,4 @@
-package com.flyer.example
+package com.example
 
 import com.facebook.react.ReactActivity
 

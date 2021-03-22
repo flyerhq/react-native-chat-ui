@@ -1,4 +1,4 @@
-package com.flyer.example
+package com.example
 
 import android.app.Application
 import android.content.Context
@@ -15,6 +15,8 @@ class MainApplication : Application(), ReactApplication {
 
         override fun getPackages(): List<ReactPackage> {
             val packages = PackageList(this).packages
+            // Packages that cannot be autolinked yet can be added manually here, for example:
+            // packages.add(MyReactNativePackage());
             return packages
         }
 
@@ -38,7 +40,7 @@ class MainApplication : Application(), ReactApplication {
         private fun initializeFlipper(context: Context, reactInstanceManager: ReactInstanceManager) {
             if (BuildConfig.DEBUG) {
                 try {
-                    val aClass = Class.forName("com.flyer.example.ReactNativeFlipper")
+                    val aClass = Class.forName("com.example.ReactNativeFlipper")
                     aClass
                             .getMethod("initializeFlipper", Context::class.java, ReactInstanceManager::class.java)
                             .invoke(null, context, reactInstanceManager)

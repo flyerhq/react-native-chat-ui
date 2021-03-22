@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  example
-//
-//  Copyright © 2021 Facebook. All rights reserved.
-//
-
 import UIKit
 #if DEBUG
 import FlipperKit
@@ -21,7 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, RCTBridgeDelegate {
     let bridge = RCTBridge(delegate: self, launchOptions: launchOptions)
     let rootView = RCTRootView(bridge: bridge!, moduleName: "example", initialProperties: nil)
 
-    rootView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+    if #available(iOS 13.0, *) {
+      rootView.backgroundColor = UIColor.systemBackground
+    } else {
+      rootView.backgroundColor = UIColor.white
+    }
 
     window = UIWindow(frame: UIScreen.main.bounds)
     let rootViewController = UIViewController()

@@ -2,7 +2,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "esModuleInterop": true,
-    "isolatedModules": true,
     "jsx": "react-native",
     "lib": ["ESNext"],
     "module": "CommonJS",
@@ -13,7 +12,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ESNext"
+    "target": "ESNext",
   },
   "include": ["src"]
 }

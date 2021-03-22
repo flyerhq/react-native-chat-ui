@@ -20,7 +20,6 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-project.xcworkspace
 
 # Android/IntelliJ
 #
@@ -32,10 +31,6 @@ local.properties
 /android/gradlew
 /android/gradlew.bat
 /android/gradle/
-
-# Visual Studio Code
-#
-.vscode/
 
 # node.js
 #

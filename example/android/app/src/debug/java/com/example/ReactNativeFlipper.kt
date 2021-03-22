@@ -1,4 +1,4 @@
-package com.flyer.example
+package com.example
 
 import android.content.Context
 import com.facebook.flipper.android.AndroidFlipperClient
