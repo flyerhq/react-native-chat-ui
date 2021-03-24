@@ -6,6 +6,8 @@ title: Themes
 You can override anything from some defined theme or create a new one from scratch. See the default theme implementation [here](https://github.com/flyerhq/react-native-chat-ui/blob/main/src/theme.ts). To override theme partially, destructure any defined theme and change what is needed, like on this example:
 
 ```ts
+import { Chat, defaultTheme } from '@flyerhq/react-native-chat-ui'
+
 <Chat
   theme={{
     ...defaultTheme,

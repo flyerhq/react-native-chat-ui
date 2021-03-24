@@ -17,6 +17,12 @@ Try to write any URL, for example, https://flyer.chat, it should be unwrapped in
 
 :::
 
+:::important
+
+All examples are in TypeScript.
+
+:::
+
 ```ts
 import { Chat, MessageType } from '@flyerhq/react-native-chat-ui'
 import React, { useState } from 'react'
