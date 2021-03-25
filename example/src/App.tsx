@@ -50,9 +50,9 @@ const App = () => {
       })
       const fileMessage: MessageType.File = {
         authorId: userId,
+        fileName: response.name,
         id: uuidv4(),
         mimeType: response.type,
-        fileName: response.name,
         size: response.size,
         timestamp: Math.floor(Date.now() / 1000),
         type: 'file',
