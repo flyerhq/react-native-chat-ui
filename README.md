@@ -1,3 +1,11 @@
+<br>
+
+<p align="center">
+  <a href="https://flyer.chat">
+    <img src="https://flyer.chat/assets/logo-dark.svg" width="288px" alt="Flyer Chat logo" />
+  </a>
+</p>
+
 <h1 align="center">React Native Chat UI</h1>
 
 <p align="center">
@@ -38,7 +46,7 @@ Flyer Chat is a platform for creating in-app chat experiences using React Native
 
 * **Backend agnostic**. You can choose the backend you prefer. But if you don't have one, we provide our own free and open-source [Firebase implementation](https://github.com/flyerhq/react-native-firebase-chat-core), which can be used to create a working chat in minutes. We are also working on our more advanced SaaS and self-hosted solutions.
 
-* **Customizable**. Supports custom themes, locales and more. Check our [documentation](https://flyer.chat) for the info. More options are on the way, let us know if something is missing.
+* **Customizable**. Supports custom themes, locales and more. Check our [documentation](https://docs.flyer.chat/react-native/chat-ui) for the info. More options are on the way, let us know if something is missing.
 
 * **Minimum dependencies**. Our packages are lightweight. Use your favourite packages for selecting images, opening files etc. See the [example](https://github.com/flyerhq/react-native-chat-ui/blob/main/example/src/App.tsx) for possible implementation.
 
@@ -48,7 +56,7 @@ Flyer Chat is a platform for creating in-app chat experiences using React Native
 
 `React Native >=0.60.0`
 
-Read our [documentation](https://flyer.chat) or see the [example](https://github.com/flyerhq/react-native-chat-ui/tree/main/example) project.
+Read our [documentation](https://docs.flyer.chat/react-native/chat-ui) or see the [example](https://github.com/flyerhq/react-native-chat-ui/tree/main/example) project.
 
 ## Contributing
 
