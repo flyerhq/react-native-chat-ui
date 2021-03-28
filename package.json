@@ -1,8 +1,8 @@
 {
   "name": "@flyerhq/react-native-chat-ui",
-  "version": "1.0.0",
-  "description": "React Native Chat UI",
-  "homepage": "https://github.com/flyerhq/react-native-chat-ui#readme",
+  "version": "1.0.1",
+  "description": "Actively maintained, community-driven chat UI implementation with an optional Firebase BaaS.",
+  "homepage": "https://flyer.chat",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "author": "Oleksandr Demchenko <alexdemchenko@yahoo.com>",
