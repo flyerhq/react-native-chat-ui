@@ -767,12 +767,12 @@
   resolved "https://registry.yarnpkg.com/@flyerhq/react-native-keyboard-accessory-view/-/react-native-keyboard-accessory-view-2.1.1.tgz#090b809f825096995a9609d06d0304dfa50b4efd"
   integrity sha512-KwjBbePlrSsaYUPlEpsk58/1tEkOnXMFbQiKGl0qlr5WPEeRx55dQXUs5XGC/+W0vncIaUuLozLq+QZXX5Ce3g==
 
-"@flyerhq/react-native-link-preview@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@flyerhq/react-native-link-preview/-/react-native-link-preview-1.1.0.tgz#5de850a18b366ab9dba8d57d90929a1a998901cd"
-  integrity sha512-OkZoVLBrqiq8/1FnvrVUtKDfuKOkDpGTxpMDXt1FaLXQRmOTUxXAlxM8bCQpevKxofeyeI2xWzfe2JEOOxllqg==
+"@flyerhq/react-native-link-preview@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@flyerhq/react-native-link-preview/-/react-native-link-preview-1.2.0.tgz#f80f1a2d55f6dce1a00d6960fcc64edd9cb53b98"
+  integrity sha512-HlVCNJGhHY34z+//FPdU7KAaR/P7ROpN6VDQe9/SRtDZb2yPYFGvspRJRopgGO+bSwH6G8NWUPrszGgUG+CycQ==
   dependencies:
-    html-entities "^2.1.0"
+    html-entities "^2.1.1"
 
 "@hapi/hoek@^9.0.0":
   version "9.1.1"
@@ -3375,10 +3375,10 @@ html-encoding-sniffer@^2.0.1:
   dependencies:
     whatwg-encoding "^1.0.5"
 
-html-entities@^2.1.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-2.1.1.tgz#faa5fc521e2d18499627835d22be3554c202208f"
-  integrity sha512-HjNLgm9Ba8zKd6NDMkXa0mMPn3eDUxOUnEIm/qy2Rm6rnqRHgI9DpMYIv1Fndu8haUmfMQHNYNrlNKmdU8GMnQ==
+html-entities@^2.1.1:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-2.3.0.tgz#83474887115f12d33a7b85f6573c95223c2940a4"
+  integrity sha512-/XzLX7A79umjBdw7yYw99bk20uj+L1hQINB029One2OCIqtHj0o5F+XMRam1pveHF4pEYZyr8RSLYWdhguHrwg==
 
 html-escaper@^2.0.0:
   version "2.0.2"
