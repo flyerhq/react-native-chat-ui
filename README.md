@@ -20,10 +20,10 @@
     <img alt="Build Status" src="https://github.com/flyerhq/react-native-chat-ui/workflows/build/badge.svg" />
   </a>
   <a href="https://codeclimate.com/github/flyerhq/react-native-chat-ui/maintainability">
-    <img alt="Maintainability" src="https://api.codeclimate.com/v1/badges/cc0aeb07c6674ce204ec/maintainability" />
+    <img alt="Maintainability" src="https://api.codeclimate.com/v1/badges/6913931b6ad4f98d7a57/maintainability" />
   </a>
   <a href="https://codeclimate.com/github/flyerhq/react-native-chat-ui/test_coverage">
-    <img alt="Test Coverage" src="https://api.codeclimate.com/v1/badges/cc0aeb07c6674ce204ec/test_coverage" />
+    <img alt="Test Coverage" src="https://api.codeclimate.com/v1/badges/6913931b6ad4f98d7a57/test_coverage" />
   </a>
   <a href="https://github.com/plantain-00/type-coverage">
     <img alt="Type Coverage" src="https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&suffix=%&query=$.typeCoverage.is&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fflyerhq%2Freact-native-chat-ui%2Fmain%2Fpackage.json" />

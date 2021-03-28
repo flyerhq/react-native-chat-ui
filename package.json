@@ -1,6 +1,6 @@
 {
   "name": "@flyerhq/react-native-chat-ui",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "React Native Chat UI",
   "homepage": "https://github.com/flyerhq/react-native-chat-ui#readme",
   "main": "lib/index.js",
@@ -11,11 +11,20 @@
     "Volodymyr Smolianinov <voidozzer@gmail.com>"
   ],
   "license": "Apache-2.0",
+  "keywords": [
+    "chat",
+    "ui",
+    "react-native",
+    "react-native-component",
+    "ios",
+    "android",
+    "typescript"
+  ],
   "files": [
     "lib"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "access": "public"
   },
   "scripts": {
     "compile": "rm -rf lib && tsc -p . && copyup src/assets/*.png lib",
