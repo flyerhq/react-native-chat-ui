@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://flyer.chat">
-    <img src="https://flyer.chat/assets/logo-dark.svg" width="288px" alt="Flyer Chat logo" />
+    <img src="https://flyer.chat/assets/logo-dark.svg" width="288px" alt="Flyer Chat Logo" />
   </a>
 </p>
 
