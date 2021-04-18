@@ -12,7 +12,6 @@ import {
   SafeAreaView,
   StatusBar,
   StatusBarProps,
-  StyleSheet,
   Text,
   View,
 } from 'react-native'
@@ -22,12 +21,14 @@ import { l10n } from '../../l10n'
 import { defaultTheme } from '../../theme'
 import { MessageType, Theme, User } from '../../types'
 import {
+  getHeaderConfig,
   initLocale,
   L10nContext,
   ThemeContext,
   unwrap,
   UserContext,
 } from '../../utils'
+import { Header } from '../Header'
 import { Input, InputAdditionalProps, InputTopLevelProps } from '../Input'
 import { Message, MessageTopLevelProps } from '../Message'
 import styles from './styles'
@@ -38,11 +39,13 @@ export type ChatTopLevelProps = InputTopLevelProps & MessageTopLevelProps
 
 export interface ChatProps extends ChatTopLevelProps {
   dateDividerFormat?: string
-  flatListProps?: FlatListProps<MessageType.Any[]>
+  flatListProps?: Partial<FlatListProps<MessageType.Any[]>>
   inputProps?: InputAdditionalProps
+  isLastPage?: boolean
   l10nOverride?: Partial<Record<keyof typeof l10n[keyof typeof l10n], string>>
   locale?: keyof typeof l10n
   messages: MessageType.Any[]
+  onEndReached?: () => Promise<void>
   theme?: Theme
   user: User
 }
@@ -52,11 +55,13 @@ export const Chat = ({
   flatListProps,
   inputProps,
   isAttachmentUploading,
+  isLastPage,
   l10nOverride,
   locale = 'en',
   messages,
   messageTimeFormat,
   onAttachmentPress,
+  onEndReached,
   onFilePress,
   onPreviewDataFetched,
   onSendPress,
@@ -81,6 +86,7 @@ export const Chat = ({
   const { onLayout, size } = useComponentSize()
   const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
   const [imageViewIndex, setImageViewIndex] = React.useState(0)
+  const [loadingMoreMessages, setLoadingMoreMessages] = React.useState(false)
   const [stackEntry, setStackEntry] = React.useState<StatusBarProps>({})
   const images = messages.reduce<{ uri: string }[]>(
     (acc, curr) => (curr.type === 'image' ? [{ uri: curr.uri }, ...acc] : acc),
@@ -127,26 +133,11 @@ export const Chat = ({
 
   const renderItem = React.useCallback(
     ({ item: message, index }: { item: MessageType.Any; index: number }) => {
-      // TODO: Update the logic after pagination is introduced
       const isFirst = index === 0
-      const isLast = index === messages.length - 1
-      const nextMessage = isLast ? undefined : messages[index + 1]
       const previousMessage = isFirst ? undefined : messages[index - 1]
 
-      let nextMessageDifferentDay = false
-      let nextMessageSameAuthor = false
       let previousMessageSameAuthor = false
       let shouldRenderTime = !!message.timestamp
-
-      if (nextMessage) {
-        nextMessageDifferentDay =
-          !!message.timestamp &&
-          !!nextMessage.timestamp &&
-          !dayjs
-            .unix(message.timestamp)
-            .isSame(dayjs.unix(nextMessage.timestamp), 'day')
-        nextMessageSameAuthor = nextMessage.authorId === message.authorId
-      }
 
       if (previousMessage) {
         previousMessageSameAuthor =
@@ -157,6 +148,14 @@ export const Chat = ({
           (!previousMessageSameAuthor ||
             previousMessage.timestamp - message.timestamp >= 60)
       }
+
+      const headerConfig = getHeaderConfig({
+        index,
+        isLastPage,
+        message,
+        messages,
+        onEndReached,
+      })
 
       return (
         <>
@@ -175,25 +174,15 @@ export const Chat = ({
               shouldRenderTime,
             }}
           />
-          {(nextMessageDifferentDay || (isLast && message.timestamp)) && (
-            <Text
-              style={StyleSheet.flatten([
-                dateDivider,
-                { marginTop: nextMessageSameAuthor ? 24 : 16 },
-              ])}
-            >
-              {/* At this point we know that timestamp exists, so we can safely force unwrap it */}
-              {/* type-coverage:ignore-next-line */}
-              {dayjs.unix(message.timestamp!).calendar(undefined, {
-                sameDay: `[${l10n[locale].today}]`,
-                nextDay: dateDividerFormat,
-                nextWeek: dateDividerFormat,
-                lastDay: `[${l10n[locale].yesterday}]`,
-                lastWeek: dateDividerFormat,
-                sameElse: dateDividerFormat,
-              })}
-            </Text>
-          )}
+          <Header
+            dateDivider={dateDivider}
+            dateDividerFormat={dateDividerFormat}
+            headerConfig={headerConfig}
+            loadingMoreMessages={loadingMoreMessages}
+            locale={locale}
+            message={message}
+            theme={theme}
+          />
         </>
       )
     },
@@ -201,15 +190,19 @@ export const Chat = ({
       dateDivider,
       dateDividerFormat,
       handleImagePress,
+      isLastPage,
+      loadingMoreMessages,
       locale,
       messageTimeFormat,
       messageWidth,
       messages,
       onFilePress,
+      onEndReached,
       onPreviewDataFetched,
       renderFileMessage,
       renderImageMessage,
       renderTextMessage,
+      theme,
     ]
   )
 
@@ -226,6 +219,23 @@ export const Chat = ({
 
   const renderListFooterComponent = React.useCallback(() => <View />, [])
 
+  const handleEndReached = React.useCallback(
+    async ({ distanceFromEnd }: { distanceFromEnd: number }) => {
+      if (
+        distanceFromEnd <= 0 ||
+        messages.length === 0 ||
+        loadingMoreMessages
+      ) {
+        return
+      }
+
+      setLoadingMoreMessages(true)
+      await onEndReached?.()
+      setLoadingMoreMessages(false)
+    },
+    [loadingMoreMessages, messages.length, onEndReached]
+  )
+
   const renderScrollable = React.useCallback(
     (panHandlers: GestureResponderHandlers) => (
       <FlatList
@@ -240,6 +250,7 @@ export const Chat = ({
         ListFooterComponent={renderListFooterComponent}
         ListFooterComponentStyle={footer}
         maxToRenderPerBatch={6}
+        onEndReachedThreshold={0.75}
         showsHorizontalScrollIndicator={false}
         style={flatList}
         {...unwrap(flatListProps)}
@@ -247,6 +258,7 @@ export const Chat = ({
         inverted={messages.length !== 0}
         keyboardDismissMode='interactive'
         keyExtractor={keyExtractor}
+        onEndReached={handleEndReached}
         ref={list}
         renderItem={renderItem}
         {...panHandlers}
@@ -257,6 +269,7 @@ export const Chat = ({
       flatListContentContainer,
       flatListProps,
       footer,
+      handleEndReached,
       keyExtractor,
       messages,
       renderItem,

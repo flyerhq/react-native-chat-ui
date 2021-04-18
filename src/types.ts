@@ -102,3 +102,11 @@ export interface User {
   id: string
   lastName?: string
 }
+
+export interface HeaderParams {
+  index: number
+  isLastPage?: boolean
+  message: MessageType.Any
+  messages: MessageType.Any[]
+  onEndReached?: () => Promise<void>
+}

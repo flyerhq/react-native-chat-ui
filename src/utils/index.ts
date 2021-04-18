@@ -2,9 +2,10 @@ import dayjs from 'dayjs'
 import * as React from 'react'
 import Blob from 'react-native/Libraries/Blob/Blob'
 
+import { HeaderConfig } from '../components/Header'
 import { l10n } from '../l10n'
 import { defaultTheme } from '../theme'
-import { Theme, User } from '../types'
+import { HeaderParams, Theme, User } from '../types'
 
 export const L10nContext = React.createContext<typeof l10n[keyof typeof l10n]>(
   l10n.en
@@ -20,6 +21,46 @@ export const formatBytes = (size: number, fractionDigits = 2) => {
     ' ' +
     ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'][multiple]
   )
+}
+
+export const getHeaderConfig = ({
+  index,
+  isLastPage,
+  message,
+  messages,
+  onEndReached,
+}: HeaderParams): HeaderConfig => {
+  const isLast = index === messages.length - 1
+  const nextMessage = isLast ? undefined : messages[index + 1]
+  const withPagination = !!onEndReached
+
+  let nextMessageDifferentDay = false
+  let nextMessageSameAuthor = false
+
+  if (nextMessage) {
+    nextMessageDifferentDay =
+      !!message.timestamp &&
+      !!nextMessage.timestamp &&
+      !dayjs
+        .unix(message.timestamp)
+        .isSame(dayjs.unix(nextMessage.timestamp), 'day')
+    nextMessageSameAuthor = nextMessage.authorId === message.authorId
+  }
+
+  const shouldRenderDateWithoutPagination = isLast && !withPagination
+  const shouldRenderDateWithPagination = isLast && isLastPage === true
+  const shouldRenderDate =
+    !!message.timestamp &&
+    (withPagination
+      ? shouldRenderDateWithPagination
+      : shouldRenderDateWithoutPagination)
+
+  return {
+    isLast,
+    nextMessageDifferentDay,
+    nextMessageSameAuthor,
+    shouldRenderDate,
+  }
 }
 
 export const getTextSizeInBytes = (text: string) => new Blob([text]).size
