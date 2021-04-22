@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 
 import { L10nContext, ThemeContext } from '../../utils'
+import styles from './styles'
 
 export interface SendButtonPropsAdditionalProps {
   touchableOpacityProps?: TouchableOpacityProps
@@ -34,6 +35,7 @@ export const SendButton = ({
       accessibilityRole='button'
       {...touchableOpacityProps}
       onPress={handlePress}
+      style={styles.sendButton}
     >
       <Image
         source={

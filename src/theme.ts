@@ -21,7 +21,7 @@ export const defaultTheme: Theme = {
       fontFamily: 'Avenir',
       fontSize: 16,
       fontWeight: '500',
-      lineHeight: 22,
+      lineHeight: 24,
     },
     body2: {
       fontFamily: 'Avenir',

@@ -7,6 +7,7 @@ export default ({ theme }: { theme: Theme }) =>
     container: {
       alignItems: 'center',
       flexDirection: 'row',
+      marginRight: 16,
       paddingHorizontal: 24,
       paddingVertical: 20,
     },
@@ -18,7 +19,6 @@ export default ({ theme }: { theme: Theme }) =>
         maxHeight: 100,
         // Fixes default paddings for Android
         paddingBottom: 0,
-        paddingHorizontal: 16,
         paddingTop: 0,
       },
     ]),

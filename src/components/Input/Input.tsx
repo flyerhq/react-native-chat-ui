@@ -68,10 +68,12 @@ export const Input = ({
             }}
           />
         ) : (
-          <AttachmentButton
-            {...unwrap(attachmentButtonProps)}
-            onPress={onAttachmentPress}
-          />
+          !!onAttachmentPress && (
+            <AttachmentButton
+              {...unwrap(attachmentButtonProps)}
+              onPress={onAttachmentPress}
+            />
+          )
         ))}
       <TextInput
         multiline
