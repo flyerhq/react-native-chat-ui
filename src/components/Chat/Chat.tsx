@@ -66,6 +66,7 @@ export const Chat = ({
   textInputProps,
   theme = defaultTheme,
   user,
+  removeMessage,
 }: ChatProps) => {
   const {
     container,
@@ -173,27 +174,15 @@ export const Chat = ({
               renderImageMessage,
               renderTextMessage,
               shouldRenderTime,
+              removeMessage: () => removeMessage(message.id),
+              dateDivider,
+              dateDividerFormat,
+              nextMessageSameAuthor,
+              locale,
+              displayHeader:
+                nextMessageDifferentDay || (isLast && message.timestamp),
             }}
           />
-          {(nextMessageDifferentDay || (isLast && message.timestamp)) && (
-            <Text
-              style={StyleSheet.flatten([
-                dateDivider,
-                { marginTop: nextMessageSameAuthor ? 24 : 16 },
-              ])}
-            >
-              {/* At this point we know that timestamp exists, so we can safely force unwrap it */}
-              {/* type-coverage:ignore-next-line */}
-              {dayjs.unix(message.timestamp!).calendar(undefined, {
-                sameDay: `[${l10n[locale].today}]`,
-                nextDay: dateDividerFormat,
-                nextWeek: dateDividerFormat,
-                lastDay: `[${l10n[locale].yesterday}]`,
-                lastWeek: dateDividerFormat,
-                sameElse: dateDividerFormat,
-              })}
-            </Text>
-          )}
         </>
       )
     },
@@ -201,12 +190,12 @@ export const Chat = ({
       dateDivider,
       dateDividerFormat,
       handleImagePress,
-      locale,
       messageTimeFormat,
       messageWidth,
       messages,
       onFilePress,
       onPreviewDataFetched,
+      removeMessage,
       renderFileMessage,
       renderImageMessage,
       renderTextMessage,

@@ -1,8 +1,19 @@
 import { oneOf } from '@flyerhq/react-native-link-preview'
-import dayjs from 'dayjs'
+import dayjs, { locale } from 'dayjs'
 import * as React from 'react'
-import { Image, ImageSourcePropType, Text, View } from 'react-native'
+import {
+  Image,
+  ImageSourcePropType,
+  LayoutAnimation,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  UIManager,
+  View,
+} from 'react-native'
 
+import { l10n } from '../..'
 import { MessageType } from '../../types'
 import { ThemeContext, UserContext } from '../../utils'
 import { CircularActivityIndicator } from '../CircularActivityIndicator'
@@ -36,6 +47,12 @@ export interface MessageProps extends MessageTopLevelProps {
   shouldRenderTime: boolean
 }
 
+if (Platform.OS === 'android') {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true)
+  }
+}
+
 export const Message = React.memo(
   ({
     message,
@@ -49,6 +66,12 @@ export const Message = React.memo(
     renderImageMessage,
     renderTextMessage,
     shouldRenderTime,
+    removeMessage,
+    nextMessageSameAuthor,
+    displayHeader,
+    dateDivider,
+    dateDividerFormat,
+    locale,
   }: MessageProps) => {
     const theme = React.useContext(ThemeContext)
     const user = React.useContext(UserContext)
@@ -65,6 +88,17 @@ export const Message = React.memo(
       theme,
       user,
     })
+
+    const newAnimation = () => {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+    }
+
+    React.useEffect(() => {
+      newAnimation()
+      return () => {
+        newAnimation()
+      }
+    }, [])
 
     const renderMessage = React.useCallback(() => {
       switch (message.type) {
@@ -114,37 +148,58 @@ export const Message = React.memo(
       theme.icons?.deliveredIcon ?? require('../../assets/icon-delivered.png')
 
     return (
-      <View style={container}>
-        <View style={contentContainer}>{renderMessage()}</View>
-        {shouldRenderTime && (
-          <View style={statusContainer}>
-            <Text style={time}>
-              {/* `shouldRenderTime` will only be true if timestamp exists, so we can safely force unwrap it */}
-              {/* type-coverage:ignore-next-line */}
-              {dayjs.unix(message.timestamp!).format(messageTimeFormat)}
-            </Text>
-            {user?.id === message.authorId && (
-              <>
-                {message.status === 'sending' && (
-                  <CircularActivityIndicator
-                    color={theme.colors.primary}
-                    size={12}
-                  />
-                )}
-                {(message.status === 'read' ||
-                  message.status === 'delivered') && (
-                  <Image
-                    source={
-                      message.status === 'read' ? readIcon : deliveredIcon
-                    }
-                    style={status}
-                  />
-                )}
-              </>
-            )}
-          </View>
+      <>
+        <TouchableOpacity style={container} onPress={removeMessage}>
+          <View style={contentContainer}>{renderMessage()}</View>
+          {shouldRenderTime && (
+            <View style={statusContainer}>
+              <Text style={time}>
+                {/* `shouldRenderTime` will only be true if timestamp exists, so we can safely force unwrap it */}
+                {/* type-coverage:ignore-next-line */}
+                {dayjs.unix(message.timestamp!).format(messageTimeFormat)}
+              </Text>
+              {user?.id === message.authorId && (
+                <>
+                  {message.status === 'sending' && (
+                    <CircularActivityIndicator
+                      color={theme.colors.primary}
+                      size={12}
+                    />
+                  )}
+                  {(message.status === 'read' ||
+                    message.status === 'delivered') && (
+                    <Image
+                      source={
+                        message.status === 'read' ? readIcon : deliveredIcon
+                      }
+                      style={status}
+                    />
+                  )}
+                </>
+              )}
+            </View>
+          )}
+        </TouchableOpacity>
+        {displayHeader && (
+          <Text
+            style={StyleSheet.flatten([
+              dateDivider,
+              { marginTop: nextMessageSameAuthor ? 24 : 16 },
+            ])}
+          >
+            {/* At this point we know that timestamp exists, so we can safely force unwrap it */}
+            {/* type-coverage:ignore-next-line */}
+            {dayjs.unix(message.timestamp!).calendar(undefined, {
+              sameDay: `[${l10n[locale].today}]`,
+              nextDay: dateDividerFormat,
+              nextWeek: dateDividerFormat,
+              lastDay: `[${l10n[locale].yesterday}]`,
+              lastWeek: dateDividerFormat,
+              sameElse: dateDividerFormat,
+            })}
+          </Text>
         )}
-      </View>
+      </>
     )
   }
 )
