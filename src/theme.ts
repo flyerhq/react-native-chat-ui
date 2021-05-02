@@ -15,6 +15,7 @@ export const defaultTheme: Theme = {
     primaryText: '#ffffff',
     secondary: '#f7f7f8',
     secondaryText: '#1d1d21',
+    subtitle2: '#1d1d21',
   },
   fonts: {
     body1: {
@@ -58,5 +59,6 @@ export const darkTheme: Theme = {
     inputBackground: '#2b2250',
     secondary: '#2b2250',
     secondaryText: '#ffffff',
+    subtitle2: '#ffffff',
   },
 }

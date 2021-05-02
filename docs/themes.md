@@ -53,6 +53,7 @@ Question mark shows optional types.
 | primaryText     | ColorValue | Color of the text on a `primary` color                             |
 | secondary       | ColorValue | Secondary color, used as a background of received messages         |
 | secondaryText   | ColorValue | Color of the text on a `secondary` color                           |
+| subtitle2       | ColorValue | Color of the `subtitle2` text style                                |
 
 ### ThemeFonts
 

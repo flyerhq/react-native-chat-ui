@@ -11,7 +11,7 @@ export default ({ theme }: { theme: Theme }) =>
     dateDivider: StyleSheet.flatten([
       theme.fonts.subtitle2,
       {
-        color: theme.colors.secondaryText,
+        color: theme.colors.subtitle2,
         marginBottom: 32,
         textAlign: 'center',
       },

@@ -78,6 +78,7 @@ export interface ThemeColors {
   primaryText: ColorValue
   secondary: ColorValue
   secondaryText: ColorValue
+  subtitle2: ColorValue
 }
 
 export interface ThemeFonts {
