@@ -2,6 +2,7 @@ import * as React from 'react'
 import {
   GestureResponderEvent,
   Image,
+  StyleSheet,
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native'
@@ -40,8 +41,17 @@ export const AttachmentButton = ({
           theme.icons?.attachmentButtonIcon ??
           require('../../assets/icon-attachment.png')
         }
-        style={{ tintColor: theme.colors.inputText }}
+        style={StyleSheet.flatten([
+          styles.image,
+          { tintColor: theme.colors.inputText },
+        ])}
       />
     </TouchableOpacity>
   )
 }
+
+const styles = StyleSheet.create({
+  image: {
+    marginRight: 16,
+  },
+})

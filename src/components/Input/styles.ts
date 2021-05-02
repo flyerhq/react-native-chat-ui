@@ -7,7 +7,6 @@ export default ({ theme }: { theme: Theme }) =>
     container: {
       alignItems: 'center',
       flexDirection: 'row',
-      marginRight: 16,
       paddingHorizontal: 24,
       paddingVertical: 20,
     },
