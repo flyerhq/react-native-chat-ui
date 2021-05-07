@@ -9,11 +9,13 @@ import {
   FlatList,
   FlatListProps,
   GestureResponderHandlers,
+  Platform,
   SafeAreaView,
   StatusBar,
   StatusBarProps,
   StyleSheet,
   Text,
+  UIManager,
   View,
 } from 'react-native'
 import ImageView from 'react-native-image-viewing'
@@ -33,6 +35,12 @@ import { Message, MessageTopLevelProps } from '../Message'
 import styles from './styles'
 
 dayjs.extend(calendar)
+
+if (Platform.OS === 'android') {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true)
+  }
+}
 
 export type ChatTopLevelProps = InputTopLevelProps & MessageTopLevelProps
 
@@ -175,14 +183,28 @@ export const Chat = ({
               renderTextMessage,
               shouldRenderTime,
               removeMessage: () => removeMessage(message.id),
-              dateDivider,
-              dateDividerFormat,
-              nextMessageSameAuthor,
-              locale,
-              displayHeader:
-                nextMessageDifferentDay || (isLast && message.timestamp),
+              isLastMessage: messages?.length === 1,
             }}
           />
+          {(nextMessageDifferentDay || (isLast && message.timestamp)) && (
+            <Text
+              style={StyleSheet.flatten([
+                dateDivider,
+                { marginTop: nextMessageSameAuthor ? 24 : 16 },
+              ])}
+            >
+              {/* At this point we know that timestamp exists, so we can safely force unwrap it */}
+              {/* type-coverage:ignore-next-line */}
+              {dayjs.unix(message.timestamp!).calendar(undefined, {
+                sameDay: `[${l10n[locale].today}]`,
+                nextDay: dateDividerFormat,
+                nextWeek: dateDividerFormat,
+                lastDay: `[${l10n[locale].yesterday}]`,
+                lastWeek: dateDividerFormat,
+                sameElse: dateDividerFormat,
+              })}
+            </Text>
+          )}
         </>
       )
     },
@@ -190,9 +212,10 @@ export const Chat = ({
       dateDivider,
       dateDividerFormat,
       handleImagePress,
+      locale,
+      messages,
       messageTimeFormat,
       messageWidth,
-      messages,
       onFilePress,
       onPreviewDataFetched,
       removeMessage,

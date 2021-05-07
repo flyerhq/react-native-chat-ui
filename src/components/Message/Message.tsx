@@ -1,19 +1,16 @@
 import { oneOf } from '@flyerhq/react-native-link-preview'
-import dayjs, { locale } from 'dayjs'
+import dayjs from 'dayjs'
 import * as React from 'react'
 import {
   Image,
   ImageSourcePropType,
+  InteractionManager,
   LayoutAnimation,
-  Platform,
-  StyleSheet,
   Text,
   TouchableOpacity,
-  UIManager,
   View,
 } from 'react-native'
 
-import { l10n } from '../..'
 import { MessageType } from '../../types'
 import { ThemeContext, UserContext } from '../../utils'
 import { CircularActivityIndicator } from '../CircularActivityIndicator'
@@ -45,13 +42,25 @@ export interface MessageProps extends MessageTopLevelProps {
   onImagePress: (uri: string) => void
   previousMessageSameAuthor: boolean
   shouldRenderTime: boolean
+  isLastMessage: boolean
 }
 
-if (Platform.OS === 'android') {
-  if (UIManager.setLayoutAnimationEnabledExperimental) {
-    UIManager.setLayoutAnimationEnabledExperimental(true)
-  }
-}
+// const useMount = (func) => React.useEffect(() => func(), [])
+
+// // You can create a custom interaction/animation and add
+// // support for InteractionManager
+// const useCustomInteraction = (timeLocked = 300) => {
+//   useMount(() => {
+//     const handle = InteractionManager.createInteractionHandle()
+
+//     setTimeout(
+//       () => InteractionManager.clearInteractionHandle(handle),
+//       timeLocked
+//     )
+
+//     return () => InteractionManager.clearInteractionHandle(handle)
+//   })
+// }
 
 export const Message = React.memo(
   ({
@@ -67,11 +76,7 @@ export const Message = React.memo(
     renderTextMessage,
     shouldRenderTime,
     removeMessage,
-    nextMessageSameAuthor,
-    displayHeader,
-    dateDivider,
-    dateDividerFormat,
-    locale,
+    isLastMessage,
   }: MessageProps) => {
     const theme = React.useContext(ThemeContext)
     const user = React.useContext(UserContext)
@@ -90,15 +95,18 @@ export const Message = React.memo(
     })
 
     const newAnimation = () => {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+      if (!isLastMessage) {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+      }
     }
 
-    React.useEffect(() => {
-      newAnimation()
-      return () => {
-        newAnimation()
-      }
-    }, [])
+    InteractionManager.runAfterInteractions(newAnimation)
+
+    // React.useEffect(() => {
+    //   newAnimation()
+
+    //   // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isLastMessage])
 
     const renderMessage = React.useCallback(() => {
       switch (message.type) {
@@ -148,58 +156,37 @@ export const Message = React.memo(
       theme.icons?.deliveredIcon ?? require('../../assets/icon-delivered.png')
 
     return (
-      <>
-        <TouchableOpacity style={container} onPress={removeMessage}>
-          <View style={contentContainer}>{renderMessage()}</View>
-          {shouldRenderTime && (
-            <View style={statusContainer}>
-              <Text style={time}>
-                {/* `shouldRenderTime` will only be true if timestamp exists, so we can safely force unwrap it */}
-                {/* type-coverage:ignore-next-line */}
-                {dayjs.unix(message.timestamp!).format(messageTimeFormat)}
-              </Text>
-              {user?.id === message.authorId && (
-                <>
-                  {message.status === 'sending' && (
-                    <CircularActivityIndicator
-                      color={theme.colors.primary}
-                      size={12}
-                    />
-                  )}
-                  {(message.status === 'read' ||
-                    message.status === 'delivered') && (
-                    <Image
-                      source={
-                        message.status === 'read' ? readIcon : deliveredIcon
-                      }
-                      style={status}
-                    />
-                  )}
-                </>
-              )}
-            </View>
-          )}
-        </TouchableOpacity>
-        {displayHeader && (
-          <Text
-            style={StyleSheet.flatten([
-              dateDivider,
-              { marginTop: nextMessageSameAuthor ? 24 : 16 },
-            ])}
-          >
-            {/* At this point we know that timestamp exists, so we can safely force unwrap it */}
-            {/* type-coverage:ignore-next-line */}
-            {dayjs.unix(message.timestamp!).calendar(undefined, {
-              sameDay: `[${l10n[locale].today}]`,
-              nextDay: dateDividerFormat,
-              nextWeek: dateDividerFormat,
-              lastDay: `[${l10n[locale].yesterday}]`,
-              lastWeek: dateDividerFormat,
-              sameElse: dateDividerFormat,
-            })}
-          </Text>
+      <TouchableOpacity style={container} onPress={removeMessage}>
+        <View style={contentContainer}>{renderMessage()}</View>
+        {shouldRenderTime && (
+          <View style={statusContainer}>
+            <Text style={time}>
+              {/* `shouldRenderTime` will only be true if timestamp exists, so we can safely force unwrap it */}
+              {/* type-coverage:ignore-next-line */}
+              {dayjs.unix(message.timestamp!).format(messageTimeFormat)}
+            </Text>
+            {user?.id === message.authorId && (
+              <>
+                {message.status === 'sending' && (
+                  <CircularActivityIndicator
+                    color={theme.colors.primary}
+                    size={12}
+                  />
+                )}
+                {(message.status === 'read' ||
+                  message.status === 'delivered') && (
+                  <Image
+                    source={
+                      message.status === 'read' ? readIcon : deliveredIcon
+                    }
+                    style={status}
+                  />
+                )}
+              </>
+            )}
+          </View>
         )}
-      </>
+      </TouchableOpacity>
     )
   }
 )
