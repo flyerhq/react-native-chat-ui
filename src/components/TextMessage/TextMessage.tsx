@@ -45,7 +45,11 @@ export const TextMessage = ({
     onPreviewDataFetched?.({ message, previewData: data })
   }
 
-  const handleUrlPress = (url: string) => Linking.openURL(url)
+  const handleUrlPress = (url: string) => {
+    const uri = url.toLowerCase().startsWith('http') ? url : `https://${url}`
+
+    Linking.openURL(uri)
+  }
 
   const renderPreviewDescription = (description: string) => {
     return (
@@ -62,11 +66,11 @@ export const TextMessage = ({
         parse={[
           {
             onPress: handleUrlPress,
+            pattern: REGEX_LINK,
             style: StyleSheet.flatten([
               text,
               { textDecorationLine: 'underline' },
             ]),
-            type: 'url',
           },
         ]}
         style={text}

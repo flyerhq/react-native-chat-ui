@@ -38,4 +38,36 @@ describe('text message', () => {
     getPreviewDataMock.mockRestore()
     openUrlMock.mockRestore()
   })
+
+  it('renders preview image without https and handles link press', async () => {
+    expect.assertions(2)
+    const link = 'github.com/flyerhq/'
+    const getPreviewDataMock = jest
+      .spyOn(utils, 'getPreviewData')
+      .mockResolvedValue({
+        description: 'description',
+        image: {
+          height: 460,
+          url: 'https://avatars2.githubusercontent.com/u/59206044',
+          width: 460,
+        },
+        link,
+        title: 'title',
+      })
+    const openUrlMock = jest.spyOn(Linking, 'openURL')
+    const { getByRole, getByText } = render(
+      <TextMessage
+        message={{ ...textMessage, text: link }}
+        messageWidth={440}
+      />
+    )
+    await waitFor(() => getByRole('image'))
+    const image = getByRole('image')
+    expect(image).toBeDefined()
+    const text = getByText(link)
+    fireEvent.press(text)
+    expect(openUrlMock).toHaveBeenCalledWith('https://' + link)
+    getPreviewDataMock.mockRestore()
+    openUrlMock.mockRestore()
+  })
 })
