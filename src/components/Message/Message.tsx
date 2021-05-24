@@ -52,19 +52,14 @@ export const Message = React.memo(
   }: MessageProps) => {
     const theme = React.useContext(ThemeContext)
     const user = React.useContext(UserContext)
-    const {
-      container,
-      contentContainer,
-      status,
-      statusContainer,
-      time,
-    } = styles({
-      message,
-      messageWidth,
-      previousMessageSameAuthor,
-      theme,
-      user,
-    })
+    const { container, contentContainer, status, statusContainer, time } =
+      styles({
+        message,
+        messageWidth,
+        previousMessageSameAuthor,
+        theme,
+        user,
+      })
 
     const renderMessage = React.useCallback(() => {
       switch (message.type) {
