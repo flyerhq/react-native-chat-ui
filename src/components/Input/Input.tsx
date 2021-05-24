@@ -39,7 +39,7 @@ export const Input = ({
   const l10n = React.useContext(L10nContext)
   const theme = React.useContext(ThemeContext)
   const user = React.useContext(UserContext)
-  const { container, input } = styles({ theme })
+  const { container, input, marginRight } = styles({ theme })
 
   // Use `defaultValue` if provided
   const [text, setText] = React.useState(textInputProps?.defaultValue ?? '')
@@ -65,6 +65,7 @@ export const Input = ({
             {...{
               ...attachmentCircularActivityIndicatorProps,
               color: theme.colors.inputText,
+              style: marginRight,
             }}
           />
         ) : (
