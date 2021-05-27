@@ -24,8 +24,8 @@ export default ({ theme }: { theme: Theme }) =>
       // Ignore because it is object
       // @ts-ignore
       ...theme.fonts.body1,
-      textAlign: 'center',
       color: theme.colors.caption,
+      textAlign: 'center',
       transform: [{ rotateX: '180deg' }],
     },
     flatList: {
