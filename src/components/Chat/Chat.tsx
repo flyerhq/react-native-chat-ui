@@ -244,7 +244,7 @@ export const Chat = ({
         style={flatList}
         {...unwrap(flatListProps)}
         data={messages}
-        inverted={messages.length !== 0}
+        inverted
         keyboardDismissMode='interactive'
         keyExtractor={keyExtractor}
         ref={list}
