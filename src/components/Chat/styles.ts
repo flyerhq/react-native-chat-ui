@@ -26,6 +26,7 @@ export default ({ theme }: { theme: Theme }) =>
       ...theme.fonts.body1,
       textAlign: 'center',
       color: theme.colors.caption,
+      transform: [{ rotateX: '180deg' }],
     },
     flatList: {
       backgroundColor: theme.colors.background,
