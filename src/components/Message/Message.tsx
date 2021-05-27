@@ -1,7 +1,7 @@
 import { oneOf } from '@flyerhq/react-native-link-preview'
 import dayjs from 'dayjs'
 import * as React from 'react'
-import { Image, ImageSourcePropType, Text, View } from 'react-native'
+import { Image, ImageSourcePropType, Pressable, Text, View } from 'react-native'
 
 import { MessageType } from '../../types'
 import { ThemeContext, UserContext } from '../../utils'
@@ -49,6 +49,7 @@ export const Message = React.memo(
     renderImageMessage,
     renderTextMessage,
     shouldRenderTime,
+    removeMessage,
   }: MessageProps) => {
     const theme = React.useContext(ThemeContext)
     const user = React.useContext(UserContext)
@@ -109,7 +110,7 @@ export const Message = React.memo(
       theme.icons?.deliveredIcon ?? require('../../assets/icon-delivered.png')
 
     return (
-      <View style={container}>
+      <Pressable style={container} onPress={() => removeMessage(message.id)}>
         <View style={contentContainer}>{renderMessage()}</View>
         {shouldRenderTime && (
           <View style={statusContainer}>
@@ -139,7 +140,7 @@ export const Message = React.memo(
             )}
           </View>
         )}
-      </View>
+      </Pressable>
     )
   }
 )
