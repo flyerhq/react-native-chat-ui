@@ -78,7 +78,6 @@ export const Chat = ({
   textInputProps,
   theme = defaultTheme,
   user,
-  removeMessage,
 }: ChatProps) => {
   const {
     container,
@@ -198,7 +197,6 @@ export const Chat = ({
               renderImageMessage,
               renderTextMessage,
               shouldRenderTime,
-              removeMessage,
             }}
           />
           {(nextMessageDifferentDay || (isLast && message.timestamp)) && (
@@ -233,7 +231,6 @@ export const Chat = ({
       messages,
       onFilePress,
       onPreviewDataFetched,
-      removeMessage,
       renderFileMessage,
       renderImageMessage,
       renderTextMessage,

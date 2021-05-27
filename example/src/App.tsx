@@ -18,10 +18,6 @@ const App = () => {
     setMessages([{ ...message, status: 'read' }, ...messages])
   }
 
-  const removeMessage = (messageId: string) => {
-    setMessages(messages.filter(({ id }) => id !== messageId))
-  }
-
   const handleAttachmentPress = () => {
     showActionSheetWithOptions(
       {
@@ -131,7 +127,6 @@ const App = () => {
       onPreviewDataFetched={handlePreviewDataFetched}
       onSendPress={handleSendPress}
       user={{ id: userId }}
-      removeMessage={removeMessage}
     />
   )
 }
