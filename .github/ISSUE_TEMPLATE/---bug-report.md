@@ -1,5 +1,5 @@
 ---
-name: "\U0001F41E Bug report"
+name: "\U0001F41B Bug report"
 about: Something isn't working? Create a report to help us improve Flyer Chat.
 title: ''
 labels: bug
@@ -30,7 +30,7 @@ A few steps to define where does the bug occur.
 Step 1. ...
 Step 2. ... etc.
 
-## What behavior is expected? ✅
+## What behavior is expected? 💡
 A clear and concise description of what you expected to happen.
 
 <br />
