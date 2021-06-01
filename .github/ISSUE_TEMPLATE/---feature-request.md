@@ -7,14 +7,31 @@ assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+<!--
+Hello 👋 Thank you for submitting a feature request!
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+🚨 Please ensure there is no similar request has been submitted before. Otherwise it will be marked as duplicate and ignored.
+-->
 
-**Describe alternatives you've considered**
+## Is your feature request related to a problem?
+A clear and concise description of what the problem is or why we should process it.
+
+## What solution would you suggest?
+A clear and concise description of what you want to happen. How would it solve the problem of yours?
+
+## Is there any additional solution to that?
 A clear and concise description of any alternative solutions or features you've considered.
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+## Extras
+**Screenshots or videos 📸**
+If applicable, add screenshots or videos to help explain your feature.
+
+**Code snippets 📝**
+If applicable, add code samples to help explain your feature.
+
+```ts
+// Your snippet here...
+```
+
+## Related issues/PRs
+Let us know if this is related to any issue/pull request.
