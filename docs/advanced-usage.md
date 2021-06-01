@@ -23,8 +23,10 @@ const App = () => {
         mediaType: 'photo',
         quality: 0.7,
       },
-      (response) => {
-        if (response.base64) {
+      ({ assets }) => {
+        const response = assets?.[0]
+
+        if (response?.base64) {
           const imageMessage: MessageType.Image = {
             authorId: userId,
             height: response.height,
@@ -268,8 +270,10 @@ const App = () => {
         mediaType: 'photo',
         quality: 0.7,
       },
-      (response) => {
-        if (response.base64) {
+      ({ assets }) => {
+        const response = assets?.[0]
+
+        if (response?.base64) {
           const imageMessage: MessageType.Image = {
             authorId: userId,
             height: response.height,
