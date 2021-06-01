@@ -2,7 +2,7 @@
 name: "\U0001F914 Questions & help"
 about: " Use this if there is something not clear about the code or documentation."
 title: ''
-labels: ''
+labels: question
 assignees: ''
 
 ---
