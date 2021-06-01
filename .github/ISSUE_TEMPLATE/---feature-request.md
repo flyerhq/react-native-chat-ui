@@ -10,7 +10,7 @@ assignees: ''
 <!--
 Hello 👋 Thank you for submitting a feature request!
 
-🚨 Please ensure there is no similar request has been submitted before. Otherwise it will be marked as duplicate and ignored.
+🚨 Please ensure there is no similar request has been submitted before. Otherwise, it will be marked as duplicate and ignored.
 -->
 
 ## Is your feature request related to a problem?
