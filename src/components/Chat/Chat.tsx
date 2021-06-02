@@ -9,11 +9,15 @@ import {
   FlatList,
   FlatListProps,
   GestureResponderHandlers,
+  InteractionManager,
+  LayoutAnimation,
+  Platform,
   SafeAreaView,
   StatusBar,
   StatusBarProps,
   StyleSheet,
   Text,
+  UIManager,
   View,
 } from 'react-native'
 import ImageView from 'react-native-image-viewing'
@@ -31,6 +35,14 @@ import {
 import { Input, InputAdditionalProps, InputTopLevelProps } from '../Input'
 import { Message, MessageTopLevelProps } from '../Message'
 import styles from './styles'
+
+Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental &&
+  UIManager.setLayoutAnimationEnabledExperimental(true)
+
+const animate = () => {
+  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+}
 
 dayjs.extend(calendar)
 
@@ -77,7 +89,7 @@ export const Chat = ({
     footer,
     keyboardAccessoryView,
   } = styles({ theme })
-
+  const refa = React.useRef(false)
   const { onLayout, size } = useComponentSize()
   const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
   const [imageViewIndex, setImageViewIndex] = React.useState(0)
@@ -92,6 +104,18 @@ export const Chat = ({
   React.useEffect(() => {
     initLocale(locale)
   }, [locale])
+
+  if (refa.current) {
+    InteractionManager.runAfterInteractions(animate)
+  }
+
+  React.useEffect(() => {
+    if (refa.current) {
+      InteractionManager.runAfterInteractions(animate)
+    } else {
+      refa.current = true
+    }
+  }, [messages])
 
   const handleImagePress = React.useCallback(
     (uri: string) => {
