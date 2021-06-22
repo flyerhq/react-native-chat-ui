@@ -16,7 +16,7 @@ const styles = ({
       theme.fonts.body2,
       {
         color:
-          user?.id === message.authorId
+          user?.id === message.author
             ? theme.colors.primaryText
             : theme.colors.secondaryText,
         marginTop: 4,
@@ -26,7 +26,7 @@ const styles = ({
       theme.fonts.subtitle1,
       {
         color:
-          user?.id === message.authorId
+          user?.id === message.author
             ? theme.colors.primaryText
             : theme.colors.secondaryText,
       },
@@ -35,7 +35,7 @@ const styles = ({
       theme.fonts.body1,
       {
         color:
-          user?.id === message.authorId
+          user?.id === message.author
             ? theme.colors.primaryText
             : theme.colors.secondaryText,
       },

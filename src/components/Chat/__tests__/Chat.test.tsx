@@ -23,7 +23,7 @@ describe('chat', () => {
         ...textMessage,
         id: 'new-uuidv4',
         status: 'delivered' as const,
-        timestamp: 1,
+        createdAt: 1,
       },
     ]
     const onSendPress = jest.fn()
@@ -43,13 +43,13 @@ describe('chat', () => {
       fileMessage,
       {
         ...imageMessage,
-        timestamp: 1,
+        createdAt: 1,
       },
       {
         ...textMessage,
         id: 'new-uuidv4',
         status: 'sending' as const,
-        timestamp: 2,
+        createdAt: 2,
       },
     ]
     const onSendPress = jest.fn()

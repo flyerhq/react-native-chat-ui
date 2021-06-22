@@ -31,7 +31,7 @@ const styles = ({
     minimizedImageContainer: {
       alignItems: 'center',
       backgroundColor:
-        user?.id === message.authorId
+        user?.id === message.author
           ? theme.colors.primary
           : theme.colors.secondary,
       flexDirection: 'row',
@@ -40,7 +40,7 @@ const styles = ({
       theme.fonts.body1,
       {
         color:
-          user?.id === message.authorId
+          user?.id === message.author
             ? theme.colors.primaryText
             : theme.colors.secondaryText,
       },
@@ -49,7 +49,7 @@ const styles = ({
       theme.fonts.caption,
       {
         color:
-          user?.id === message.authorId
+          user?.id === message.author
             ? `${String(theme.colors.primaryText)}80`
             : theme.colors.caption,
         marginTop: 4,

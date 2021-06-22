@@ -114,11 +114,11 @@ export const Message = React.memo(
         {shouldRenderTime && (
           <View style={statusContainer}>
             <Text style={time}>
-              {/* `shouldRenderTime` will only be true if timestamp exists, so we can safely force unwrap it */}
+              {/* `shouldRenderTime` will only be true if createdAt exists, so we can safely force unwrap it */}
               {/* type-coverage:ignore-next-line */}
-              {dayjs.unix(message.timestamp!).format(messageTimeFormat)}
+              {dayjs.unix(message.createdAt!).format(messageTimeFormat)}
             </Text>
-            {user?.id === message.authorId && (
+            {user?.id === message.author && (
               <>
                 {message.status === 'sending' && (
                   <CircularActivityIndicator
@@ -126,11 +126,11 @@ export const Message = React.memo(
                     size={12}
                   />
                 )}
-                {(message.status === 'read' ||
+                {(message.status === 'seen' ||
                   message.status === 'delivered') && (
                   <Image
                     source={
-                      message.status === 'read' ? readIcon : deliveredIcon
+                      message.status === 'seen' ? readIcon : deliveredIcon
                     }
                     style={status}
                   />
