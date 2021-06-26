@@ -47,7 +47,9 @@ const App = () => {
 
   const handleSendPress = (message: MessageType.PartialText) => {
     const textMessage: MessageType.Text = {
-      author: userId,
+      author: {
+        id: userId,
+      },
       id: uuidv4(),
       text: message.text,
       createdAt: Date.now(),

@@ -118,7 +118,7 @@ export const Message = React.memo(
               {/* type-coverage:ignore-next-line */}
               {dayjs.unix(message.createdAt!).format(messageTimeFormat)}
             </Text>
-            {user?.id === message.author && (
+            {user?.id === message.author.id && (
               <>
                 {message.status === 'sending' && (
                   <CircularActivityIndicator

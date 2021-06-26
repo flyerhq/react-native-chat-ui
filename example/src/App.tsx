@@ -49,7 +49,9 @@ const App = () => {
         type: [DocumentPicker.types.allFiles],
       })
       const fileMessage: MessageType.File = {
-        author: userId,
+        author: {
+          id: userId,
+        },
         name: response.name,
         id: uuidv4(),
         mimeType: response.type,
@@ -79,10 +81,12 @@ const App = () => {
 
         if (response?.base64) {
           const imageMessage: MessageType.Image = {
-            author: userId,
+            author: {
+              id: userId,
+            },
             height: response.height,
             id: uuidv4(),
-            name: response.name ?? response.uri?.split('/').pop() ?? '🖼',
+            name: response.fileName ?? response.uri?.split('/').pop() ?? '🖼',
             size: response.fileSize ?? 0,
             createdAt: Date.now(),
             type: 'image',
@@ -111,7 +115,9 @@ const App = () => {
 
   const handleSendPress = (message: MessageType.PartialText) => {
     const textMessage: MessageType.Text = {
-      author: userId,
+      author: {
+        id: userId,
+      },
       id: uuidv4(),
       text: message.text,
       createdAt: Date.now(),
@@ -127,7 +133,7 @@ const App = () => {
       onFilePress={handleFilePress}
       onPreviewDataFetched={handlePreviewDataFetched}
       onSendPress={handleSendPress}
-      user={{ id: userId }}
+      user={{ id: userId, createdAt: 1624699019364 }}
     />
   )
 }

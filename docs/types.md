@@ -17,7 +17,7 @@ Question mark shows optional types.
 
 | Name       | Type                                        | Description                  |
 | ---------- | ------------------------------------------- | ---------------------------- |
-| author     | string                                      | Message's author             |
+| author     | Object with id and possible imageUrl        | Message's author             |
 | id         | string                                      | Message's ID                 |
 | status?    | `delivered` `error` `read` `sending` `sent` | Message's status             |
 | createdAt? | number                                      | CreatedAt in **miliseconds** |

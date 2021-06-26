@@ -20,14 +20,14 @@ const styles = ({
     },
     icon: {
       tintColor:
-        user?.id === message.author
+        user?.id === message.author.id
           ? theme.colors.primaryText
           : theme.colors.primary,
     },
     iconContainer: {
       alignItems: 'center',
       backgroundColor:
-        user?.id === message.author
+        user?.id === message.author.id
           ? `${String(theme.colors.primaryText)}33`
           : `${String(theme.colors.primary)}33`,
       borderRadius: 21,
@@ -39,7 +39,7 @@ const styles = ({
       theme.fonts.body1,
       {
         color:
-          user?.id === message.author
+          user?.id === message.author.id
             ? theme.colors.primaryText
             : theme.colors.secondaryText,
       },
@@ -48,7 +48,7 @@ const styles = ({
       theme.fonts.caption,
       {
         color:
-          user?.id === message.author
+          user?.id === message.author.id
             ? `${String(theme.colors.primaryText)}80`
             : theme.colors.caption,
         marginTop: 4,

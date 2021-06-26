@@ -10,8 +10,13 @@ export namespace MessageType {
   export type Any = File | Image | Text
   export type PartialAny = PartialFile | PartialImage | PartialText
 
+  interface Author {
+    id: string
+    imageUrl?: string
+  }
+
   interface Base {
-    author: string
+    author: Author
     id: string
     status?: 'delivered' | 'error' | 'seen' | 'sending' | 'sent'
     createdAt?: number

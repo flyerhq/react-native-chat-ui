@@ -1,7 +1,9 @@
 import { MessageType, Size, User } from '../src/types'
 
 export const fileMessage: MessageType.File = {
-  author: 'userId',
+  author: {
+    id: 'userId',
+  },
   name: 'flyer.pdf',
   id: 'file-uuidv4',
   mimeType: 'application/pdf',
@@ -13,7 +15,9 @@ export const fileMessage: MessageType.File = {
 }
 
 export const imageMessage: MessageType.Image = {
-  author: 'image-userId',
+  author: {
+    id: 'image-userId',
+  },
   height: 100,
   id: 'image-uuidv4',
   name: 'name',
@@ -31,7 +35,9 @@ export const size: Size = {
 }
 
 export const textMessage: MessageType.Text = {
-  author: 'userId',
+  author: {
+    id: 'userId',
+  },
   id: 'uuidv4',
   text: 'text',
   createdAt: 0,
