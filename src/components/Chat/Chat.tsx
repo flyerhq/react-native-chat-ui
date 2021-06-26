@@ -145,11 +145,12 @@ export const Chat = ({
           !dayjs
             .unix(message.createdAt)
             .isSame(dayjs.unix(nextMessage.createdAt), 'day')
-        nextMessageSameAuthor = nextMessage.author === message.author
+        nextMessageSameAuthor = nextMessage.author.id === message.author.id
       }
 
       if (previousMessage) {
-        previousMessageSameAuthor = previousMessage.author === message.author
+        previousMessageSameAuthor =
+          previousMessage.author.id === message.author.id
         shouldRenderTime =
           !!message.createdAt &&
           !!previousMessage.createdAt &&

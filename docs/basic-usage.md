@@ -38,21 +38,19 @@ const uuidv4 = () => {
 }
 
 const App = () => {
-  const userId = '06c33e8b-e835-4736-80f4-63f44b66666c'
   const [messages, setMessages] = useState<MessageType.Any[]>([])
+  const user = { id: '06c33e8b-e835-4736-80f4-63f44b66666c' }
 
   const addMessage = (message: MessageType.Any) => {
-    setMessages([{ ...message, status: 'seen' }, ...messages])
+    setMessages([message, ...messages])
   }
 
   const handleSendPress = (message: MessageType.PartialText) => {
     const textMessage: MessageType.Text = {
-      author: {
-        id: userId,
-      },
+      author: user,
+      createdAt: Date.now(),
       id: uuidv4(),
       text: message.text,
-      createdAt: Date.now(),
       type: 'text',
     }
     addMessage(textMessage)
@@ -65,7 +63,7 @@ const App = () => {
       <Chat
         messages={messages}
         onSendPress={handleSendPress}
-        user={{ id: userId }}
+        user={user}
       />
     </SafeAreaProvider>
   )

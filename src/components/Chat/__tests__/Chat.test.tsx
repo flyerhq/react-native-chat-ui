@@ -21,9 +21,9 @@ describe('chat', () => {
       fileMessage,
       {
         ...textMessage,
+        createdAt: 1,
         id: 'new-uuidv4',
         status: 'delivered' as const,
-        createdAt: 1,
       },
     ]
     const onSendPress = jest.fn()
@@ -47,9 +47,9 @@ describe('chat', () => {
       },
       {
         ...textMessage,
+        createdAt: 2,
         id: 'new-uuidv4',
         status: 'sending' as const,
-        createdAt: 2,
       },
     ]
     const onSendPress = jest.fn()

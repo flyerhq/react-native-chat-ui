@@ -10,23 +10,19 @@ export namespace MessageType {
   export type Any = File | Image | Text
   export type PartialAny = PartialFile | PartialImage | PartialText
 
-  interface Author {
-    id: string
-    imageUrl?: string
-  }
-
   interface Base {
-    author: Author
-    id: string
-    status?: 'delivered' | 'error' | 'seen' | 'sending' | 'sent'
+    author: User
     createdAt?: number
+    id: string
     metadata?: Record<string, any>
-    type: 'file' | 'image' | 'text'
+    roomId?: string
+    status?: 'delivered' | 'error' | 'seen' | 'sending' | 'sent'
+    type: 'custom' | 'file' | 'image' | 'text' | 'unsupported'
   }
 
   export interface PartialFile {
-    name: string
     mimeType?: string
+    name: string
     size: number
     uri: string
   }
@@ -99,12 +95,12 @@ export interface ThemeIcons {
   attachmentButtonIcon?: ImageSourcePropType
   deliveredIcon?: ImageSourcePropType
   documentIcon?: ImageSourcePropType
-  readIcon?: ImageSourcePropType
+  seenIcon?: ImageSourcePropType
   sendButtonIcon?: ImageSourcePropType
 }
 
 export interface User {
-  createdAt: number
+  createdAt?: number
   firstName?: string
   id: string
   imageUrl?: string

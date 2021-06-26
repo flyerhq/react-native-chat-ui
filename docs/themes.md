@@ -72,5 +72,5 @@ Question mark shows optional types.
 | attachmentButtonIcon? | ImageSourcePropType | Icon for select attachment button     |
 | deliveredIcon?        | ImageSourcePropType | Icon for message's `delivered` status |
 | documentIcon?         | ImageSourcePropType | Icon inside file message              |
-| readIcon?             | ImageSourcePropType | Icon for message's `read` status      |
+| seenIcon?             | ImageSourcePropType | Icon for message's `seen` status      |
 | sendButtonIcon?       | ImageSourcePropType | Icon for send button                  |

@@ -28,14 +28,12 @@ const App = () => {
 
         if (response?.base64) {
           const imageMessage: MessageType.Image = {
-            author: {
-              id: userId,
-            },
+            author: user,
+            createdAt: Date.now(),
             height: response.height,
             id: uuidv4(),
             name: response.fileName ?? response.uri?.split('/').pop() ?? '🖼',
             size: response.fileSize ?? 0,
-            createdAt: Date.now(),
             type: 'image',
             uri: `data:image/*;base64,${response.base64}`,
             width: response.width,
@@ -85,14 +83,12 @@ const App = () => {
         type: [DocumentPicker.types.allFiles],
       })
       const fileMessage: MessageType.File = {
-        author: {
-          id: userId,
-        },
-        name: response.name,
+        author: user,
+        createdAt: Date.now(),
         id: uuidv4(),
         mimeType: response.type,
+        name: response.name,
         size: response.size,
-        createdAt: Date.now(),
         type: 'file',
         uri: response.uri,
       }
@@ -209,12 +205,12 @@ const uuidv4 = () => {
 }
 
 const App = () => {
-  const userId = '06c33e8b-e835-4736-80f4-63f44b66666c'
   const { showActionSheetWithOptions } = useActionSheet()
   const [messages, setMessages] = useState<MessageType.Any[]>([])
+  const user = { id: '06c33e8b-e835-4736-80f4-63f44b66666c' }
 
   const addMessage = (message: MessageType.Any) => {
-    setMessages([{ ...message, status: 'seen' }, ...messages])
+    setMessages([message, ...messages])
   }
 
   const handleAttachmentPress = () => {
@@ -248,14 +244,12 @@ const App = () => {
         type: [DocumentPicker.types.allFiles],
       })
       const fileMessage: MessageType.File = {
-        author: {
-          id: userId,
-        },
-        name: response.name,
+        author: user,
+        createdAt: Date.now(),
         id: uuidv4(),
         mimeType: response.type,
+        name: response.name,
         size: response.size,
-        createdAt: Date.now(),
         type: 'file',
         uri: response.uri,
       }
@@ -280,14 +274,12 @@ const App = () => {
 
         if (response?.base64) {
           const imageMessage: MessageType.Image = {
-            author: {
-              id: userId,
-            },
+            author: user,
+            createdAt: Date.now(),
             height: response.height,
             id: uuidv4(),
             name: response.fileName ?? response.uri?.split('/').pop() ?? '🖼',
             size: response.fileSize ?? 0,
-            createdAt: Date.now(),
             type: 'image',
             uri: `data:image/*;base64,${response.base64}`,
             width: response.width,
@@ -314,12 +306,10 @@ const App = () => {
 
   const handleSendPress = (message: MessageType.PartialText) => {
     const textMessage: MessageType.Text = {
-      author: {
-        id: userId,
-      },
+      author: user,
+      createdAt: Date.now(),
       id: uuidv4(),
       text: message.text,
-      createdAt: Date.now(),
       type: 'text',
     }
     addMessage(textMessage)
@@ -335,7 +325,7 @@ const App = () => {
         onFilePress={handleFilePress}
         onPreviewDataFetched={handlePreviewDataFetched}
         onSendPress={handleSendPress}
-        user={{ id: userId }}
+        user={user}
       />
     </SafeAreaProvider>
   )
