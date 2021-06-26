@@ -102,8 +102,8 @@ export const Message = React.memo(
       renderTextMessage,
     ])
 
-    const readIcon: ImageSourcePropType =
-      theme.icons?.readIcon ?? require('../../assets/icon-read.png')
+    const seenIcon: ImageSourcePropType =
+      theme.icons?.seenIcon ?? require('../../assets/icon-seen.png')
 
     const deliveredIcon: ImageSourcePropType =
       theme.icons?.deliveredIcon ?? require('../../assets/icon-delivered.png')
@@ -114,11 +114,11 @@ export const Message = React.memo(
         {shouldRenderTime && (
           <View style={statusContainer}>
             <Text style={time}>
-              {/* `shouldRenderTime` will only be true if timestamp exists, so we can safely force unwrap it */}
+              {/* `shouldRenderTime` will only be true if createdAt exists, so we can safely force unwrap it */}
               {/* type-coverage:ignore-next-line */}
-              {dayjs.unix(message.timestamp!).format(messageTimeFormat)}
+              {dayjs.unix(message.createdAt!).format(messageTimeFormat)}
             </Text>
-            {user?.id === message.authorId && (
+            {user?.id === message.author.id && (
               <>
                 {message.status === 'sending' && (
                   <CircularActivityIndicator
@@ -126,11 +126,12 @@ export const Message = React.memo(
                     size={12}
                   />
                 )}
-                {(message.status === 'read' ||
-                  message.status === 'delivered') && (
+                {(message.status === 'delivered' ||
+                  message.status === 'seen' ||
+                  message.status === 'sent') && (
                   <Image
                     source={
-                      message.status === 'read' ? readIcon : deliveredIcon
+                      message.status === 'seen' ? seenIcon : deliveredIcon
                     }
                     style={status}
                   />

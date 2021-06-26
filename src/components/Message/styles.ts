@@ -17,20 +17,20 @@ const styles = ({
 }) =>
   StyleSheet.create({
     container: {
-      alignSelf: user?.id === message.authorId ? 'flex-end' : 'flex-start',
+      alignSelf: user?.id === message.author.id ? 'flex-end' : 'flex-start',
       flex: 1,
       marginBottom: previousMessageSameAuthor ? 8 : 16,
       marginHorizontal: 24,
     },
     contentContainer: {
       backgroundColor:
-        user?.id !== message.authorId || message.type === 'image'
+        user?.id !== message.author.id || message.type === 'image'
           ? theme.colors.secondary
           : theme.colors.primary,
       borderBottomLeftRadius:
-        user?.id === message.authorId ? theme.borders.messageBorderRadius : 0,
+        user?.id === message.author.id ? theme.borders.messageBorderRadius : 0,
       borderBottomRightRadius:
-        user?.id === message.authorId ? 0 : theme.borders.messageBorderRadius,
+        user?.id === message.author.id ? 0 : theme.borders.messageBorderRadius,
       borderColor: 'transparent',
       borderRadius: theme.borders.messageBorderRadius,
       maxWidth: messageWidth,
@@ -49,7 +49,7 @@ const styles = ({
       theme.fonts.caption,
       {
         color: theme.colors.caption,
-        marginRight: user?.id === message.authorId ? 8 : 16,
+        marginRight: user?.id === message.author.id ? 8 : 16,
       },
     ]),
   })

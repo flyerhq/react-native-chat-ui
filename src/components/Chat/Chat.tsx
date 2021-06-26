@@ -136,26 +136,26 @@ export const Chat = ({
       let nextMessageDifferentDay = false
       let nextMessageSameAuthor = false
       let previousMessageSameAuthor = false
-      let shouldRenderTime = !!message.timestamp
+      let shouldRenderTime = !!message.createdAt
 
       if (nextMessage) {
         nextMessageDifferentDay =
-          !!message.timestamp &&
-          !!nextMessage.timestamp &&
+          !!message.createdAt &&
+          !!nextMessage.createdAt &&
           !dayjs
-            .unix(message.timestamp)
-            .isSame(dayjs.unix(nextMessage.timestamp), 'day')
-        nextMessageSameAuthor = nextMessage.authorId === message.authorId
+            .unix(message.createdAt)
+            .isSame(dayjs.unix(nextMessage.createdAt), 'day')
+        nextMessageSameAuthor = nextMessage.author.id === message.author.id
       }
 
       if (previousMessage) {
         previousMessageSameAuthor =
-          previousMessage.authorId === message.authorId
+          previousMessage.author.id === message.author.id
         shouldRenderTime =
-          !!message.timestamp &&
-          !!previousMessage.timestamp &&
+          !!message.createdAt &&
+          !!previousMessage.createdAt &&
           (!previousMessageSameAuthor ||
-            previousMessage.timestamp - message.timestamp >= 60)
+            previousMessage.createdAt - message.createdAt >= 60)
       }
 
       return (
@@ -175,16 +175,16 @@ export const Chat = ({
               shouldRenderTime,
             }}
           />
-          {(nextMessageDifferentDay || (isLast && message.timestamp)) && (
+          {(nextMessageDifferentDay || (isLast && message.createdAt)) && (
             <Text
               style={StyleSheet.flatten([
                 dateDivider,
                 { marginTop: nextMessageSameAuthor ? 24 : 16 },
               ])}
             >
-              {/* At this point we know that timestamp exists, so we can safely force unwrap it */}
+              {/* At this point we know that createdAt exists, so we can safely force unwrap it */}
               {/* type-coverage:ignore-next-line */}
-              {dayjs.unix(message.timestamp!).calendar(undefined, {
+              {dayjs.unix(message.createdAt!).calendar(undefined, {
                 sameDay: `[${l10n[locale].today}]`,
                 nextDay: dateDividerFormat,
                 nextWeek: dateDividerFormat,

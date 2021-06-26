@@ -44,7 +44,7 @@ export const FileMessage = ({ message, onPress }: FileMessageProps) => {
           />
         </View>
         <View style={textContainer}>
-          <Text style={name}>{message.fileName}</Text>
+          <Text style={name}>{message.name}</Text>
           <Text style={size}>{formatBytes(message.size)}</Text>
         </View>
       </View>

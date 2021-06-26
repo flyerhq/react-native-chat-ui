@@ -5,9 +5,9 @@ title: Basic Usage
 
 You start with a `<Chat />` component that will render a chat screen. It has 3 required props:
 
-* `messages` - an array of messages to be rendered. Accepts any message, see [types](types). If you have your message types you will need to map those to any of the defined ones. Let us know if we need to add more message types or add more fields to the existing ones.
-* `onSendPress` - a function that will have a partial text message as a parameter. See [types](types) for more info on how types are structured. From the partial text message you need to create a text message which will at least have `authorId`, `id`, `text` and `type: 'text'`, this is done by you because we wanted to give you more control over those values.
-* `user` - a [User](types#user) object, that has only one required field - an `id`, used to determine the message author.
+- `messages` - an array of messages to be rendered. Accepts any message, see [types](types). If you have your message types you will need to map those to any of the defined ones. Let us know if we need to add more message types or add more fields to the existing ones.
+- `onSendPress` - a function that will have a partial text message as a parameter. See [types](types) for more info on how types are structured. From the partial text message you need to create a text message which will at least have `author`, `id`, `text` and `type: 'text'`, this is done by you because we wanted to give you more control over those values.
+- `user` - a [User](types#user) object, that has only one required field - an `id`, used to determine the message author.
 
 Below you will find a drop-in example of the chat with only text messages.
 
@@ -35,22 +35,22 @@ const uuidv4 = () => {
     const v = c === 'x' ? r : (r % 4) + 8
     return v.toString(16)
   })
- }
+}
 
 const App = () => {
-  const userId = '06c33e8b-e835-4736-80f4-63f44b66666c'
   const [messages, setMessages] = useState<MessageType.Any[]>([])
+  const user = { id: '06c33e8b-e835-4736-80f4-63f44b66666c' }
 
   const addMessage = (message: MessageType.Any) => {
-    setMessages([{ ...message, status: 'read' }, ...messages])
+    setMessages([message, ...messages])
   }
 
   const handleSendPress = (message: MessageType.PartialText) => {
     const textMessage: MessageType.Text = {
-      authorId: userId,
+      author: user,
+      createdAt: Date.now(),
       id: uuidv4(),
       text: message.text,
-      timestamp: Math.floor(Date.now() / 1000),
       type: 'text',
     }
     addMessage(textMessage)
@@ -63,7 +63,7 @@ const App = () => {
       <Chat
         messages={messages}
         onSendPress={handleSendPress}
-        user={{ id: userId }}
+        user={user}
       />
     </SafeAreaProvider>
   )

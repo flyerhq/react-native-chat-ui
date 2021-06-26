@@ -75,7 +75,7 @@ export const ImageMessage = ({
         {renderImage()}
       </TouchableWithoutFeedback>
       <View style={textContainer}>
-        <Text style={nameText}>{message.imageName}</Text>
+        <Text style={nameText}>{message.name}</Text>
         <Text style={sizeText}>{formatBytes(message.size)}</Text>
       </View>
     </View>

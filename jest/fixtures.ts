@@ -1,25 +1,29 @@
 import { MessageType, Size, User } from '../src/types'
 
 export const fileMessage: MessageType.File = {
-  authorId: 'userId',
-  fileName: 'flyer.pdf',
+  author: {
+    id: 'userId',
+  },
+  createdAt: 2000000,
   id: 'file-uuidv4',
   mimeType: 'application/pdf',
+  name: 'flyer.pdf',
   size: 15000,
-  status: 'read',
-  timestamp: 2000000,
+  status: 'seen',
   type: 'file',
   uri: 'file:///Users/admin/flyer.pdf',
 }
 
 export const imageMessage: MessageType.Image = {
-  authorId: 'image-userId',
+  author: {
+    id: 'image-userId',
+  },
+  createdAt: 0,
   height: 100,
   id: 'image-uuidv4',
-  imageName: 'imageName',
+  name: 'name',
   size: 15000,
   status: 'sending',
-  timestamp: 0,
   type: 'image',
   uri: 'https://avatars1.githubusercontent.com/u/59206044',
   width: 100,
@@ -31,10 +35,12 @@ export const size: Size = {
 }
 
 export const textMessage: MessageType.Text = {
-  authorId: 'userId',
+  author: {
+    id: 'userId',
+  },
+  createdAt: 0,
   id: 'uuidv4',
   text: 'text',
-  timestamp: 0,
   type: 'text',
 }
 

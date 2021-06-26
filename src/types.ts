@@ -11,16 +11,18 @@ export namespace MessageType {
   export type PartialAny = PartialFile | PartialImage | PartialText
 
   interface Base {
-    authorId: string
+    author: User
+    createdAt?: number
     id: string
-    status?: 'delivered' | 'error' | 'read' | 'sending'
-    timestamp?: number
-    type: 'file' | 'image' | 'text'
+    metadata?: Record<string, any>
+    roomId?: string
+    status?: 'delivered' | 'error' | 'seen' | 'sending' | 'sent'
+    type: 'custom' | 'file' | 'image' | 'text' | 'unsupported'
   }
 
   export interface PartialFile {
-    fileName: string
     mimeType?: string
+    name: string
     size: number
     uri: string
   }
@@ -31,7 +33,7 @@ export namespace MessageType {
 
   export interface PartialImage {
     height?: number
-    imageName: string
+    name: string
     size: number
     uri: string
     width?: number
@@ -93,13 +95,17 @@ export interface ThemeIcons {
   attachmentButtonIcon?: ImageSourcePropType
   deliveredIcon?: ImageSourcePropType
   documentIcon?: ImageSourcePropType
-  readIcon?: ImageSourcePropType
+  seenIcon?: ImageSourcePropType
   sendButtonIcon?: ImageSourcePropType
 }
 
 export interface User {
-  avatarUrl?: string
+  createdAt?: number
   firstName?: string
   id: string
+  imageUrl?: string
   lastName?: string
+  lastSeen?: number
+  metadata?: Record<string, any>
+  role?: 'admin' | 'agent' | 'moderator' | 'user'
 }
