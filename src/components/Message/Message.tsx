@@ -1,18 +1,18 @@
 import { oneOf } from '@flyerhq/react-native-link-preview'
-import dayjs from 'dayjs'
 import * as React from 'react'
-import { Image, ImageSourcePropType, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 
 import { MessageType } from '../../types'
 import { ThemeContext, UserContext } from '../../utils'
-import { CircularActivityIndicator } from '../CircularActivityIndicator'
+import { Avatar } from '../Avatar'
 import { FileMessage } from '../FileMessage'
 import { ImageMessage } from '../ImageMessage'
+import { ImageStatusIcon } from '../ImageStatusIcon'
 import { TextMessage, TextMessageTopLevelProps } from '../TextMessage'
 import styles from './styles'
 
-export interface MessageTopLevelProps extends TextMessageTopLevelProps {
-  messageTimeFormat?: string
+export interface MessageTopLevelProps
+  extends TextMessageTopLevelProps<MessageType.CalculatedText> {
   onFilePress?: (message: MessageType.File) => void
   renderFileMessage?: (
     message: MessageType.File,
@@ -26,43 +26,59 @@ export interface MessageTopLevelProps extends TextMessageTopLevelProps {
     message: MessageType.Text,
     messageWidth: number
   ) => React.ReactNode
+  renderCustomMessage?: (
+    message: MessageType.Text,
+    messageWidth: number
+  ) => React.ReactNode
 }
 
-export interface MessageProps extends MessageTopLevelProps {
-  message: MessageType.Any
+export interface MessageProps<T> extends MessageTopLevelProps {
+  buildCustomMessage?: (message: T) => React.ReactNode
+  message: T
   messageWidth: number
   onImagePress: (uri: string) => void
-  previousMessageSameAuthor: boolean
-  shouldRenderTime: boolean
+  showAvatar: boolean
 }
 
 export const Message = React.memo(
   ({
+    buildCustomMessage,
     message,
-    messageTimeFormat = 'h:mm a',
     messageWidth,
     onFilePress,
     onImagePress,
     onPreviewDataFetched,
-    previousMessageSameAuthor,
     renderFileMessage,
     renderImageMessage,
     renderTextMessage,
-    shouldRenderTime,
-  }: MessageProps) => {
+    showAvatar,
+  }: MessageProps<MessageType.Derived>) => {
     const theme = React.useContext(ThemeContext)
     const user = React.useContext(UserContext)
-    const { container, contentContainer, status, statusContainer, time } =
+
+    const currentUserIsAuthor =
+      message.type !== 'dateHeader' && user?.id === message.author.id
+
+    const { container, contentContainer, dateDivider, dateHeader, status } =
       styles({
         message,
         messageWidth,
-        previousMessageSameAuthor,
         theme,
-        user,
+        currentUserIsAuthor,
       })
 
-    const renderMessage = React.useCallback(() => {
+    if (message.type === 'dateHeader') {
+      return (
+        <View style={dateHeader}>
+          <Text style={dateDivider}>{message.text}</Text>
+        </View>
+      )
+    }
+
+    const renderMessage = () => {
       switch (message.type) {
+        case 'custom':
+          return buildCustomMessage?.(message) ?? undefined
         case 'file':
           return oneOf(
             renderFileMessage,
@@ -90,56 +106,25 @@ export const Message = React.memo(
               }}
             />
           )(message, messageWidth)
+        default:
+          return
       }
-    }, [
-      message,
-      messageWidth,
-      onFilePress,
-      onImagePress,
-      onPreviewDataFetched,
-      renderFileMessage,
-      renderImageMessage,
-      renderTextMessage,
-    ])
-
-    const seenIcon: ImageSourcePropType =
-      theme.icons?.seenIcon ?? require('../../assets/icon-seen.png')
-
-    const deliveredIcon: ImageSourcePropType =
-      theme.icons?.deliveredIcon ?? require('../../assets/icon-delivered.png')
+    }
 
     return (
       <View style={container}>
-        <View style={contentContainer}>{renderMessage()}</View>
-        {shouldRenderTime && (
-          <View style={statusContainer}>
-            <Text style={time}>
-              {/* `shouldRenderTime` will only be true if createdAt exists, so we can safely force unwrap it */}
-              {/* type-coverage:ignore-next-line */}
-              {dayjs.unix(message.createdAt!).format(messageTimeFormat)}
-            </Text>
-            {user?.id === message.author.id && (
-              <>
-                {message.status === 'sending' && (
-                  <CircularActivityIndicator
-                    color={theme.colors.primary}
-                    size={12}
-                  />
-                )}
-                {(message.status === 'delivered' ||
-                  message.status === 'seen' ||
-                  message.status === 'sent') && (
-                  <Image
-                    source={
-                      message.status === 'seen' ? seenIcon : deliveredIcon
-                    }
-                    style={status}
-                  />
-                )}
-              </>
-            )}
-          </View>
-        )}
+        <Avatar author={message.author} showAvatar={showAvatar} />
+        <View testID='ContentContainer' style={contentContainer}>
+          {renderMessage()}
+        </View>
+        <ImageStatusIcon
+          {...{
+            currentUserIsAuthor,
+            status: message.status,
+            style: status,
+            theme,
+          }}
+        />
       </View>
     )
   }

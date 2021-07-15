@@ -2,12 +2,19 @@ import { PreviewData } from '@flyerhq/react-native-link-preview'
 import {
   ColorValue,
   ImageSourcePropType,
+  ImageURISource,
   StyleProp,
   TextStyle,
 } from 'react-native'
 
 export namespace MessageType {
   export type Any = File | Image | Text
+  export type Derived =
+    | CalculatedFile
+    | CalculatedImage
+    | CalculatedText
+    | Custom
+    | DateHeader
   export type PartialAny = PartialFile | PartialImage | PartialText
 
   interface Base {
@@ -18,6 +25,29 @@ export namespace MessageType {
     roomId?: string
     status?: 'delivered' | 'error' | 'seen' | 'sending' | 'sent'
     type: 'custom' | 'file' | 'image' | 'text' | 'unsupported'
+  }
+
+  export interface CalculatedMessage extends Base {
+    nextMessageInGroup: boolean
+    offset: number
+    showName: boolean
+    showStatus: boolean
+  }
+
+  export interface CalculatedFile extends CalculatedMessage, File {
+    type: File['type']
+  }
+
+  export interface CalculatedImage extends CalculatedMessage, Image {
+    type: Image['type']
+  }
+
+  export interface CalculatedText extends CalculatedMessage, Text {
+    type: Text['type']
+  }
+
+  export interface Custom extends CalculatedMessage {
+    type: 'custom'
   }
 
   export interface PartialFile {
@@ -50,6 +80,12 @@ export namespace MessageType {
 
   export interface Text extends Base, PartialText {
     type: 'text'
+  }
+
+  export interface DateHeader {
+    id: string
+    type: 'dateHeader'
+    text: string
   }
 }
 
@@ -103,7 +139,7 @@ export interface User {
   createdAt?: number
   firstName?: string
   id: string
-  imageUrl?: string
+  imageUrl?: ImageURISource['uri']
   lastName?: string
   lastSeen?: number
   metadata?: Record<string, any>

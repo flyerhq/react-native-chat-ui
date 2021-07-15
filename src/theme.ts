@@ -1,4 +1,20 @@
+import { ColorValue } from 'react-native'
+
 import { Theme } from './types'
+
+// For internal usage only. Use values from theme itself.
+export const colors: ColorValue[] = [
+  '#ff6767',
+  '#66e0da',
+  '#f5a2d9',
+  '#f0c722',
+  '#6a85e5',
+  '#fd9a6f',
+  '#92db6e',
+  '#73b8e5',
+  '#fd7590',
+  '#c78ae5',
+]
 
 export const defaultTheme: Theme = {
   borders: {

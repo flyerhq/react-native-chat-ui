@@ -1,57 +1,60 @@
 import { StyleSheet } from 'react-native'
 
-import { MessageType, Theme, User } from '../../types'
+import { MessageType, Theme } from '../../types'
 
 const styles = ({
+  currentUserIsAuthor,
   message,
   messageWidth,
-  previousMessageSameAuthor,
   theme,
-  user,
 }: {
-  message: MessageType.Any
+  currentUserIsAuthor: boolean
+  message: MessageType.Derived
   messageWidth: number
-  previousMessageSameAuthor: boolean
   theme: Theme
-  user?: User
 }) =>
   StyleSheet.create({
     container: {
-      alignSelf: user?.id === message.author.id ? 'flex-end' : 'flex-start',
+      alignItems: 'flex-end',
+      alignSelf: currentUserIsAuthor ? 'flex-end' : 'flex-start',
+      justifyContent: !currentUserIsAuthor ? 'flex-end' : 'flex-start',
       flex: 1,
-      marginBottom: previousMessageSameAuthor ? 8 : 16,
-      marginHorizontal: 24,
+      flexDirection: 'row',
+      marginBottom: message.type === 'dateHeader' ? 0 : message.offset ?? 8,
+      paddingLeft: currentUserIsAuthor ? 0 : 8,
     },
     contentContainer: {
       backgroundColor:
-        user?.id !== message.author.id || message.type === 'image'
+        !currentUserIsAuthor || message.type === 'image'
           ? theme.colors.secondary
           : theme.colors.primary,
-      borderBottomLeftRadius:
-        user?.id === message.author.id ? theme.borders.messageBorderRadius : 0,
-      borderBottomRightRadius:
-        user?.id === message.author.id ? 0 : theme.borders.messageBorderRadius,
+      borderBottomLeftRadius: currentUserIsAuthor
+        ? theme.borders.messageBorderRadius
+        : 0,
+      borderBottomRightRadius: currentUserIsAuthor
+        ? 0
+        : theme.borders.messageBorderRadius,
       borderColor: 'transparent',
       borderRadius: theme.borders.messageBorderRadius,
       maxWidth: messageWidth,
       overflow: 'hidden',
     },
+    dateDivider: StyleSheet.flatten([
+      theme.fonts.subtitle2,
+      {
+        color: theme.colors.subtitle2,
+        textAlign: 'center',
+      },
+    ]),
+    dateHeader: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 32,
+      marginTop: 16,
+    },
     status: {
       tintColor: theme.colors.primary,
     },
-    statusContainer: {
-      alignItems: 'center',
-      alignSelf: 'flex-end',
-      flexDirection: 'row',
-      marginTop: 8,
-    },
-    time: StyleSheet.flatten([
-      theme.fonts.caption,
-      {
-        color: theme.colors.caption,
-        marginRight: user?.id === message.author.id ? 8 : 16,
-      },
-    ]),
   })
 
 export default styles

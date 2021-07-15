@@ -12,7 +12,6 @@ import {
   SafeAreaView,
   StatusBar,
   StatusBarProps,
-  StyleSheet,
   Text,
   View,
 } from 'react-native'
@@ -22,6 +21,7 @@ import { l10n } from '../../l10n'
 import { defaultTheme } from '../../theme'
 import { MessageType, Theme, User } from '../../types'
 import {
+  calculateChatMessages,
   initLocale,
   L10nContext,
   ThemeContext,
@@ -37,25 +37,34 @@ dayjs.extend(calendar)
 export type ChatTopLevelProps = InputTopLevelProps & MessageTopLevelProps
 
 export interface ChatProps extends ChatTopLevelProps {
-  dateDividerFormat?: string
-  flatListProps?: FlatListProps<MessageType.Any[]>
+  buildCustomMessage?: (message: MessageType.Derived) => React.ReactNode
+  customDateHeaderText?: (dateTime: number) => string
+  dateFormat?: string
+  flatListProps?: FlatListProps<MessageType.Derived[]>
   inputProps?: InputAdditionalProps
   l10nOverride?: Partial<Record<keyof typeof l10n[keyof typeof l10n], string>>
   locale?: keyof typeof l10n
   messages: MessageType.Any[]
+  showUserAvatar?: boolean
+  showUserNames?: boolean
   theme?: Theme
   user: User
+  // NOTE: not implemented buildCustomMessage
+  onMessageTap?: (message: MessageType.Derived) => void
+  disableImageGallery?: boolean
+  isLastPage?: boolean
 }
 
 export const Chat = ({
-  dateDividerFormat = 'DD MMMM',
+  buildCustomMessage,
+  customDateHeaderText,
+  dateFormat = 'DD.MM.YYYY',
   flatListProps,
   inputProps,
   isAttachmentUploading,
   l10nOverride,
   locale = 'en',
-  messages,
-  messageTimeFormat,
+  messages: messagesData,
   onAttachmentPress,
   onFilePress,
   onPreviewDataFetched,
@@ -63,13 +72,14 @@ export const Chat = ({
   renderFileMessage,
   renderImageMessage,
   renderTextMessage,
+  showUserAvatar = false,
+  showUserNames = false,
   textInputProps,
   theme = defaultTheme,
   user,
 }: ChatProps) => {
   const {
     container,
-    dateDivider,
     emptyComponentContainer,
     emptyComponentTitle,
     flatList,
@@ -82,11 +92,19 @@ export const Chat = ({
   const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
   const [imageViewIndex, setImageViewIndex] = React.useState(0)
   const [stackEntry, setStackEntry] = React.useState<StatusBarProps>({})
-  const images = messages.reduce<{ uri: string }[]>(
-    (acc, curr) => (curr.type === 'image' ? [{ uri: curr.uri }, ...acc] : acc),
-    []
+
+  const { gallery: images, chatMessages: messages } = calculateChatMessages(
+    messagesData,
+    user,
+    {
+      customDateHeaderText,
+      showUserNames,
+      dateLocale: locale,
+      dateFormat,
+    }
   )
-  const list = React.useRef<FlatList<MessageType.Any>>(null)
+
+  const list = React.useRef<FlatList<MessageType.Derived>>(null)
   const messageWidth = Math.floor(Math.min(size.width * 0.77, 440))
 
   React.useEffect(() => {
@@ -123,93 +141,46 @@ export const Chat = ({
     })
   }
 
-  const keyExtractor = React.useCallback((item: MessageType.Any) => item.id, [])
+  const keyExtractor = React.useCallback(
+    ({ id }: MessageType.Derived) => id,
+    []
+  )
 
   const renderItem = React.useCallback(
-    ({ item: message, index }: { item: MessageType.Any; index: number }) => {
-      // TODO: Update the logic after pagination is introduced
-      const isFirst = index === 0
-      const isLast = index === messages.length - 1
-      const nextMessage = isLast ? undefined : messages[index + 1]
-      const previousMessage = isFirst ? undefined : messages[index - 1]
-
-      let nextMessageDifferentDay = false
-      let nextMessageSameAuthor = false
-      let previousMessageSameAuthor = false
-      let shouldRenderTime = !!message.createdAt
-
-      if (nextMessage) {
-        nextMessageDifferentDay =
-          !!message.createdAt &&
-          !!nextMessage.createdAt &&
-          !dayjs
-            .unix(message.createdAt)
-            .isSame(dayjs.unix(nextMessage.createdAt), 'day')
-        nextMessageSameAuthor = nextMessage.author.id === message.author.id
-      }
-
-      if (previousMessage) {
-        previousMessageSameAuthor =
-          previousMessage.author.id === message.author.id
-        shouldRenderTime =
-          !!message.createdAt &&
-          !!previousMessage.createdAt &&
-          (!previousMessageSameAuthor ||
-            previousMessage.createdAt - message.createdAt >= 60)
-      }
-
+    ({ item: message }: { item: MessageType.Derived; index: number }) => {
+      const showAvatar =
+        message.type !== 'dateHeader' &&
+        user?.id !== message.author.id &&
+        showUserAvatar &&
+        !message.nextMessageInGroup
       return (
-        <>
-          <Message
-            {...{
-              message,
-              messageTimeFormat,
-              messageWidth,
-              onFilePress,
-              onImagePress: handleImagePress,
-              onPreviewDataFetched,
-              previousMessageSameAuthor,
-              renderFileMessage,
-              renderImageMessage,
-              renderTextMessage,
-              shouldRenderTime,
-            }}
-          />
-          {(nextMessageDifferentDay || (isLast && message.createdAt)) && (
-            <Text
-              style={StyleSheet.flatten([
-                dateDivider,
-                { marginTop: nextMessageSameAuthor ? 24 : 16 },
-              ])}
-            >
-              {/* At this point we know that createdAt exists, so we can safely force unwrap it */}
-              {/* type-coverage:ignore-next-line */}
-              {dayjs.unix(message.createdAt!).calendar(undefined, {
-                sameDay: `[${l10n[locale].today}]`,
-                nextDay: dateDividerFormat,
-                nextWeek: dateDividerFormat,
-                lastDay: `[${l10n[locale].yesterday}]`,
-                lastWeek: dateDividerFormat,
-                sameElse: dateDividerFormat,
-              })}
-            </Text>
-          )}
-        </>
+        <Message
+          {...{
+            buildCustomMessage,
+            message,
+            messageWidth,
+            onFilePress,
+            onImagePress: handleImagePress,
+            onPreviewDataFetched,
+            renderFileMessage,
+            renderImageMessage,
+            renderTextMessage,
+            showAvatar,
+          }}
+        />
       )
     },
     [
-      dateDivider,
-      dateDividerFormat,
+      buildCustomMessage,
       handleImagePress,
-      locale,
-      messageTimeFormat,
       messageWidth,
-      messages,
       onFilePress,
       onPreviewDataFetched,
       renderFileMessage,
       renderImageMessage,
       renderTextMessage,
+      showUserAvatar,
+      user?.id,
     ]
   )
 
@@ -240,8 +211,8 @@ export const Chat = ({
         ListFooterComponent={renderListFooterComponent}
         ListFooterComponentStyle={footer}
         maxToRenderPerBatch={6}
-        showsHorizontalScrollIndicator={false}
         style={flatList}
+        showsVerticalScrollIndicator={false}
         {...unwrap(flatListProps)}
         data={messages}
         inverted
@@ -288,8 +259,8 @@ export const Chat = ({
               />
             </KeyboardAccessoryView>
             <ImageView
-              images={images}
               imageIndex={imageViewIndex}
+              images={images}
               onRequestClose={handleRequestClose}
               visible={isImageViewVisible}
             />

@@ -76,6 +76,7 @@ describe('chat', () => {
         onFilePress={onFilePress}
         messages={messages}
         onSendPress={onSendPress}
+        showUserAvatar={true}
         user={user}
       />
     )
@@ -92,8 +93,8 @@ describe('chat', () => {
     const onFilePress = jest.fn()
     const { getByText } = render(
       <Chat
-        onFilePress={onFilePress}
         messages={messages}
+        onFilePress={onFilePress}
         onSendPress={onSendPress}
         user={user}
       />

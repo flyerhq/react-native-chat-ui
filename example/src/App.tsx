@@ -12,10 +12,17 @@ import data from './messages.json'
 const App = () => {
   const { showActionSheetWithOptions } = useActionSheet()
   const [messages, setMessages] = useState(data as MessageType.Any[])
-  const user = { id: '06c33e8b-e835-4736-80f4-63f44b66666c' }
+  const user = {
+    id: '06c33e8b-e835-4736-80f4-63f44b66666c',
+    firstName: 'John',
+    lastName: 'Doe',
+  }
 
   const addMessage = (message: MessageType.Any) => {
-    setMessages([message, ...messages])
+    setMessages([
+      { ...message, author: { ...message.author, ...user } },
+      ...messages,
+    ])
   }
 
   const handleAttachmentPress = () => {
@@ -116,6 +123,7 @@ const App = () => {
       id: uuidv4(),
       text: message.text,
       type: 'text',
+      status: 'seen',
     }
     addMessage(textMessage)
   }

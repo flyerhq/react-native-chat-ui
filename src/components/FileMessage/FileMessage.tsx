@@ -10,12 +10,15 @@ import {
 } from '../../utils'
 import styles from './styles'
 
-export interface FileMessageProps {
-  message: MessageType.File
-  onPress?: (message: MessageType.File) => void
+export interface FileMessageProps<T> {
+  message: T
+  onPress?: (message: T) => void
 }
 
-export const FileMessage = ({ message, onPress }: FileMessageProps) => {
+export const FileMessage = ({
+  message,
+  onPress,
+}: FileMessageProps<MessageType.CalculatedFile>) => {
   const l10n = React.useContext(L10nContext)
   const theme = React.useContext(ThemeContext)
   const user = React.useContext(UserContext)

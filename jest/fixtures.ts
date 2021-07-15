@@ -1,6 +1,6 @@
 import { MessageType, Size, User } from '../src/types'
 
-export const fileMessage: MessageType.File = {
+export const fileMessage: MessageType.CalculatedFile = {
   author: {
     id: 'userId',
   },
@@ -12,9 +12,13 @@ export const fileMessage: MessageType.File = {
   status: 'seen',
   type: 'file',
   uri: 'file:///Users/admin/flyer.pdf',
+  nextMessageInGroup: false,
+  offset: 12,
+  showName: false,
+  showStatus: true,
 }
 
-export const imageMessage: MessageType.Image = {
+export const imageMessage: MessageType.CalculatedImage = {
   author: {
     id: 'image-userId',
   },
@@ -27,6 +31,10 @@ export const imageMessage: MessageType.Image = {
   type: 'image',
   uri: 'https://avatars1.githubusercontent.com/u/59206044',
   width: 100,
+  nextMessageInGroup: false,
+  offset: 12,
+  showName: false,
+  showStatus: true,
 }
 
 export const size: Size = {
@@ -34,7 +42,7 @@ export const size: Size = {
   width: 414,
 }
 
-export const textMessage: MessageType.Text = {
+export const textMessage: MessageType.CalculatedText = {
   author: {
     id: 'userId',
   },
@@ -42,6 +50,10 @@ export const textMessage: MessageType.Text = {
   id: 'uuidv4',
   text: 'text',
   type: 'text',
+  nextMessageInGroup: false,
+  offset: 12,
+  showName: false,
+  showStatus: true,
 }
 
 export const user: User = {

@@ -1,4 +1,5 @@
 export * from './AttachmentButton'
+export * from './Avatar'
 export * from './Chat'
 export * from './CircularActivityIndicator'
 export * from './ImageMessage'
