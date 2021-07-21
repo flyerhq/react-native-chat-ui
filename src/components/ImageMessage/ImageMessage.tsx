@@ -14,7 +14,7 @@ import styles from './styles'
 export interface ImageMessageProps<T> {
   message: T
   messageWidth: number
-  onPress: (uri: string) => void
+  onPress?: (uri: string) => void
 }
 
 export const ImageMessage = ({
@@ -56,7 +56,7 @@ export const ImageMessage = ({
       )
   }, [defaultHeight, defaultWidth, message.uri])
 
-  const handlePress = () => onPress(message.uri)
+  const handlePress = () => onPress?.(message.uri)
 
   const renderImage = () => {
     return (

@@ -1,6 +1,6 @@
 import { oneOf } from '@flyerhq/react-native-link-preview'
 import * as React from 'react'
-import { Text, View } from 'react-native'
+import { Pressable, Text, View } from 'react-native'
 
 import { MessageType } from '../../types'
 import { ThemeContext, UserContext } from '../../utils'
@@ -14,6 +14,7 @@ import styles from './styles'
 export interface MessageTopLevelProps
   extends TextMessageTopLevelProps<MessageType.CalculatedText> {
   onFilePress?: (message: MessageType.File) => void
+
   renderFileMessage?: (
     message: MessageType.File,
     messageWidth: number
@@ -34,19 +35,25 @@ export interface MessageTopLevelProps
 
 export interface MessageProps<T> extends MessageTopLevelProps {
   buildCustomMessage?: (message: T) => React.ReactNode
+  disableImageGallery?: boolean
   message: T
   messageWidth: number
   onImagePress: (uri: string) => void
+  onMessageLongPress?: (message: MessageType.Derived) => void
+  onMessagePress?: (message: MessageType.Derived) => void
   showAvatar: boolean
 }
 
 export const Message = React.memo(
   ({
     buildCustomMessage,
+    disableImageGallery,
     message,
     messageWidth,
     onFilePress,
     onImagePress,
+    onMessagePress,
+    onMessageLongPress,
     onPreviewDataFetched,
     renderFileMessage,
     renderImageMessage,
@@ -91,7 +98,7 @@ export const Message = React.memo(
               {...{
                 message,
                 messageWidth,
-                onPress: onImagePress,
+                onPress: !disableImageGallery ? onImagePress : undefined,
               }}
             />
           )(message, messageWidth)
@@ -114,9 +121,14 @@ export const Message = React.memo(
     return (
       <View style={container}>
         <Avatar author={message.author} showAvatar={showAvatar} />
-        <View testID='ContentContainer' style={contentContainer}>
+        <Pressable
+          testID='ContentContainer'
+          style={contentContainer}
+          onPress={() => onMessagePress?.(message)}
+          onLongPress={() => onMessageLongPress?.(message)}
+        >
           {renderMessage()}
-        </View>
+        </Pressable>
         <ImageStatusIcon
           {...{
             currentUserIsAuthor,

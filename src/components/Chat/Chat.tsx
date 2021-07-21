@@ -40,25 +40,25 @@ export interface ChatProps extends ChatTopLevelProps {
   buildCustomMessage?: (message: MessageType.Derived) => React.ReactNode
   customDateHeaderText?: (dateTime: number) => string
   dateFormat?: string
+  disableImageGallery?: boolean
   flatListProps?: FlatListProps<MessageType.Derived[]>
   inputProps?: InputAdditionalProps
   l10nOverride?: Partial<Record<keyof typeof l10n[keyof typeof l10n], string>>
   locale?: keyof typeof l10n
   messages: MessageType.Any[]
+  onMessageLongPress?: (message: MessageType.Derived) => void
+  onMessagePress?: (message: MessageType.Derived) => void
   showUserAvatar?: boolean
   showUserNames?: boolean
   theme?: Theme
   user: User
-  // NOTE: not implemented buildCustomMessage
-  onMessageTap?: (message: MessageType.Derived) => void
-  disableImageGallery?: boolean
-  isLastPage?: boolean
 }
 
 export const Chat = ({
   buildCustomMessage,
   customDateHeaderText,
   dateFormat = 'DD.MM.YYYY',
+  disableImageGallery,
   flatListProps,
   inputProps,
   isAttachmentUploading,
@@ -67,6 +67,8 @@ export const Chat = ({
   messages: messagesData,
   onAttachmentPress,
   onFilePress,
+  onMessageLongPress,
+  onMessagePress,
   onPreviewDataFetched,
   onSendPress,
   renderFileMessage,
@@ -157,10 +159,13 @@ export const Chat = ({
         <Message
           {...{
             buildCustomMessage,
+            disableImageGallery,
             message,
             messageWidth,
             onFilePress,
             onImagePress: handleImagePress,
+            onMessageLongPress,
+            onMessagePress,
             onPreviewDataFetched,
             renderFileMessage,
             renderImageMessage,
@@ -172,9 +177,12 @@ export const Chat = ({
     },
     [
       buildCustomMessage,
+      disableImageGallery,
       handleImagePress,
       messageWidth,
       onFilePress,
+      onMessageLongPress,
+      onMessagePress,
       onPreviewDataFetched,
       renderFileMessage,
       renderImageMessage,
