@@ -9,12 +9,13 @@ import {
 
 export namespace MessageType {
   export type Any = File | Image | Text | Custom
-  export type Derived =
-    | DateHeader
+  export type DerivedUserMessage =
     | DerivedCustom
     | DerivedFile
     | DerivedImage
     | DerivedText
+    | DerivedUnsupported
+  export type Derived = DateHeader | DerivedUserMessage
 
   export type PartialAny = PartialFile | PartialImage | PartialText
 
@@ -88,6 +89,10 @@ export namespace MessageType {
   }
 
   export interface Unsupported extends Base {
+    type: 'unsupported'
+  }
+
+  export interface DerivedUnsupported extends DerivedMessageProps {
     type: 'unsupported'
   }
 

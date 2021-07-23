@@ -1,5 +1,5 @@
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { Chat, MessageType } from '@flyerhq/react-native-chat-ui'
+import { Chat, Message, MessageType } from '@flyerhq/react-native-chat-ui'
 import { PreviewData } from '@flyerhq/react-native-link-preview'
 import React, { useState } from 'react'
 import DocumentPicker from 'react-native-document-picker'
@@ -128,11 +128,17 @@ const App = () => {
     addMessage(textMessage)
   }
 
+  const onMessagePress = (message: MessageType.DerivedUserMessage) => {
+    if (message.type === 'file') {
+      handleFilePress(message)
+    }
+  }
+
   return (
     <Chat
       messages={messages}
       onAttachmentPress={handleAttachmentPress}
-      onFilePress={handleFilePress}
+      onMessagePress={onMessagePress}
       onPreviewDataFetched={handlePreviewDataFetched}
       onSendPress={handleSendPress}
       user={user}

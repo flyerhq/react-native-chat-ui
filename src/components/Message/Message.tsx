@@ -12,8 +12,6 @@ import { TextMessage, TextMessageTopLevelProps } from '../TextMessage'
 import styles from './styles'
 
 export interface MessageTopLevelProps extends TextMessageTopLevelProps {
-  onFilePress?: (message: MessageType.File) => void
-
   renderFileMessage?: (
     message: MessageType.File,
     messageWidth: number
@@ -37,9 +35,8 @@ export interface MessageProps extends MessageTopLevelProps {
   disableImageGallery?: boolean
   message: MessageType.Derived
   messageWidth: number
-  onImagePress: (uri: string) => void
-  onMessageLongPress?: (message: MessageType.Derived) => void
-  onMessagePress?: (message: MessageType.Derived) => void
+  onMessageLongPress?: (message: MessageType.DerivedUserMessage) => void
+  onMessagePress?: (message: MessageType.DerivedUserMessage) => void
   showAvatar: boolean
 }
 
@@ -49,8 +46,6 @@ export const Message = React.memo(
     disableImageGallery,
     message,
     messageWidth,
-    onFilePress,
-    onImagePress,
     onMessagePress,
     onMessageLongPress,
     onPreviewDataFetched,
@@ -88,7 +83,7 @@ export const Message = React.memo(
         case 'file':
           return oneOf(
             renderFileMessage,
-            <FileMessage message={message} onPress={onFilePress} />
+            <FileMessage message={message} onPress={onMessagePress} />
           )(message, messageWidth)
         case 'image':
           return oneOf(
@@ -97,7 +92,6 @@ export const Message = React.memo(
               {...{
                 message,
                 messageWidth,
-                onPress: !disableImageGallery ? onImagePress : undefined,
               }}
             />
           )(message, messageWidth)

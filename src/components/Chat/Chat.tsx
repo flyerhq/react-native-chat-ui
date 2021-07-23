@@ -46,8 +46,8 @@ export interface ChatProps extends ChatTopLevelProps {
   l10nOverride?: Partial<Record<keyof typeof l10n[keyof typeof l10n], string>>
   locale?: keyof typeof l10n
   messages: MessageType.Any[]
-  onMessageLongPress?: (message: MessageType.Derived) => void
-  onMessagePress?: (message: MessageType.Derived) => void
+  onMessageLongPress?: (message: MessageType.DerivedUserMessage) => void
+  onMessagePress?: (message: MessageType.DerivedUserMessage) => void
   showUserAvatar?: boolean
   showUserNames?: boolean
   theme?: Theme
@@ -66,7 +66,6 @@ export const Chat = ({
   locale = 'en',
   messages: messagesData,
   onAttachmentPress,
-  onFilePress,
   onMessageLongPress,
   onMessagePress,
   onPreviewDataFetched,
@@ -114,8 +113,8 @@ export const Chat = ({
   }, [locale])
 
   const handleImagePress = React.useCallback(
-    (uri: string) => {
-      setImageViewIndex(images.findIndex((image) => image.uri === uri))
+    (message: MessageType.DerivedImage) => {
+      setImageViewIndex(images.findIndex((image) => image.uri === message.uri))
       setIsImageViewVisible(true)
       setStackEntry(
         StatusBar.pushStackEntry({
@@ -125,6 +124,16 @@ export const Chat = ({
       )
     },
     [images]
+  )
+
+  const handleMessagePress = React.useCallback(
+    (message: MessageType.DerivedUserMessage) => {
+      if (message.type === 'image' && !disableImageGallery) {
+        handleImagePress(message)
+      }
+      onMessagePress?.(message)
+    },
+    [disableImageGallery, handleImagePress, onMessagePress]
   )
 
   // TODO: Tapping on a close button results in the next warning:
@@ -162,10 +171,8 @@ export const Chat = ({
             disableImageGallery,
             message,
             messageWidth,
-            onFilePress,
-            onImagePress: handleImagePress,
             onMessageLongPress,
-            onMessagePress,
+            onMessagePress: handleMessagePress,
             onPreviewDataFetched,
             renderFileMessage,
             renderImageMessage,
@@ -178,11 +185,9 @@ export const Chat = ({
     [
       buildCustomMessage,
       disableImageGallery,
-      handleImagePress,
+      handleMessagePress,
       messageWidth,
-      onFilePress,
       onMessageLongPress,
-      onMessagePress,
       onPreviewDataFetched,
       renderFileMessage,
       renderImageMessage,
