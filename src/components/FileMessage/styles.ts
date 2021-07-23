@@ -7,7 +7,7 @@ const styles = ({
   theme,
   user,
 }: {
-  message: MessageType.CalculatedFile
+  message: MessageType.DerivedFile
   theme: Theme
   user?: User
 }) =>

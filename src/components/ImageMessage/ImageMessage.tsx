@@ -11,8 +11,8 @@ import { MessageType, Size } from '../../types'
 import { formatBytes, ThemeContext, UserContext } from '../../utils'
 import styles from './styles'
 
-export interface ImageMessageProps<T> {
-  message: T
+export interface ImageMessageProps {
+  message: MessageType.DerivedImage
   messageWidth: number
   onPress?: (uri: string) => void
 }
@@ -21,7 +21,7 @@ export const ImageMessage = ({
   message,
   messageWidth,
   onPress,
-}: ImageMessageProps<MessageType.CalculatedImage>) => {
+}: ImageMessageProps) => {
   const theme = React.useContext(ThemeContext)
   const user = React.useContext(UserContext)
   const defaultHeight = message.height ?? 0

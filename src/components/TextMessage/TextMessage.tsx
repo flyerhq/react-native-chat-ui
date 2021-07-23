@@ -11,18 +11,18 @@ import { MessageType } from '../../types'
 import { ThemeContext, UserContext } from '../../utils'
 import styles from './styles'
 
-export interface TextMessageTopLevelProps<T> {
+export interface TextMessageTopLevelProps {
   onPreviewDataFetched?: ({
     message,
     previewData,
   }: {
-    message: T
+    message: MessageType.DerivedText
     previewData: PreviewData
   }) => void
 }
 
-export interface TextMessageProps<T> extends TextMessageTopLevelProps<T> {
-  message: T
+export interface TextMessageProps extends TextMessageTopLevelProps {
+  message: MessageType.DerivedText
   messageWidth: number
 }
 
@@ -30,7 +30,7 @@ export const TextMessage = ({
   message,
   messageWidth,
   onPreviewDataFetched,
-}: TextMessageProps<MessageType.CalculatedText>) => {
+}: TextMessageProps) => {
   const theme = React.useContext(ThemeContext)
   const user = React.useContext(UserContext)
   const [previewData, setPreviewData] = React.useState(message.previewData)

@@ -11,8 +11,7 @@ import { ImageStatusIcon } from '../ImageStatusIcon'
 import { TextMessage, TextMessageTopLevelProps } from '../TextMessage'
 import styles from './styles'
 
-export interface MessageTopLevelProps
-  extends TextMessageTopLevelProps<MessageType.CalculatedText> {
+export interface MessageTopLevelProps extends TextMessageTopLevelProps {
   onFilePress?: (message: MessageType.File) => void
 
   renderFileMessage?: (
@@ -33,10 +32,10 @@ export interface MessageTopLevelProps
   ) => React.ReactNode
 }
 
-export interface MessageProps<T> extends MessageTopLevelProps {
-  buildCustomMessage?: (message: T) => React.ReactNode
+export interface MessageProps extends MessageTopLevelProps {
+  buildCustomMessage?: (message: MessageType.DerivedCustom) => React.ReactNode
   disableImageGallery?: boolean
-  message: T
+  message: MessageType.Derived
   messageWidth: number
   onImagePress: (uri: string) => void
   onMessageLongPress?: (message: MessageType.Derived) => void
@@ -59,7 +58,7 @@ export const Message = React.memo(
     renderImageMessage,
     renderTextMessage,
     showAvatar,
-  }: MessageProps<MessageType.Derived>) => {
+  }: MessageProps) => {
     const theme = React.useContext(ThemeContext)
     const user = React.useContext(UserContext)
 

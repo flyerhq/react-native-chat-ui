@@ -8,13 +8,14 @@ import {
 } from 'react-native'
 
 export namespace MessageType {
-  export type Any = File | Image | Text
+  export type Any = File | Image | Text | Custom
   export type Derived =
-    | CalculatedFile
-    | CalculatedImage
-    | CalculatedText
-    | Custom
     | DateHeader
+    | DerivedCustom
+    | DerivedFile
+    | DerivedImage
+    | DerivedText
+
   export type PartialAny = PartialFile | PartialImage | PartialText
 
   interface Base {
@@ -27,27 +28,31 @@ export namespace MessageType {
     type: 'custom' | 'file' | 'image' | 'text' | 'unsupported'
   }
 
-  export interface CalculatedMessage extends Base {
+  export interface Custom extends Base {
+    type: 'custom'
+  }
+
+  export interface DerivedMessageProps extends Base {
     nextMessageInGroup: boolean
     offset: number
     showName: boolean
     showStatus: boolean
   }
 
-  export interface CalculatedFile extends CalculatedMessage, File {
+  export interface DerivedFile extends DerivedMessageProps, File {
     type: File['type']
   }
 
-  export interface CalculatedImage extends CalculatedMessage, Image {
+  export interface DerivedImage extends DerivedMessageProps, Image {
     type: Image['type']
   }
 
-  export interface CalculatedText extends CalculatedMessage, Text {
+  export interface DerivedText extends DerivedMessageProps, Text {
     type: Text['type']
   }
 
-  export interface Custom extends CalculatedMessage {
-    type: 'custom'
+  export interface DerivedCustom extends DerivedMessageProps {
+    type: Custom['type']
   }
 
   export interface PartialFile {
@@ -80,6 +85,10 @@ export namespace MessageType {
 
   export interface Text extends Base, PartialText {
     type: 'text'
+  }
+
+  export interface Unsupported extends Base {
+    type: 'unsupported'
   }
 
   export interface DateHeader {
