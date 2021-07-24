@@ -22,7 +22,7 @@ describe('message', () => {
         messageWidth={440}
         buildCustomMessage={buildCustomMessage}
         showAvatar={false}
-        onImagePress={jest.fn}
+        onMessageLongPress={jest.fn}
       />
     )
     expect(getByTestId('CustomMessage')).toBeDefined()
@@ -36,12 +36,12 @@ describe('message', () => {
         message={{ ...textMessage, type: 'custom' }}
         messageWidth={440}
         showAvatar={false}
-        onImagePress={jest.fn}
+        onMessagePress={jest.fn}
       />
     )
     const ContentContainer = getByTestId('ContentContainer')
     expect(ContentContainer).toBeDefined()
-    expect(ContentContainer).toHaveProperty('props.children', undefined)
+    expect(ContentContainer).toHaveProperty('props.children[0]', undefined)
   })
 
   it('renders undefined in ContentContainer with wrong message type', () => {
@@ -52,11 +52,11 @@ describe('message', () => {
         message={{ ...textMessage, type: 'wrong' }}
         messageWidth={440}
         showAvatar={false}
-        onImagePress={jest.fn}
+        onMessagePress={jest.fn}
       />
     )
     const ContentContainer = getByTestId('ContentContainer')
     expect(ContentContainer).toBeDefined()
-    expect(ContentContainer).toHaveProperty('props.children', undefined)
+    expect(ContentContainer).toHaveProperty('props.children[0]', undefined)
   })
 })

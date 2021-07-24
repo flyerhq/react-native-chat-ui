@@ -8,6 +8,7 @@ import {
   user,
 } from '../../../../jest/fixtures'
 import { l10n } from '../../../l10n'
+import { MessageType } from '../../../types'
 import { Chat } from '../Chat'
 
 jest.useFakeTimers()
@@ -71,9 +72,14 @@ describe('chat', () => {
     const messages = [fileMessage, textMessage, imageMessage]
     const onSendPress = jest.fn()
     const onFilePress = jest.fn()
+    const onMessagePress = (message: MessageType.DerivedUserMessage) => {
+      if (message.type === 'file') {
+        onFilePress(message)
+      }
+    }
     const { getByLabelText } = render(
       <Chat
-        onFilePress={onFilePress}
+        onMessagePress={onMessagePress}
         messages={messages}
         onSendPress={onSendPress}
         showUserAvatar={true}
@@ -86,15 +92,73 @@ describe('chat', () => {
     expect(onFilePress).toHaveBeenCalledWith(fileMessage)
   })
 
+  it('opens image on image message press', () => {
+    expect.assertions(1)
+    const messages = [imageMessage]
+    const onSendPress = jest.fn()
+    const onImagePress = jest.fn()
+    const onMessagePress = (message: MessageType.DerivedUserMessage) => {
+      if (message.type === 'image') {
+        onImagePress(message)
+      }
+    }
+
+    const onMessageLongPress = jest.fn()
+
+    const { getByTestId } = render(
+      <Chat
+        onMessagePress={onMessagePress}
+        onMessageLongPress={onMessageLongPress}
+        messages={messages}
+        onSendPress={onSendPress}
+        showUserAvatar={true}
+        user={user}
+      />
+    )
+
+    const button = getByTestId('ContentContainer')
+    fireEvent.press(button)
+    expect(onImagePress).toHaveBeenCalledWith(imageMessage)
+  })
+
+  it('fires image on image message long press', () => {
+    expect.assertions(1)
+    const messages = [imageMessage]
+    const onSendPress = jest.fn()
+    const onImagePress = jest.fn()
+    const onMessagePress = (message: MessageType.DerivedUserMessage) => {
+      if (message.type === 'image') {
+        onImagePress(message)
+      }
+    }
+
+    const onMessageLongPress = jest.fn()
+
+    const { getByTestId } = render(
+      <Chat
+        onMessagePress={onMessagePress}
+        onMessageLongPress={onMessageLongPress}
+        messages={messages}
+        onSendPress={onSendPress}
+        showUserAvatar={true}
+        user={user}
+      />
+    )
+
+    const button = getByTestId('ContentContainer')
+    fireEvent(button, 'onLongPress')
+    expect(onMessageLongPress).toHaveBeenCalledWith(imageMessage)
+  })
+
   it('renders empty chat placeholder', () => {
     expect.assertions(1)
     const messages = []
     const onSendPress = jest.fn()
-    const onFilePress = jest.fn()
+    const onMessagePress = jest.fn()
     const { getByText } = render(
       <Chat
         messages={messages}
-        onFilePress={onFilePress}
+        onMessagePress={onMessagePress}
         onSendPress={onSendPress}
         user={user}
       />

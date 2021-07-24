@@ -32,7 +32,6 @@ export interface MessageTopLevelProps extends TextMessageTopLevelProps {
 
 export interface MessageProps extends MessageTopLevelProps {
   buildCustomMessage?: (message: MessageType.DerivedCustom) => React.ReactNode
-  disableImageGallery?: boolean
   message: MessageType.Derived
   messageWidth: number
   onMessageLongPress?: (message: MessageType.DerivedUserMessage) => void
@@ -43,7 +42,6 @@ export interface MessageProps extends MessageTopLevelProps {
 export const Message = React.memo(
   ({
     buildCustomMessage,
-    disableImageGallery,
     message,
     messageWidth,
     onMessagePress,

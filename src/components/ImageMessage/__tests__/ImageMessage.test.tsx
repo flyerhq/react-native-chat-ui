@@ -43,19 +43,4 @@ describe('image message', () => {
     expect(errorImageComponent.props).toHaveProperty('style.width', 64)
     getSizeMock.mockRestore()
   })
-
-  it('handles press', () => {
-    expect.assertions(1)
-    const onPress = jest.fn()
-    const { getByRole } = render(
-      <ImageMessage
-        message={imageMessage}
-        messageWidth={440}
-        onPress={onPress}
-      />
-    )
-    const button = getByRole('image').parent
-    fireEvent.press(button)
-    expect(onPress).toHaveBeenCalledWith(imageMessage.uri)
-  })
 })
