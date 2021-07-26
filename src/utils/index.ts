@@ -241,4 +241,10 @@ export const calculateChatMessages = (
   }
 }
 
-// NOTE: check this shit and integrate logic in Chat flat list renderer
+export const excludeInitialMessage = (
+  message: MessageType.DerivedUserMessage
+) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { nextMessageInGroup, offset, showName, showStatus, ...rest } = message
+  return { ...rest } as MessageType.Any
+}

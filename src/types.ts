@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 
 export namespace MessageType {
-  export type Any = File | Image | Text | Custom
+  export type Any = File | Image | Text | Custom | Unsupported
   export type DerivedUserMessage =
     | DerivedCustom
     | DerivedFile

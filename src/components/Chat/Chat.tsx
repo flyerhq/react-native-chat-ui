@@ -37,7 +37,7 @@ dayjs.extend(calendar)
 export type ChatTopLevelProps = InputTopLevelProps & MessageTopLevelProps
 
 export interface ChatProps extends ChatTopLevelProps {
-  buildCustomMessage?: (message: MessageType.Derived) => React.ReactNode
+  buildCustomMessage?: (message: MessageType.Custom) => React.ReactNode
   customDateHeaderText?: (dateTime: number) => string
   dateFormat?: string
   disableImageGallery?: boolean
@@ -46,8 +46,8 @@ export interface ChatProps extends ChatTopLevelProps {
   l10nOverride?: Partial<Record<keyof typeof l10n[keyof typeof l10n], string>>
   locale?: keyof typeof l10n
   messages: MessageType.Any[]
-  onMessageLongPress?: (message: MessageType.DerivedUserMessage) => void
-  onMessagePress?: (message: MessageType.DerivedUserMessage) => void
+  onMessageLongPress?: (message: MessageType.Any) => void
+  onMessagePress?: (message: MessageType.Any) => void
   showUserAvatar?: boolean
   showUserNames?: boolean
   theme?: Theme
@@ -113,7 +113,7 @@ export const Chat = ({
   }, [locale])
 
   const handleImagePress = React.useCallback(
-    (message: MessageType.DerivedImage) => {
+    (message: MessageType.Image) => {
       setImageViewIndex(images.findIndex((image) => image.uri === message.uri))
       setIsImageViewVisible(true)
       setStackEntry(
@@ -127,7 +127,7 @@ export const Chat = ({
   )
 
   const handleMessagePress = React.useCallback(
-    (message: MessageType.DerivedUserMessage) => {
+    (message: MessageType.Any) => {
       if (message.type === 'image' && !disableImageGallery) {
         handleImagePress(message)
       }

@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Pressable, Text, View } from 'react-native'
 
 import { MessageType } from '../../types'
-import { ThemeContext, UserContext } from '../../utils'
+import { excludeInitialMessage, ThemeContext, UserContext } from '../../utils'
 import { Avatar } from '../Avatar'
 import { FileMessage } from '../FileMessage'
 import { ImageMessage } from '../ImageMessage'
@@ -31,11 +31,11 @@ export interface MessageTopLevelProps extends TextMessageTopLevelProps {
 }
 
 export interface MessageProps extends MessageTopLevelProps {
-  buildCustomMessage?: (message: MessageType.DerivedCustom) => React.ReactNode
+  buildCustomMessage?: (message: MessageType.Custom) => React.ReactNode
   message: MessageType.Derived
   messageWidth: number
-  onMessageLongPress?: (message: MessageType.DerivedUserMessage) => void
-  onMessagePress?: (message: MessageType.DerivedUserMessage) => void
+  onMessageLongPress?: (message: MessageType.Any) => void
+  onMessagePress?: (message: MessageType.Any) => void
   showAvatar: boolean
 }
 
@@ -77,7 +77,11 @@ export const Message = React.memo(
     const renderMessage = () => {
       switch (message.type) {
         case 'custom':
-          return buildCustomMessage?.(message) ?? undefined
+          return (
+            buildCustomMessage?.(
+              excludeInitialMessage(message) as MessageType.Custom
+            ) ?? undefined
+          )
         case 'file':
           return oneOf(
             renderFileMessage,
@@ -115,8 +119,10 @@ export const Message = React.memo(
         <Pressable
           testID='ContentContainer'
           style={contentContainer}
-          onPress={() => onMessagePress?.(message)}
-          onLongPress={() => onMessageLongPress?.(message)}
+          onPress={() => onMessagePress?.(excludeInitialMessage(message))}
+          onLongPress={() =>
+            onMessageLongPress?.(excludeInitialMessage(message))
+          }
         >
           {renderMessage()}
         </Pressable>
