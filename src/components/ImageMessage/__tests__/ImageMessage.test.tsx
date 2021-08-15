@@ -29,8 +29,8 @@ describe('image message', () => {
     })
     const successImageComponent = getByRole('image')
     expect(successImageComponent.props).toHaveProperty(
-      'style.aspectRatio',
-      size.width / size.height
+      'style.height',
+      440 / (size.width / size.height)
     )
     act(() => {
       success(size.width, size.width * 10 + 1)

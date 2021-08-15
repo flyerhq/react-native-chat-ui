@@ -17,7 +17,7 @@ const styles = ({
 }) =>
   StyleSheet.create({
     image: {
-      aspectRatio,
+      height: messageWidth / aspectRatio,
       maxHeight: messageWidth,
       minWidth: 170,
       width: messageWidth,
