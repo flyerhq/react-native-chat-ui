@@ -12,7 +12,6 @@ import {
   SafeAreaView,
   StatusBar,
   StatusBarProps,
-  StyleSheet,
   Text,
   View,
 } from 'react-native'
@@ -22,6 +21,7 @@ import { l10n } from '../../l10n'
 import { defaultTheme } from '../../theme'
 import { MessageType, Theme, User } from '../../types'
 import {
+  calculateChatMessages,
   initLocale,
   L10nContext,
   ThemeContext,
@@ -37,39 +37,49 @@ dayjs.extend(calendar)
 export type ChatTopLevelProps = InputTopLevelProps & MessageTopLevelProps
 
 export interface ChatProps extends ChatTopLevelProps {
-  dateDividerFormat?: string
-  flatListProps?: FlatListProps<MessageType.Any[]>
+  customDateHeaderText?: (dateTime: number) => string
+  dateFormat?: string
+  disableImageGallery?: boolean
+  flatListProps?: FlatListProps<MessageType.DerivedAny[]>
   inputProps?: InputAdditionalProps
   l10nOverride?: Partial<Record<keyof typeof l10n[keyof typeof l10n], string>>
   locale?: keyof typeof l10n
   messages: MessageType.Any[]
+  showUserNames?: boolean
   theme?: Theme
+  timeFormat?: string
   user: User
 }
 
 export const Chat = ({
-  dateDividerFormat = 'DD MMMM',
+  customDateHeaderText,
+  dateFormat,
+  disableImageGallery,
   flatListProps,
   inputProps,
   isAttachmentUploading,
   l10nOverride,
   locale = 'en',
   messages,
-  messageTimeFormat,
   onAttachmentPress,
-  onFilePress,
+  onMessageLongPress,
+  onMessagePress,
   onPreviewDataFetched,
   onSendPress,
+  renderCustomMessage,
   renderFileMessage,
   renderImageMessage,
   renderTextMessage,
+  showUserAvatars = false,
+  showUserNames = false,
   textInputProps,
   theme = defaultTheme,
+  timeFormat,
+  usePreviewData = true,
   user,
 }: ChatProps) => {
   const {
     container,
-    dateDivider,
     emptyComponentContainer,
     emptyComponentTitle,
     flatList,
@@ -79,23 +89,29 @@ export const Chat = ({
   } = styles({ theme })
 
   const { onLayout, size } = useComponentSize()
+  const list = React.useRef<FlatList<MessageType.DerivedAny>>(null)
   const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
   const [imageViewIndex, setImageViewIndex] = React.useState(0)
   const [stackEntry, setStackEntry] = React.useState<StatusBarProps>({})
-  const images = messages.reduce<{ uri: string }[]>(
-    (acc, curr) => (curr.type === 'image' ? [{ uri: curr.uri }, ...acc] : acc),
-    []
-  )
-  const list = React.useRef<FlatList<MessageType.Any>>(null)
-  const messageWidth = Math.floor(Math.min(size.width * 0.77, 440))
+
+  const { chatMessages, gallery } = calculateChatMessages(messages, user, {
+    customDateHeaderText,
+    dateFormat,
+    showUserNames,
+    timeFormat,
+  })
 
   React.useEffect(() => {
     initLocale(locale)
   }, [locale])
 
   const handleImagePress = React.useCallback(
-    (uri: string) => {
-      setImageViewIndex(images.findIndex((image) => image.uri === uri))
+    (message: MessageType.Image) => {
+      setImageViewIndex(
+        gallery.findIndex(
+          (image) => image.id === message.id && image.uri === message.uri
+        )
+      )
       setIsImageViewVisible(true)
       setStackEntry(
         StatusBar.pushStackEntry({
@@ -104,7 +120,17 @@ export const Chat = ({
         })
       )
     },
-    [images]
+    [gallery]
+  )
+
+  const handleMessagePress = React.useCallback(
+    (message: MessageType.Any) => {
+      if (message.type === 'image' && !disableImageGallery) {
+        handleImagePress(message)
+      }
+      onMessagePress?.(message)
+    },
+    [disableImageGallery, handleImagePress, onMessagePress]
   )
 
   // TODO: Tapping on a close button results in the next warning:
@@ -123,93 +149,61 @@ export const Chat = ({
     })
   }
 
-  const keyExtractor = React.useCallback((item: MessageType.Any) => item.id, [])
+  const keyExtractor = React.useCallback(
+    ({ id }: MessageType.DerivedAny) => id,
+    []
+  )
 
   const renderItem = React.useCallback(
-    ({ item: message, index }: { item: MessageType.Any; index: number }) => {
-      // TODO: Update the logic after pagination is introduced
-      const isFirst = index === 0
-      const isLast = index === messages.length - 1
-      const nextMessage = isLast ? undefined : messages[index + 1]
-      const previousMessage = isFirst ? undefined : messages[index - 1]
+    ({ item: message }: { item: MessageType.DerivedAny; index: number }) => {
+      const messageWidth =
+        showUserAvatars &&
+        message.type !== 'dateHeader' &&
+        message.author.id !== user.id
+          ? Math.floor(Math.min(size.width * 0.72, 440))
+          : Math.floor(Math.min(size.width * 0.77, 440))
 
-      let nextMessageDifferentDay = false
-      let nextMessageSameAuthor = false
-      let previousMessageSameAuthor = false
-      let shouldRenderTime = !!message.timestamp
-
-      if (nextMessage) {
-        nextMessageDifferentDay =
-          !!message.timestamp &&
-          !!nextMessage.timestamp &&
-          !dayjs
-            .unix(message.timestamp)
-            .isSame(dayjs.unix(nextMessage.timestamp), 'day')
-        nextMessageSameAuthor = nextMessage.authorId === message.authorId
-      }
-
-      if (previousMessage) {
-        previousMessageSameAuthor =
-          previousMessage.authorId === message.authorId
-        shouldRenderTime =
-          !!message.timestamp &&
-          !!previousMessage.timestamp &&
-          (!previousMessageSameAuthor ||
-            previousMessage.timestamp - message.timestamp >= 60)
-      }
+      const roundBorder =
+        message.type !== 'dateHeader' && message.nextMessageInGroup
+      const showAvatar =
+        message.type !== 'dateHeader' && !message.nextMessageInGroup
+      const showName = message.type !== 'dateHeader' && message.showName
+      const showStatus = message.type !== 'dateHeader' && message.showStatus
 
       return (
-        <>
-          <Message
-            {...{
-              message,
-              messageTimeFormat,
-              messageWidth,
-              onFilePress,
-              onImagePress: handleImagePress,
-              onPreviewDataFetched,
-              previousMessageSameAuthor,
-              renderFileMessage,
-              renderImageMessage,
-              renderTextMessage,
-              shouldRenderTime,
-            }}
-          />
-          {(nextMessageDifferentDay || (isLast && message.timestamp)) && (
-            <Text
-              style={StyleSheet.flatten([
-                dateDivider,
-                { marginTop: nextMessageSameAuthor ? 24 : 16 },
-              ])}
-            >
-              {/* At this point we know that timestamp exists, so we can safely force unwrap it */}
-              {/* type-coverage:ignore-next-line */}
-              {dayjs.unix(message.timestamp!).calendar(undefined, {
-                sameDay: `[${l10n[locale].today}]`,
-                nextDay: dateDividerFormat,
-                nextWeek: dateDividerFormat,
-                lastDay: `[${l10n[locale].yesterday}]`,
-                lastWeek: dateDividerFormat,
-                sameElse: dateDividerFormat,
-              })}
-            </Text>
-          )}
-        </>
+        <Message
+          {...{
+            message,
+            messageWidth,
+            onMessageLongPress,
+            onMessagePress: handleMessagePress,
+            onPreviewDataFetched,
+            renderCustomMessage,
+            renderFileMessage,
+            renderImageMessage,
+            renderTextMessage,
+            roundBorder,
+            showAvatar,
+            showName,
+            showStatus,
+            showUserAvatars,
+            usePreviewData,
+          }}
+        />
       )
     },
     [
-      dateDivider,
-      dateDividerFormat,
-      handleImagePress,
-      locale,
-      messageTimeFormat,
-      messageWidth,
-      messages,
-      onFilePress,
+      handleMessagePress,
+      onMessageLongPress,
       onPreviewDataFetched,
+      renderCustomMessage,
       renderFileMessage,
       renderImageMessage,
       renderTextMessage,
+      showUserAvatars,
+      size.width,
+      usePreviewData,
+      user.id,
     ]
   )
 
@@ -233,17 +227,17 @@ export const Chat = ({
         contentContainerStyle={[
           flatListContentContainer,
           // eslint-disable-next-line react-native/no-inline-styles
-          { justifyContent: messages.length !== 0 ? undefined : 'center' },
+          { justifyContent: chatMessages.length !== 0 ? undefined : 'center' },
         ]}
         initialNumToRender={10}
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
         ListFooterComponentStyle={footer}
         maxToRenderPerBatch={6}
-        showsHorizontalScrollIndicator={false}
         style={flatList}
+        showsVerticalScrollIndicator={false}
         {...unwrap(flatListProps)}
-        data={messages}
+        data={chatMessages}
         inverted
         keyboardDismissMode='interactive'
         keyExtractor={keyExtractor}
@@ -253,12 +247,12 @@ export const Chat = ({
       />
     ),
     [
+      chatMessages,
       flatList,
       flatListContentContainer,
       flatListProps,
       footer,
       keyExtractor,
-      messages,
       renderItem,
       renderListEmptyComponent,
       renderListFooterComponent,
@@ -288,8 +282,8 @@ export const Chat = ({
               />
             </KeyboardAccessoryView>
             <ImageView
-              images={images}
               imageIndex={imageViewIndex}
+              images={gallery}
               onRequestClose={handleRequestClose}
               visible={isImageViewVisible}
             />

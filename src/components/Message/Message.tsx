@@ -1,19 +1,27 @@
 import { oneOf } from '@flyerhq/react-native-link-preview'
-import dayjs from 'dayjs'
 import * as React from 'react'
-import { Image, ImageSourcePropType, Text, View } from 'react-native'
+import { Pressable, Text, View } from 'react-native'
 
 import { MessageType } from '../../types'
-import { ThemeContext, UserContext } from '../../utils'
-import { CircularActivityIndicator } from '../CircularActivityIndicator'
+import {
+  excludeDerivedMessageProps,
+  ThemeContext,
+  UserContext,
+} from '../../utils'
+import { Avatar } from '../Avatar'
 import { FileMessage } from '../FileMessage'
 import { ImageMessage } from '../ImageMessage'
+import { StatusIcon } from '../StatusIcon'
 import { TextMessage, TextMessageTopLevelProps } from '../TextMessage'
 import styles from './styles'
 
 export interface MessageTopLevelProps extends TextMessageTopLevelProps {
-  messageTimeFormat?: string
-  onFilePress?: (message: MessageType.File) => void
+  onMessageLongPress?: (message: MessageType.Any) => void
+  onMessagePress?: (message: MessageType.Any) => void
+  renderCustomMessage?: (
+    message: MessageType.Custom,
+    messageWidth: number
+  ) => React.ReactNode
   renderFileMessage?: (
     message: MessageType.File,
     messageWidth: number
@@ -26,48 +34,74 @@ export interface MessageTopLevelProps extends TextMessageTopLevelProps {
     message: MessageType.Text,
     messageWidth: number
   ) => React.ReactNode
+  showUserAvatars?: boolean
 }
 
 export interface MessageProps extends MessageTopLevelProps {
-  message: MessageType.Any
+  message: MessageType.DerivedAny
   messageWidth: number
-  onImagePress: (uri: string) => void
-  previousMessageSameAuthor: boolean
-  shouldRenderTime: boolean
+  roundBorder: boolean
+  showAvatar: boolean
+  showName: boolean
+  showStatus: boolean
 }
 
 export const Message = React.memo(
   ({
     message,
-    messageTimeFormat = 'h:mm a',
     messageWidth,
-    onFilePress,
-    onImagePress,
+    onMessagePress,
+    onMessageLongPress,
     onPreviewDataFetched,
-    previousMessageSameAuthor,
+    renderCustomMessage,
     renderFileMessage,
     renderImageMessage,
     renderTextMessage,
-    shouldRenderTime,
+    roundBorder,
+    showAvatar,
+    showName,
+    showStatus,
+    showUserAvatars,
+    usePreviewData,
   }: MessageProps) => {
     const theme = React.useContext(ThemeContext)
     const user = React.useContext(UserContext)
-    const { container, contentContainer, status, statusContainer, time } =
-      styles({
-        message,
-        messageWidth,
-        previousMessageSameAuthor,
-        theme,
-        user,
-      })
 
-    const renderMessage = React.useCallback(() => {
+    const currentUserIsAuthor =
+      message.type !== 'dateHeader' && user?.id === message.author.id
+
+    const { container, contentContainer, dateHeader } = styles({
+      currentUserIsAuthor,
+      message,
+      messageWidth,
+      roundBorder,
+      theme,
+    })
+
+    if (message.type === 'dateHeader') {
+      return (
+        <View style={dateHeader}>
+          <Text style={theme.fonts.dateDividerTextStyle}>{message.text}</Text>
+        </View>
+      )
+    }
+
+    const renderMessage = () => {
       switch (message.type) {
+        case 'custom':
+          return (
+            renderCustomMessage?.(
+              // It's okay to cast here since we checked message type above
+              // type-coverage:ignore-next-line
+              excludeDerivedMessageProps(message) as MessageType.Custom,
+              messageWidth
+            ) ?? null
+          )
         case 'file':
-          return oneOf(
-            renderFileMessage,
-            <FileMessage message={message} onPress={onFilePress} />
-          )(message, messageWidth)
+          return oneOf(renderFileMessage, <FileMessage message={message} />)(
+            message,
+            messageWidth
+          )
         case 'image':
           return oneOf(
             renderImageMessage,
@@ -75,7 +109,6 @@ export const Message = React.memo(
               {...{
                 message,
                 messageWidth,
-                onPress: onImagePress,
               }}
             />
           )(message, messageWidth)
@@ -87,58 +120,45 @@ export const Message = React.memo(
                 message,
                 messageWidth,
                 onPreviewDataFetched,
+                showName,
+                usePreviewData,
               }}
             />
           )(message, messageWidth)
+        default:
+          return null
       }
-    }, [
-      message,
-      messageWidth,
-      onFilePress,
-      onImagePress,
-      onPreviewDataFetched,
-      renderFileMessage,
-      renderImageMessage,
-      renderTextMessage,
-    ])
-
-    const readIcon: ImageSourcePropType =
-      theme.icons?.readIcon ?? require('../../assets/icon-read.png')
-
-    const deliveredIcon: ImageSourcePropType =
-      theme.icons?.deliveredIcon ?? require('../../assets/icon-delivered.png')
+    }
 
     return (
       <View style={container}>
-        <View style={contentContainer}>{renderMessage()}</View>
-        {shouldRenderTime && (
-          <View style={statusContainer}>
-            <Text style={time}>
-              {/* `shouldRenderTime` will only be true if timestamp exists, so we can safely force unwrap it */}
-              {/* type-coverage:ignore-next-line */}
-              {dayjs.unix(message.timestamp!).format(messageTimeFormat)}
-            </Text>
-            {user?.id === message.authorId && (
-              <>
-                {message.status === 'sending' && (
-                  <CircularActivityIndicator
-                    color={theme.colors.primary}
-                    size={12}
-                  />
-                )}
-                {(message.status === 'read' ||
-                  message.status === 'delivered') && (
-                  <Image
-                    source={
-                      message.status === 'read' ? readIcon : deliveredIcon
-                    }
-                    style={status}
-                  />
-                )}
-              </>
-            )}
-          </View>
-        )}
+        <Avatar
+          {...{
+            author: message.author,
+            currentUserIsAuthor,
+            showAvatar,
+            showUserAvatars,
+            theme,
+          }}
+        />
+        <Pressable
+          onLongPress={() =>
+            onMessageLongPress?.(excludeDerivedMessageProps(message))
+          }
+          onPress={() => onMessagePress?.(excludeDerivedMessageProps(message))}
+          style={contentContainer}
+          testID='ContentContainer'
+        >
+          {renderMessage()}
+        </Pressable>
+        <StatusIcon
+          {...{
+            currentUserIsAuthor,
+            showStatus,
+            status: message.status,
+            theme,
+          }}
+        />
       </View>
     )
   }

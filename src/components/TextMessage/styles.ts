@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native'
 
 import { MessageType, Theme, User } from '../../types'
+import { getUserAvatarNameColor } from '../../utils'
 
 const styles = ({
   message,
@@ -12,34 +13,32 @@ const styles = ({
   user?: User
 }) =>
   StyleSheet.create({
-    descriptionText: StyleSheet.flatten([
-      theme.fonts.body2,
-      {
-        color:
-          user?.id === message.authorId
-            ? theme.colors.primaryText
-            : theme.colors.secondaryText,
-        marginTop: 4,
-      },
-    ]),
-    titleText: StyleSheet.flatten([
-      theme.fonts.subtitle1,
-      {
-        color:
-          user?.id === message.authorId
-            ? theme.colors.primaryText
-            : theme.colors.secondaryText,
-      },
-    ]),
-    text: StyleSheet.flatten([
-      theme.fonts.body1,
-      {
-        color:
-          user?.id === message.authorId
-            ? theme.colors.primaryText
-            : theme.colors.secondaryText,
-      },
-    ]),
+    descriptionText: {
+      ...(user?.id === message.author.id
+        ? theme.fonts.sentMessageLinkDescriptionTextStyle
+        : theme.fonts.receivedMessageLinkDescriptionTextStyle),
+      marginTop: 4,
+    },
+    headerText: {
+      ...theme.fonts.userNameTextStyle,
+      color: getUserAvatarNameColor(
+        message.author,
+        theme.colors.userAvatarNameColors
+      ),
+      marginBottom: 6,
+    },
+    titleText:
+      user?.id === message.author.id
+        ? theme.fonts.sentMessageLinkTitleTextStyle
+        : theme.fonts.receivedMessageLinkTitleTextStyle,
+    text:
+      user?.id === message.author.id
+        ? theme.fonts.sentMessageBodyTextStyle
+        : theme.fonts.receivedMessageBodyTextStyle,
+    textContainer: {
+      marginHorizontal: 24,
+      marginVertical: 16,
+    },
   })
 
 export default styles

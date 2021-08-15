@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { StyleSheet, TextInput, TextInputProps, View } from 'react-native'
+import { TextInput, TextInputProps, View } from 'react-native'
 
 import { MessageType } from '../../types'
 import { L10nContext, ThemeContext, unwrap, UserContext } from '../../utils'
@@ -53,8 +53,15 @@ export const Input = ({
   }
 
   const handleSend = () => {
-    onSendPress({ text: value.trim() })
-    setText('')
+    const trimmedValue = value.trim()
+
+    // Impossible to test since button is not visible when value is empty.
+    // Additional check for the keyboard input.
+    /* istanbul ignore next */
+    if (trimmedValue) {
+      onSendPress({ text: trimmedValue })
+      setText('')
+    }
   }
 
   return (
@@ -83,7 +90,7 @@ export const Input = ({
         underlineColorAndroid='transparent'
         {...textInputProps}
         // Keep our implementation but allow user to use these `TextInputProps`
-        style={StyleSheet.flatten([input, textInputProps?.style])}
+        style={[input, textInputProps?.style]}
         onChangeText={handleChangeText}
         value={value}
       />

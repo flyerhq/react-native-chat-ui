@@ -267,7 +267,7 @@ PODS:
     - React-Core
   - react-native-get-random-values (1.7.0):
     - React-Core
-  - react-native-image-picker (3.8.0):
+  - react-native-image-picker (4.0.3):
     - React-Core
   - react-native-safe-area-context (3.2.0):
     - React-Core
@@ -509,7 +509,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 500a59626037be5b3b3d89c5151bc3baa9abf1a9
   react-native-document-picker: 1a7518132d4a06b67f459be9bb1464a567d2b3b4
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
-  react-native-image-picker: ec63410edbcacc543acd77dcccfc056da39320ab
+  react-native-image-picker: 474cf2c33c2b6671da53d293a16c97995f0aec15
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   React-perflogger: aad6d4b4a267936b3667260d1f649b6f6069a675
   React-RCTActionSheet: fc376be462c9c8d6ad82c0905442fd77f82a9d2a

@@ -8,23 +8,12 @@ export default ({ theme }: { theme: Theme }) =>
       backgroundColor: theme.colors.background,
       flex: 1,
     },
-    dateDivider: StyleSheet.flatten([
-      theme.fonts.subtitle2,
-      {
-        color: theme.colors.subtitle2,
-        marginBottom: 32,
-        textAlign: 'center',
-      },
-    ]),
     emptyComponentContainer: {
       alignItems: 'center',
       marginHorizontal: 24,
     },
     emptyComponentTitle: {
-      // Ignore because it is object
-      // @ts-ignore
-      ...theme.fonts.body1,
-      color: theme.colors.caption,
+      ...theme.fonts.emptyChatPlaceholderTextStyle,
       textAlign: 'center',
       transform: [{ rotateX: '180deg' }],
     },
