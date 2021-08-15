@@ -79,7 +79,7 @@ const App = () => {
   // ...
   const handleFileSelection = async () => {
     try {
-      const response = await DocumentPicker.pick({
+      const response = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.allFiles],
       })
       const fileMessage: MessageType.File = {
@@ -244,7 +244,7 @@ const App = () => {
 
   const handleFileSelection = async () => {
     try {
-      const response = await DocumentPicker.pick({
+      const response = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.allFiles],
       })
       const fileMessage: MessageType.File = {
