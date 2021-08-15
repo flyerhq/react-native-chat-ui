@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Text, View } from 'react-native'
 
 import { MessageType } from '../../types'
 import {
@@ -12,10 +12,9 @@ import styles from './styles'
 
 export interface FileMessageProps {
   message: MessageType.DerivedFile
-  onPress?: (message: MessageType.DerivedFile) => void
 }
 
-export const FileMessage = ({ message, onPress }: FileMessageProps) => {
+export const FileMessage = ({ message }: FileMessageProps) => {
   const l10n = React.useContext(L10nContext)
   const theme = React.useContext(ThemeContext)
   const user = React.useContext(UserContext)
@@ -25,29 +24,23 @@ export const FileMessage = ({ message, onPress }: FileMessageProps) => {
     user,
   })
 
-  const handlePress = () => onPress?.(message)
-
   return (
-    <TouchableOpacity
+    <View
       accessibilityLabel={l10n.fileButtonAccessibilityLabel}
-      accessibilityRole='button'
-      onPress={handlePress}
+      style={container}
     >
-      <View style={container}>
-        <View style={iconContainer}>
+      <View style={iconContainer}>
+        {theme.icons?.documentIcon?.() ?? (
           <Image
-            source={
-              theme.icons?.documentIcon ??
-              require('../../assets/icon-document.png')
-            }
+            source={require('../../assets/icon-document.png')}
             style={icon}
           />
-        </View>
-        <View style={textContainer}>
-          <Text style={name}>{message.name}</Text>
-          <Text style={size}>{formatBytes(message.size)}</Text>
-        </View>
+        )}
       </View>
-    </TouchableOpacity>
+      <View style={textContainer}>
+        <Text style={name}>{message.name}</Text>
+        <Text style={size}>{formatBytes(message.size)}</Text>
+      </View>
+    </View>
   )
 }

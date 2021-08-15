@@ -1,6 +1,13 @@
 import { MessageType, Size, User } from '../src/types'
 
-export const fileMessage: MessageType.CalculatedFile = {
+export const defaultDerivedMessageProps = {
+  nextMessageInGroup: false,
+  offset: 12,
+  showName: false,
+  showStatus: true,
+}
+
+export const fileMessage: MessageType.File = {
   author: {
     id: 'userId',
   },
@@ -12,13 +19,14 @@ export const fileMessage: MessageType.CalculatedFile = {
   status: 'seen',
   type: 'file',
   uri: 'file:///Users/admin/flyer.pdf',
-  nextMessageInGroup: false,
-  offset: 12,
-  showName: false,
-  showStatus: true,
 }
 
-export const imageMessage: MessageType.CalculatedImage = {
+export const derivedFileMessage: MessageType.DerivedFile = {
+  ...fileMessage,
+  ...defaultDerivedMessageProps,
+}
+
+export const imageMessage: MessageType.Image = {
   author: {
     id: 'image-userId',
   },
@@ -31,10 +39,11 @@ export const imageMessage: MessageType.CalculatedImage = {
   type: 'image',
   uri: 'https://avatars1.githubusercontent.com/u/59206044',
   width: 100,
-  nextMessageInGroup: false,
-  offset: 12,
-  showName: false,
-  showStatus: true,
+}
+
+export const derivedImageMessage: MessageType.DerivedImage = {
+  ...imageMessage,
+  ...defaultDerivedMessageProps,
 }
 
 export const size: Size = {
@@ -42,7 +51,7 @@ export const size: Size = {
   width: 414,
 }
 
-export const textMessage: MessageType.CalculatedText = {
+export const textMessage: MessageType.Text = {
   author: {
     id: 'userId',
   },
@@ -50,10 +59,11 @@ export const textMessage: MessageType.CalculatedText = {
   id: 'uuidv4',
   text: 'text',
   type: 'text',
-  nextMessageInGroup: false,
-  offset: 12,
-  showName: false,
-  showStatus: true,
+}
+
+export const derivedTextMessage: MessageType.DerivedText = {
+  ...textMessage,
+  ...defaultDerivedMessageProps,
 }
 
 export const user: User = {

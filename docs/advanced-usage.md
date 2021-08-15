@@ -65,7 +65,7 @@ You can use this URL https://bit.ly/2P0cn2g to test the file message presentatio
 
 :::
 
-On tap, images will be previewed inside an interactive image gallery.
+On tap, images will be previewed inside an interactive image gallery. To disable the image gallery pass `disableImageGallery` prop to the `Chat` component.
 
 ## Files
 
@@ -123,16 +123,20 @@ import FileViewer from 'react-native-file-viewer'
 
 const App = () => {
   // ...
-  const handleFilePress = async (message: MessageType.File) => {
-    try {
-      await FileViewer.open(message.uri, { showOpenWithDialog: true })
-    } catch {}
+  const handleMessagePress = async (
+    message: MessageType.DerivedUserMessage
+  ) => {
+    if (message.type === 'file') {
+      try {
+        await FileViewer.open(message.uri, { showOpenWithDialog: true })
+      } catch {}
+    }
   }
 
   return (
     <Chat
       // ...
-      onFilePress={handleFilePress}
+      onMessagePress={handleMessagePress}
     />
   )
 }

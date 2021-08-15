@@ -1,5 +1,5 @@
 import { useActionSheet } from '@expo/react-native-action-sheet'
-import { Chat, Message, MessageType } from '@flyerhq/react-native-chat-ui'
+import { Chat, MessageType } from '@flyerhq/react-native-chat-ui'
 import { PreviewData } from '@flyerhq/react-native-link-preview'
 import React, { useState } from 'react'
 import DocumentPicker from 'react-native-document-picker'
@@ -12,17 +12,10 @@ import data from './messages.json'
 const App = () => {
   const { showActionSheetWithOptions } = useActionSheet()
   const [messages, setMessages] = useState(data as MessageType.Any[])
-  const user = {
-    id: '06c33e8b-e835-4736-80f4-63f44b66666c',
-    firstName: 'John',
-    lastName: 'Doe',
-  }
+  const user = { id: '06c33e8b-e835-4736-80f4-63f44b66666c' }
 
   const addMessage = (message: MessageType.Any) => {
-    setMessages([
-      { ...message, author: { ...message.author, ...user } },
-      ...messages,
-    ])
+    setMessages([message, ...messages])
   }
 
   const handleAttachmentPress = () => {
@@ -42,12 +35,6 @@ const App = () => {
         }
       }
     )
-  }
-
-  const handleFilePress = async (message: MessageType.File) => {
-    try {
-      await FileViewer.open(message.uri, { showOpenWithDialog: true })
-    } catch {}
   }
 
   const handleFileSelection = async () => {
@@ -102,6 +89,14 @@ const App = () => {
     )
   }
 
+  const handleMessagePress = async (message: MessageType.Any) => {
+    if (message.type === 'file') {
+      try {
+        await FileViewer.open(message.uri, { showOpenWithDialog: true })
+      } catch {}
+    }
+  }
+
   const handlePreviewDataFetched = ({
     message,
     previewData,
@@ -123,22 +118,15 @@ const App = () => {
       id: uuidv4(),
       text: message.text,
       type: 'text',
-      status: 'seen',
     }
     addMessage(textMessage)
-  }
-
-  const onMessagePress = (message: MessageType.DerivedUserMessage) => {
-    if (message.type === 'file') {
-      handleFilePress(message)
-    }
   }
 
   return (
     <Chat
       messages={messages}
       onAttachmentPress={handleAttachmentPress}
-      onMessagePress={onMessagePress}
+      onMessagePress={handleMessagePress}
       onPreviewDataFetched={handlePreviewDataFetched}
       onSendPress={handleSendPress}
       user={user}

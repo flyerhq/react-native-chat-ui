@@ -21,39 +21,30 @@ const styles = ({
     icon: {
       tintColor:
         user?.id === message.author.id
-          ? theme.colors.primaryText
-          : theme.colors.primary,
+          ? theme.colors.sentMessageDocumentIconColor
+          : theme.colors.receivedMessageDocumentIconColor,
     },
     iconContainer: {
       alignItems: 'center',
       backgroundColor:
         user?.id === message.author.id
-          ? `${String(theme.colors.primaryText)}33`
-          : `${String(theme.colors.primary)}33`,
+          ? `${String(theme.colors.sentMessageDocumentIconColor)}33`
+          : `${String(theme.colors.receivedMessageDocumentIconColor)}33`,
       borderRadius: 21,
       height: 42,
       justifyContent: 'center',
       width: 42,
     },
-    name: StyleSheet.flatten([
-      theme.fonts.body1,
-      {
-        color:
-          user?.id === message.author.id
-            ? theme.colors.primaryText
-            : theme.colors.secondaryText,
-      },
-    ]),
-    size: StyleSheet.flatten([
-      theme.fonts.caption,
-      {
-        color:
-          user?.id === message.author.id
-            ? `${String(theme.colors.primaryText)}80`
-            : theme.colors.caption,
-        marginTop: 4,
-      },
-    ]),
+    name:
+      user?.id === message.author.id
+        ? theme.fonts.sentMessageBodyTextStyle
+        : theme.fonts.receivedMessageBodyTextStyle,
+    size: {
+      ...(user?.id === message.author.id
+        ? theme.fonts.sentMessageCaptionTextStyle
+        : theme.fonts.receivedMessageCaptionTextStyle),
+      marginTop: 4,
+    },
     textContainer: {
       flexShrink: 1,
       marginLeft: 16,

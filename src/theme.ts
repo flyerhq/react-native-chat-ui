@@ -3,7 +3,9 @@ import { ColorValue } from 'react-native'
 import { Theme } from './types'
 
 // For internal usage only. Use values from theme itself.
-export const colors: ColorValue[] = [
+
+/// See [ChatTheme.userAvatarNameColors]
+export const COLORS: ColorValue[] = [
   '#ff6767',
   '#66e0da',
   '#f5a2d9',
@@ -16,49 +18,134 @@ export const colors: ColorValue[] = [
   '#c78ae5',
 ]
 
+/// Dark
+const DARK = '#1f1c38'
+
+/// Error
+const ERROR = '#ff6767'
+
+/// N0
+const NEUTRAL_0 = '#1d1c21'
+
+/// N2
+const NEUTRAL_2 = '#9e9cab'
+
+/// N7
+const NEUTRAL_7 = '#ffffff'
+
+/// N7 with opacity
+const NEUTRAL_7_WITH_OPACITY = '#ffffff80'
+
+/// Primary
+const PRIMARY = '#6f61e8'
+
+/// Secondary
+const SECONDARY = '#f5f5f7'
+
+/// Secondary dark
+const SECONDARY_DARK = '#2b2250'
+
 export const defaultTheme: Theme = {
   borders: {
     inputBorderRadius: 20,
     messageBorderRadius: 20,
   },
   colors: {
-    background: '#ffffff',
-    caption: '#9e9cab',
-    error: '#ff6767',
-    inputBackground: '#1d1d21',
-    inputText: '#ffffff',
-    primary: '#6f61e8',
-    primaryText: '#ffffff',
-    secondary: '#f7f7f8',
-    secondaryText: '#1d1d21',
-    subtitle2: '#1d1d21',
+    background: NEUTRAL_7,
+    error: ERROR,
+    inputBackground: NEUTRAL_0,
+    inputText: NEUTRAL_7,
+    primary: PRIMARY,
+    receivedMessageDocumentIconColor: PRIMARY,
+    secondary: SECONDARY,
+    sentMessageDocumentIconColor: NEUTRAL_7,
+    userAvatarNameColors: COLORS,
   },
   fonts: {
-    body1: {
+    dateDividerTextStyle: {
+      color: NEUTRAL_2,
+      fontFamily: 'Avenir',
+      fontSize: 12,
+      fontWeight: '800',
+      lineHeight: 16,
+    },
+    emptyChatPlaceholderTextStyle: {
+      color: NEUTRAL_2,
       fontFamily: 'Avenir',
       fontSize: 16,
       fontWeight: '500',
       lineHeight: 24,
     },
-    body2: {
+    inputTextStyle: {
       fontFamily: 'Avenir',
-      fontSize: 14,
-      fontWeight: '400',
-      lineHeight: 20,
+      fontSize: 16,
+      fontWeight: '500',
+      lineHeight: 24,
     },
-    caption: {
+    receivedMessageBodyTextStyle: {
+      color: NEUTRAL_0,
+      fontFamily: 'Avenir',
+      fontSize: 16,
+      fontWeight: '500',
+      lineHeight: 24,
+    },
+    receivedMessageCaptionTextStyle: {
+      color: NEUTRAL_2,
       fontFamily: 'Avenir',
       fontSize: 12,
       fontWeight: '500',
       lineHeight: 16,
     },
-    subtitle1: {
+    receivedMessageLinkDescriptionTextStyle: {
+      color: NEUTRAL_0,
+      fontFamily: 'Avenir',
+      fontSize: 14,
+      fontWeight: '400',
+      lineHeight: 20,
+    },
+    receivedMessageLinkTitleTextStyle: {
+      color: NEUTRAL_0,
       fontFamily: 'Avenir',
       fontSize: 16,
       fontWeight: '800',
       lineHeight: 22,
     },
-    subtitle2: {
+    sentMessageBodyTextStyle: {
+      color: NEUTRAL_7,
+      fontFamily: 'Avenir',
+      fontSize: 16,
+      fontWeight: '500',
+      lineHeight: 24,
+    },
+    sentMessageCaptionTextStyle: {
+      color: NEUTRAL_7_WITH_OPACITY,
+      fontFamily: 'Avenir',
+      fontSize: 12,
+      fontWeight: '500',
+      lineHeight: 16,
+    },
+    sentMessageLinkDescriptionTextStyle: {
+      color: NEUTRAL_7,
+      fontFamily: 'Avenir',
+      fontSize: 14,
+      fontWeight: '400',
+      lineHeight: 20,
+    },
+    sentMessageLinkTitleTextStyle: {
+      color: NEUTRAL_7,
+      fontFamily: 'Avenir',
+      fontSize: 16,
+      fontWeight: '800',
+      lineHeight: 22,
+    },
+    userAvatarTextStyle: {
+      color: NEUTRAL_7,
+      fontFamily: 'Avenir',
+      fontSize: 12,
+      fontWeight: '800',
+      lineHeight: 16,
+    },
+    userNameTextStyle: {
       fontFamily: 'Avenir',
       fontSize: 12,
       fontWeight: '800',
@@ -71,10 +158,31 @@ export const darkTheme: Theme = {
   ...defaultTheme,
   colors: {
     ...defaultTheme.colors,
-    background: '#1f1c38',
-    inputBackground: '#2b2250',
-    secondary: '#2b2250',
-    secondaryText: '#ffffff',
-    subtitle2: '#ffffff',
+    background: DARK,
+    inputBackground: SECONDARY_DARK,
+    secondary: SECONDARY_DARK,
+  },
+  fonts: {
+    ...defaultTheme.fonts,
+    dateDividerTextStyle: {
+      ...defaultTheme.fonts.dateDividerTextStyle,
+      color: NEUTRAL_7,
+    },
+    receivedMessageBodyTextStyle: {
+      ...defaultTheme.fonts.receivedMessageBodyTextStyle,
+      color: NEUTRAL_7,
+    },
+    receivedMessageCaptionTextStyle: {
+      ...defaultTheme.fonts.receivedMessageCaptionTextStyle,
+      color: NEUTRAL_7_WITH_OPACITY,
+    },
+    receivedMessageLinkDescriptionTextStyle: {
+      ...defaultTheme.fonts.receivedMessageLinkDescriptionTextStyle,
+      color: NEUTRAL_7,
+    },
+    receivedMessageLinkTitleTextStyle: {
+      ...defaultTheme.fonts.receivedMessageLinkTitleTextStyle,
+      color: NEUTRAL_7,
+    },
   },
 }

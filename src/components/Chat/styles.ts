@@ -13,10 +13,7 @@ export default ({ theme }: { theme: Theme }) =>
       marginHorizontal: 24,
     },
     emptyComponentTitle: {
-      // Ignore because it is object
-      // @ts-ignore
-      ...theme.fonts.body1,
-      color: theme.colors.caption,
+      ...theme.fonts.emptyChatPlaceholderTextStyle,
       textAlign: 'center',
       transform: [{ rotateX: '180deg' }],
     },

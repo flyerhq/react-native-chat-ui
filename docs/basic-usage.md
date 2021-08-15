@@ -13,7 +13,7 @@ Below you will find a drop-in example of the chat with only text messages.
 
 :::note
 
-Try to write any URL, for example, https://flyer.chat, it should be unwrapped in a rich preview.
+Try to write any URL, for example, flyer.chat, it should be unwrapped in a rich preview.
 
 :::
 

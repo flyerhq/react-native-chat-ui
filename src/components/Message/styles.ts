@@ -6,11 +6,13 @@ const styles = ({
   currentUserIsAuthor,
   message,
   messageWidth,
+  roundBorder,
   theme,
 }: {
   currentUserIsAuthor: boolean
-  message: MessageType.Derived
+  message: MessageType.DerivedAny
   messageWidth: number
+  roundBorder: boolean
   theme: Theme
 }) =>
   StyleSheet.create({
@@ -20,40 +22,33 @@ const styles = ({
       justifyContent: !currentUserIsAuthor ? 'flex-end' : 'flex-start',
       flex: 1,
       flexDirection: 'row',
-      marginBottom: message.type === 'dateHeader' ? 0 : message.offset ?? 8,
-      paddingLeft: currentUserIsAuthor ? 0 : 8,
+      marginBottom: message.type === 'dateHeader' ? 0 : 4 + message.offset,
+      marginLeft: 20,
     },
     contentContainer: {
       backgroundColor:
         !currentUserIsAuthor || message.type === 'image'
           ? theme.colors.secondary
           : theme.colors.primary,
-      borderBottomLeftRadius: currentUserIsAuthor
-        ? theme.borders.messageBorderRadius
-        : 0,
+      borderBottomLeftRadius:
+        currentUserIsAuthor || roundBorder
+          ? theme.borders.messageBorderRadius
+          : 0,
       borderBottomRightRadius: currentUserIsAuthor
-        ? 0
+        ? roundBorder
+          ? theme.borders.messageBorderRadius
+          : 0
         : theme.borders.messageBorderRadius,
       borderColor: 'transparent',
       borderRadius: theme.borders.messageBorderRadius,
       maxWidth: messageWidth,
       overflow: 'hidden',
     },
-    dateDivider: StyleSheet.flatten([
-      theme.fonts.subtitle2,
-      {
-        color: theme.colors.subtitle2,
-        textAlign: 'center',
-      },
-    ]),
     dateHeader: {
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: 32,
       marginTop: 16,
-    },
-    status: {
-      tintColor: theme.colors.primary,
     },
   })
 

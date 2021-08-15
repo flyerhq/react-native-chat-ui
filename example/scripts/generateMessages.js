@@ -4,12 +4,12 @@ const { v4: uuidv4 } = require('uuid')
 
 const users = [
   {
-    firstName: 'Alex',
+    firstName: 'John',
     id: 'b4878b96-efbc-479a-8291-474ef323dec7',
     imageUrl: 'https://avatars.githubusercontent.com/u/14123304?v=4',
   },
   {
-    firstName: 'Daria',
+    firstName: 'Jane',
     id: '06c33e8b-e835-4736-80f4-63f44b66666c',
     imageUrl: 'https://avatars.githubusercontent.com/u/33809426?v=4',
   },

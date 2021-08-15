@@ -3,15 +3,25 @@ import * as React from 'react'
 import { Pressable, Text, View } from 'react-native'
 
 import { MessageType } from '../../types'
-import { excludeInitialMessage, ThemeContext, UserContext } from '../../utils'
+import {
+  excludeDerivedMessageProps,
+  ThemeContext,
+  UserContext,
+} from '../../utils'
 import { Avatar } from '../Avatar'
 import { FileMessage } from '../FileMessage'
 import { ImageMessage } from '../ImageMessage'
-import { ImageStatusIcon } from '../ImageStatusIcon'
+import { StatusIcon } from '../StatusIcon'
 import { TextMessage, TextMessageTopLevelProps } from '../TextMessage'
 import styles from './styles'
 
 export interface MessageTopLevelProps extends TextMessageTopLevelProps {
+  onMessageLongPress?: (message: MessageType.Any) => void
+  onMessagePress?: (message: MessageType.Any) => void
+  renderCustomMessage?: (
+    message: MessageType.Custom,
+    messageWidth: number
+  ) => React.ReactNode
   renderFileMessage?: (
     message: MessageType.File,
     messageWidth: number
@@ -24,33 +34,35 @@ export interface MessageTopLevelProps extends TextMessageTopLevelProps {
     message: MessageType.Text,
     messageWidth: number
   ) => React.ReactNode
-  renderCustomMessage?: (
-    message: MessageType.Text,
-    messageWidth: number
-  ) => React.ReactNode
+  showUserAvatars?: boolean
 }
 
 export interface MessageProps extends MessageTopLevelProps {
-  buildCustomMessage?: (message: MessageType.Custom) => React.ReactNode
-  message: MessageType.Derived
+  message: MessageType.DerivedAny
   messageWidth: number
-  onMessageLongPress?: (message: MessageType.Any) => void
-  onMessagePress?: (message: MessageType.Any) => void
+  roundBorder: boolean
   showAvatar: boolean
+  showName: boolean
+  showStatus: boolean
 }
 
 export const Message = React.memo(
   ({
-    buildCustomMessage,
     message,
     messageWidth,
     onMessagePress,
     onMessageLongPress,
     onPreviewDataFetched,
+    renderCustomMessage,
     renderFileMessage,
     renderImageMessage,
     renderTextMessage,
+    roundBorder,
     showAvatar,
+    showName,
+    showStatus,
+    showUserAvatars,
+    usePreviewData,
   }: MessageProps) => {
     const theme = React.useContext(ThemeContext)
     const user = React.useContext(UserContext)
@@ -58,18 +70,18 @@ export const Message = React.memo(
     const currentUserIsAuthor =
       message.type !== 'dateHeader' && user?.id === message.author.id
 
-    const { container, contentContainer, dateDivider, dateHeader, status } =
-      styles({
-        message,
-        messageWidth,
-        theme,
-        currentUserIsAuthor,
-      })
+    const { container, contentContainer, dateHeader } = styles({
+      currentUserIsAuthor,
+      message,
+      messageWidth,
+      roundBorder,
+      theme,
+    })
 
     if (message.type === 'dateHeader') {
       return (
         <View style={dateHeader}>
-          <Text style={dateDivider}>{message.text}</Text>
+          <Text style={theme.fonts.dateDividerTextStyle}>{message.text}</Text>
         </View>
       )
     }
@@ -78,15 +90,18 @@ export const Message = React.memo(
       switch (message.type) {
         case 'custom':
           return (
-            buildCustomMessage?.(
-              excludeInitialMessage(message) as MessageType.Custom
-            ) ?? undefined
+            renderCustomMessage?.(
+              // It's okay to cast here since we checked message type above
+              // type-coverage:ignore-next-line
+              excludeDerivedMessageProps(message) as MessageType.Custom,
+              messageWidth
+            ) ?? null
           )
         case 'file':
-          return oneOf(
-            renderFileMessage,
-            <FileMessage message={message} onPress={onMessagePress} />
-          )(message, messageWidth)
+          return oneOf(renderFileMessage, <FileMessage message={message} />)(
+            message,
+            messageWidth
+          )
         case 'image':
           return oneOf(
             renderImageMessage,
@@ -105,32 +120,42 @@ export const Message = React.memo(
                 message,
                 messageWidth,
                 onPreviewDataFetched,
+                showName,
+                usePreviewData,
               }}
             />
           )(message, messageWidth)
         default:
-          return
+          return null
       }
     }
 
     return (
       <View style={container}>
-        <Avatar author={message.author} showAvatar={showAvatar} />
+        <Avatar
+          {...{
+            author: message.author,
+            currentUserIsAuthor,
+            showAvatar,
+            showUserAvatars,
+            theme,
+          }}
+        />
         <Pressable
-          testID='ContentContainer'
-          style={contentContainer}
-          onPress={() => onMessagePress?.(excludeInitialMessage(message))}
           onLongPress={() =>
-            onMessageLongPress?.(excludeInitialMessage(message))
+            onMessageLongPress?.(excludeDerivedMessageProps(message))
           }
+          onPress={() => onMessagePress?.(excludeDerivedMessageProps(message))}
+          style={contentContainer}
+          testID='ContentContainer'
         >
           {renderMessage()}
         </Pressable>
-        <ImageStatusIcon
+        <StatusIcon
           {...{
             currentUserIsAuthor,
+            showStatus,
             status: message.status,
-            style: status,
             theme,
           }}
         />

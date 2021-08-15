@@ -5,8 +5,6 @@ export const l10n = {
     fileButtonAccessibilityLabel: 'File',
     inputPlaceholder: 'Message',
     sendButtonAccessibilityLabel: 'Send',
-    today: 'Today',
-    yesterday: 'Yesterday',
   },
   es: {
     attachmentButtonAccessibilityLabel: 'Enviar multimedia',
@@ -14,8 +12,13 @@ export const l10n = {
     fileButtonAccessibilityLabel: 'Archivo',
     inputPlaceholder: 'Mensaje',
     sendButtonAccessibilityLabel: 'Enviar',
-    today: 'Hoy',
-    yesterday: 'Ayer',
+  },
+  ko: {
+    attachmentButtonAccessibilityLabel: '미디어 보내기',
+    emptyChatPlaceholder: '주고받은 메시지가 없습니다',
+    fileButtonAccessibilityLabel: '파일',
+    inputPlaceholder: '메시지',
+    sendButtonAccessibilityLabel: '보내기',
   },
   pl: {
     attachmentButtonAccessibilityLabel: 'Wyślij multimedia',
@@ -23,8 +26,13 @@ export const l10n = {
     fileButtonAccessibilityLabel: 'Plik',
     inputPlaceholder: 'Napisz wiadomość',
     sendButtonAccessibilityLabel: 'Wyślij',
-    today: 'Dzisiaj',
-    yesterday: 'Wczoraj',
+  },
+  pt: {
+    attachmentButtonAccessibilityLabel: 'Envia mídia',
+    emptyChatPlaceholder: 'Ainda não há mensagens aqui',
+    fileButtonAccessibilityLabel: 'Arquivo',
+    inputPlaceholder: 'Mensagem',
+    sendButtonAccessibilityLabel: 'Enviar',
   },
   ru: {
     attachmentButtonAccessibilityLabel: 'Отправить медиа',
@@ -32,8 +40,6 @@ export const l10n = {
     fileButtonAccessibilityLabel: 'Файл',
     inputPlaceholder: 'Сообщение',
     sendButtonAccessibilityLabel: 'Отправить',
-    today: 'Сегодня',
-    yesterday: 'Вчера',
   },
   uk: {
     attachmentButtonAccessibilityLabel: 'Надіслати медіа',
@@ -41,7 +47,5 @@ export const l10n = {
     fileButtonAccessibilityLabel: 'Файл',
     inputPlaceholder: 'Повідомлення',
     sendButtonAccessibilityLabel: 'Надіслати',
-    today: 'Сьогодні',
-    yesterday: 'Учора',
   },
 }

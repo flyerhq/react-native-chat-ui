@@ -4,11 +4,11 @@ import {
   REGEX_LINK,
 } from '@flyerhq/react-native-link-preview'
 import * as React from 'react'
-import { Linking, StyleSheet, Text } from 'react-native'
+import { Linking, Text, View } from 'react-native'
 import ParsedText from 'react-native-parsed-text'
 
 import { MessageType } from '../../types'
-import { ThemeContext, UserContext } from '../../utils'
+import { getUserName, ThemeContext, UserContext } from '../../utils'
 import styles from './styles'
 
 export interface TextMessageTopLevelProps {
@@ -19,26 +19,31 @@ export interface TextMessageTopLevelProps {
     message: MessageType.DerivedText
     previewData: PreviewData
   }) => void
+  usePreviewData?: boolean
 }
 
 export interface TextMessageProps extends TextMessageTopLevelProps {
   message: MessageType.DerivedText
   messageWidth: number
+  showName: boolean
 }
 
 export const TextMessage = ({
   message,
   messageWidth,
   onPreviewDataFetched,
+  showName,
+  usePreviewData,
 }: TextMessageProps) => {
   const theme = React.useContext(ThemeContext)
   const user = React.useContext(UserContext)
   const [previewData, setPreviewData] = React.useState(message.previewData)
-  const { descriptionText, titleText, text } = styles({
-    message,
-    theme,
-    user,
-  })
+  const { descriptionText, headerText, titleText, text, textContainer } =
+    styles({
+      message,
+      theme,
+      user,
+    })
 
   const handlePreviewDataFetched = (data: PreviewData) => {
     setPreviewData(data)
@@ -59,6 +64,14 @@ export const TextMessage = ({
     )
   }
 
+  const renderPreviewHeader = (header: string) => {
+    return (
+      <Text numberOfLines={1} style={headerText}>
+        {header}
+      </Text>
+    )
+  }
+
   const renderPreviewText = (previewText: string) => {
     return (
       <ParsedText
@@ -67,10 +80,7 @@ export const TextMessage = ({
           {
             onPress: handleUrlPress,
             pattern: REGEX_LINK,
-            style: StyleSheet.flatten([
-              text,
-              { textDecorationLine: 'underline' },
-            ]),
+            style: [text, { textDecorationLine: 'underline' }],
           },
         ]}
         style={text}
@@ -88,12 +98,16 @@ export const TextMessage = ({
     )
   }
 
-  return REGEX_LINK.test(message.text) ? (
+  return usePreviewData &&
+    !!onPreviewDataFetched &&
+    REGEX_LINK.test(message.text.toLowerCase()) ? (
     <LinkPreview
       containerStyle={{ width: previewData?.image ? messageWidth : undefined }}
+      header={showName ? getUserName(message.author) : undefined}
       onPreviewDataFetched={handlePreviewDataFetched}
       previewData={previewData}
       renderDescription={renderPreviewDescription}
+      renderHeader={renderPreviewHeader}
       renderText={renderPreviewText}
       renderTitle={renderPreviewTitle}
       text={message.text}
@@ -104,13 +118,14 @@ export const TextMessage = ({
       }}
     />
   ) : (
-    <Text
-      style={StyleSheet.flatten([
-        text,
-        { marginHorizontal: 24, marginVertical: 16 },
-      ])}
-    >
-      {message.text}
-    </Text>
+    <View style={textContainer}>
+      {
+        // Tested inside the link preview
+        /* istanbul ignore next */ showName
+          ? renderPreviewHeader(getUserName(message.author))
+          : null
+      }
+      <Text style={text}>{message.text}</Text>
+    </View>
   )
 }

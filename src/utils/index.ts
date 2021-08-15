@@ -5,7 +5,7 @@ import Blob from 'react-native/Libraries/Blob/Blob'
 
 import { l10n } from '../l10n'
 import { defaultTheme } from '../theme'
-import { MessageType, Theme, User } from '../types'
+import { MessageType, PreviewImage, Theme, User } from '../types'
 
 export const L10nContext = React.createContext<typeof l10n[keyof typeof l10n]>(
   l10n.en
@@ -13,6 +13,7 @@ export const L10nContext = React.createContext<typeof l10n[keyof typeof l10n]>(
 export const ThemeContext = React.createContext<Theme>(defaultTheme)
 export const UserContext = React.createContext<User | undefined>(undefined)
 
+/// Returns text representation of a provided bytes value (e.g. 1kB, 1GB)
 export const formatBytes = (size: number, fractionDigits = 2) => {
   if (size <= 0) return '0 B'
   const multiple = Math.floor(Math.log(size) / Math.log(1024))
@@ -23,15 +24,18 @@ export const formatBytes = (size: number, fractionDigits = 2) => {
   )
 }
 
+/// Returns size in bytes of the provided text
 export const getTextSizeInBytes = (text: string) => new Blob([text]).size
 
-// Returns user avatar and name color based on the ID
+/// Returns user avatar and name color based on the ID
 export const getUserAvatarNameColor = (user: User, colors: ColorValue[]) =>
   colors[hashCode(user.id) % colors.length]
 
+/// Returns user name as joined firstName and lastName
 export const getUserName = ({ firstName, lastName }: User) =>
   `${firstName ?? ''} ${lastName ?? ''}`.trim()
 
+/// Returns hash code of the provided text
 const hashCode = (text = '') => {
   let i,
     chr,
@@ -47,11 +51,14 @@ const hashCode = (text = '') => {
   return hash
 }
 
+/// Inits dayjs locale
 export const initLocale = (locale?: keyof typeof l10n) => {
   const locales: { [key in keyof typeof l10n]: unknown } = {
     en: require('dayjs/locale/en'),
     es: require('dayjs/locale/es'),
+    ko: require('dayjs/locale/ko'),
     pl: require('dayjs/locale/pl'),
+    pt: require('dayjs/locale/pt'),
     ru: require('dayjs/locale/ru'),
     uk: require('dayjs/locale/uk'),
   }
@@ -60,28 +67,28 @@ export const initLocale = (locale?: keyof typeof l10n) => {
   dayjs.locale(locale)
 }
 
+/// Returns either prop or empty object if null or undefined
 export const unwrap = <T>(prop: T) => prop ?? {}
 
+/// Returns formatted date used as a divider between different days in the
+/// chat history
 const getVerboseDateTimeRepresentation = (
   dateTime: number,
   {
     dateFormat,
-    dateLocale = 'en',
     timeFormat,
   }: {
     dateFormat?: string
-    dateLocale?: string
     timeFormat?: string
   }
 ) => {
-  // NOTE: check it again
   const formattedDate = dateFormat
     ? dayjs(dateTime).format(dateFormat)
-    : dayjs(dateTime).locale(dateLocale).format('MMM')
+    : dayjs(dateTime).format('MMM D')
 
   const formattedTime = timeFormat
     ? dayjs(dateTime).format(timeFormat)
-    : dayjs(dateTime).locale(dateLocale).format('HH:mm')
+    : dayjs(dateTime).format('HH:mm')
 
   const localDateTime = dayjs(dateTime)
   const now = dayjs()
@@ -97,25 +104,25 @@ const getVerboseDateTimeRepresentation = (
   return `${formattedDate}, ${formattedTime}`
 }
 
+/// Parses provided messages to chat messages (with headers) and
+/// returns them with a gallery
 export const calculateChatMessages = (
   messages: MessageType.Any[],
   user: User,
   {
     customDateHeaderText,
     dateFormat,
-    dateLocale,
     showUserNames,
     timeFormat,
   }: {
     customDateHeaderText?: (dateTime: number) => string
-    dateFormat: string
-    dateLocale?: string
+    dateFormat?: string
     showUserNames: boolean
     timeFormat?: string
   }
-): { gallery: MessageType.Image[]; chatMessages: MessageType.Derived[] } => {
-  let gallery: MessageType.Image[] = []
-  let chatMessages: MessageType.Derived[] = []
+) => {
+  let chatMessages: MessageType.DerivedAny[] = []
+  let gallery: PreviewImage[] = []
 
   let shouldShowName = false
 
@@ -135,19 +142,18 @@ export const calculateChatMessages = (
     let showName = false
 
     if (showUserNames) {
-      const previousMessage = isFirst ? null : messages[i + 1]
+      const previousMessage = isFirst ? undefined : messages[i + 1]
 
       const isFirstInGroup =
         notMyMessage &&
         (message.author.id !== previousMessage?.author.id ||
           (messageHasCreatedAt &&
-            previousMessage?.createdAt &&
-            message.createdAt &&
-            message.createdAt - previousMessage!.createdAt > 60000))
+            !!previousMessage?.createdAt &&
+            message.createdAt! - previousMessage!.createdAt! > 60000))
 
       if (isFirstInGroup) {
         shouldShowName = false
-        if (message.type === 'image') {
+        if (message.type === 'text') {
           showName = true
         } else {
           shouldShowName = true
@@ -161,22 +167,17 @@ export const calculateChatMessages = (
     }
 
     if (messageHasCreatedAt && nextMessageHasCreatedAt) {
-      nextMessageDateThreshold = !!(
-        nextMessage?.createdAt &&
-        message.createdAt &&
-        nextMessage.createdAt - message.createdAt >= 900000
+      nextMessageDateThreshold =
+        nextMessage!.createdAt! - message.createdAt! >= 900000
+
+      nextMessageDifferentDay = !dayjs(message.createdAt!).isSame(
+        nextMessage!.createdAt!,
+        'day'
       )
 
-      nextMessageDifferentDay = nextMessage?.createdAt
-        ? !dayjs(message.createdAt).isSame(nextMessage.createdAt, 'day')
-        : false
-
-      nextMessageInGroup = !!(
+      nextMessageInGroup =
         nextMessageSameAuthor &&
-        nextMessage?.createdAt &&
-        message.createdAt &&
-        nextMessage.createdAt - message.createdAt <= 60000
-      )
+        nextMessage!.createdAt! - message.createdAt! <= 60000
     }
 
     if (isFirst && messageHasCreatedAt) {
@@ -184,36 +185,32 @@ export const calculateChatMessages = (
         customDateHeaderText?.(message.createdAt!) ??
         getVerboseDateTimeRepresentation(message.createdAt!, {
           dateFormat,
-          dateLocale,
           timeFormat,
         })
-      chatMessages = [{ id: text, type: 'dateHeader', text }, ...chatMessages]
+      chatMessages = [{ id: text, text, type: 'dateHeader' }, ...chatMessages]
     }
 
     chatMessages = [
       {
         ...message,
         nextMessageInGroup,
+        // TODO: Check this
+        offset: !nextMessageInGroup ? 12 : 0,
         showName:
           notMyMessage &&
           showUserNames &&
           showName &&
           !!getUserName(message.author),
         showStatus: true,
-        offset: !nextMessageInGroup ? 12 : 8,
       },
       ...chatMessages,
     ]
 
-    if (
-      (nextMessageDifferentDay || nextMessageDateThreshold) &&
-      nextMessage?.createdAt
-    ) {
+    if (nextMessageDifferentDay || nextMessageDateThreshold) {
       const text =
-        customDateHeaderText?.(nextMessage.createdAt) ??
-        getVerboseDateTimeRepresentation(nextMessage.createdAt, {
+        customDateHeaderText?.(nextMessage!.createdAt!) ??
+        getVerboseDateTimeRepresentation(nextMessage!.createdAt!, {
           dateFormat,
-          dateLocale,
           timeFormat,
         })
 
@@ -228,21 +225,19 @@ export const calculateChatMessages = (
     }
 
     if (message.type === 'image') {
-      gallery = [
-        ...gallery,
-        { id: message.id, uri: message.uri } as MessageType.Image,
-      ]
+      gallery = [...gallery, { id: message.id, uri: message.uri }]
     }
   }
 
   return {
-    gallery,
     chatMessages,
+    gallery,
   }
 }
 
-export const excludeInitialMessage = (
-  message: MessageType.DerivedUserMessage
+/// Removes all derived message props from the derived message
+export const excludeDerivedMessageProps = (
+  message: MessageType.DerivedMessage
 ) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { nextMessageInGroup, offset, showName, showStatus, ...rest } = message

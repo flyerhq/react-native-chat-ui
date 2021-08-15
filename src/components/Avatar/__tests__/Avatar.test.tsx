@@ -1,24 +1,37 @@
 import { render } from '@testing-library/react-native'
 import * as React from 'react'
 
-import { User } from '../../../types'
-import { Avatar } from '..'
+import { user } from '../../../../jest/fixtures'
+import { defaultTheme } from '../../../theme'
+import { Avatar } from '../Avatar'
 
 describe('avatar', () => {
-  const author: User = {
-    id: '1',
-  }
-
-  it(`should render background with empty string`, () => {
+  it(`should render container with a placeholder`, () => {
     expect.assertions(1)
-    const { getByText } = render(<Avatar author={author} showAvatar />)
-    expect(getByText('')).toBeDefined()
+    const { getByTestId } = render(
+      <Avatar
+        author={user}
+        currentUserIsAuthor={false}
+        showAvatar={false}
+        showUserAvatars
+        theme={defaultTheme}
+      />
+    )
+    expect(getByTestId('AvatarContainer')).toBeDefined()
   })
 
-  it('should render background with first letter', () => {
+  it('should render background with a first letter', () => {
     expect.assertions(1)
-    const authorWithName = { ...author, firstName: 'John', lastName: 'Doe' }
-    const { getByText } = render(<Avatar author={authorWithName} showAvatar />)
+    const authorWithName = { ...user, firstName: 'John' }
+    const { getByText } = render(
+      <Avatar
+        author={authorWithName}
+        currentUserIsAuthor={false}
+        showAvatar
+        showUserAvatars
+        theme={defaultTheme}
+      />
+    )
     expect(getByText(authorWithName.firstName[0])).toBeDefined()
   })
 
@@ -28,10 +41,13 @@ describe('avatar', () => {
     const { getAllByRole } = render(
       <Avatar
         author={{
-          ...author,
+          ...user,
           imageUrl,
         }}
+        currentUserIsAuthor={false}
         showAvatar
+        showUserAvatars
+        theme={defaultTheme}
       />
     )
     const image = getAllByRole('image')

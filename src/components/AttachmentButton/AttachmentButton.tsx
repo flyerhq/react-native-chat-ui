@@ -36,16 +36,12 @@ export const AttachmentButton = ({
       {...touchableOpacityProps}
       onPress={handlePress}
     >
-      <Image
-        source={
-          theme.icons?.attachmentButtonIcon ??
-          require('../../assets/icon-attachment.png')
-        }
-        style={StyleSheet.flatten([
-          styles.image,
-          { tintColor: theme.colors.inputText },
-        ])}
-      />
+      {theme.icons?.attachmentButtonIcon?.() ?? (
+        <Image
+          source={require('../../assets/icon-attachment.png')}
+          style={[styles.image, { tintColor: theme.colors.inputText }]}
+        />
+      )}
     </TouchableOpacity>
   )
 }

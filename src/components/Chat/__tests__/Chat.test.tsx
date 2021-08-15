@@ -72,7 +72,7 @@ describe('chat', () => {
     const messages = [fileMessage, textMessage, imageMessage]
     const onSendPress = jest.fn()
     const onFilePress = jest.fn()
-    const onMessagePress = (message: MessageType.DerivedUserMessage) => {
+    const onMessagePress = (message: MessageType.Any) => {
       if (message.type === 'file') {
         onFilePress(message)
       }
@@ -82,7 +82,7 @@ describe('chat', () => {
         onMessagePress={onMessagePress}
         messages={messages}
         onSendPress={onSendPress}
-        showUserAvatar={true}
+        showUserAvatars
         user={user}
       />
     )
@@ -97,7 +97,7 @@ describe('chat', () => {
     const messages = [imageMessage]
     const onSendPress = jest.fn()
     const onImagePress = jest.fn()
-    const onMessagePress = (message: MessageType.DerivedUserMessage) => {
+    const onMessagePress = (message: MessageType.Any) => {
       if (message.type === 'image') {
         onImagePress(message)
       }
@@ -111,7 +111,7 @@ describe('chat', () => {
         onMessageLongPress={onMessageLongPress}
         messages={messages}
         onSendPress={onSendPress}
-        showUserAvatar={true}
+        showUserAvatars
         user={user}
       />
     )
@@ -126,7 +126,7 @@ describe('chat', () => {
     const messages = [imageMessage]
     const onSendPress = jest.fn()
     const onImagePress = jest.fn()
-    const onMessagePress = (message: MessageType.DerivedUserMessage) => {
+    const onMessagePress = (message: MessageType.Any) => {
       if (message.type === 'image') {
         onImagePress(message)
       }
@@ -140,7 +140,7 @@ describe('chat', () => {
         onMessageLongPress={onMessageLongPress}
         messages={messages}
         onSendPress={onSendPress}
-        showUserAvatar={true}
+        showUserAvatars
         user={user}
       />
     )

@@ -1,20 +1,30 @@
-import React, { memo } from 'react'
+import * as React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
-import { colors, getUserAvatarNameColor, getUserName, MessageType } from '../..'
+import { MessageType, Theme } from '../../types'
+import { getUserAvatarNameColor, getUserName } from '../../utils'
 
-export const Avatar = memo(
+export const Avatar = React.memo(
   ({
-    showAvatar,
     author,
+    currentUserIsAuthor,
+    showAvatar,
+    showUserAvatars,
+    theme,
   }: {
-    showAvatar: boolean
     author: MessageType.Any['author']
+    currentUserIsAuthor: boolean
+    showAvatar: boolean
+    showUserAvatars?: boolean
+    theme: Theme
   }) => {
-    const color = getUserAvatarNameColor(author, colors)
-    const name = getUserName(author)
+    const renderAvatar = () => {
+      const color = getUserAvatarNameColor(
+        author,
+        theme.colors.userAvatarNameColors
+      )
+      const name = getUserName(author)
 
-    const renderAvatarBackground = () => {
       if (author.imageUrl) {
         return (
           <Image
@@ -25,45 +35,42 @@ export const Avatar = memo(
           />
         )
       }
+
       return (
-        <View
-          style={StyleSheet.flatten([
-            styles.avatarBackground,
-            { backgroundColor: color },
-          ])}
-        >
-          <Text style={styles.name}>{name ? name[0] : ''}</Text>
+        <View style={[styles.avatarBackground, { backgroundColor: color }]}>
+          <Text style={theme.fonts.userAvatarTextStyle}>
+            {name ? name[0].toUpperCase() : ''}
+          </Text>
         </View>
       )
     }
 
-    return (
+    return !currentUserIsAuthor && showUserAvatars ? (
       <View testID='AvatarContainer'>
-        {showAvatar && renderAvatarBackground()}
+        {showAvatar ? renderAvatar() : <View style={styles.placeholder} />}
       </View>
-    )
+    ) : null
   }
 )
 
 const styles = StyleSheet.create({
   avatarBackground: {
+    alignItems: 'center',
     borderRadius: 16,
     height: 32,
-    width: 32,
-    marginRight: 8,
-    alignItems: 'center',
     justifyContent: 'center',
+    marginRight: 8,
+    width: 32,
   },
   image: {
+    alignItems: 'center',
     borderRadius: 16,
     height: 32,
-    width: 32,
-    marginRight: 8,
-    alignItems: 'center',
     justifyContent: 'center',
+    marginRight: 8,
+    width: 32,
   },
-  name: {
-    // NOTE: what color should be here
-    color: 'white',
+  placeholder: {
+    width: 40,
   },
 })
