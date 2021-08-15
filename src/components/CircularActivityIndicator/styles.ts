@@ -9,8 +9,7 @@ const styles = ({ color, size }: { color: ColorValue; size: number }) =>
       borderRadius: size / 2,
       borderRightColor: color,
       borderTopColor: color,
-      // TODO: Check 1.5
-      borderWidth: 2,
+      borderWidth: 1.5,
       height: size,
       width: size,
     },
