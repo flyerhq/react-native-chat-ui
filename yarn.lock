@@ -773,10 +773,10 @@
   resolved "https://registry.yarnpkg.com/@flyerhq/react-native-keyboard-accessory-view/-/react-native-keyboard-accessory-view-2.2.2.tgz#8984b787c6dbf95c810dd7f484894e27fdd811a4"
   integrity sha512-b2p03qpi/CoQohrWlgihaI85aY7NhIl4rq2w8OmoBArMfq9ytJbdTjIh36gnOkxKjMZAgQO09F+xxP6zk6z+RA==
 
-"@flyerhq/react-native-link-preview@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@flyerhq/react-native-link-preview/-/react-native-link-preview-1.4.0.tgz#3861e90121c4deab37c0c7aea5a243ca831995f5"
-  integrity sha512-Wd+4AGnQ+FbFrEbFlQ0I/4IoZLr+1LRUP6SMP5jOo9XbwJwsDZ2D7FQefz9+2MyM8UeNwXjc6JP19LS2QzOZEQ==
+"@flyerhq/react-native-link-preview@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@flyerhq/react-native-link-preview/-/react-native-link-preview-1.4.1.tgz#460b18a40b5514a6a3d67bd5d69179b64c818fe9"
+  integrity sha512-RVRHtI5qkXZRd3GnxQfSnGXxmqCDQDSyeYc7Q5ol3E2Lq0cDgWXpxn0+1fWgCdMkdI2JixViFgoWxtdVX/9PEA==
   dependencies:
     html-entities "^2.3.2"
 
