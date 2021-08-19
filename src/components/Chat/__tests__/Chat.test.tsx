@@ -11,8 +11,6 @@ import { l10n } from '../../../l10n'
 import { MessageType } from '../../../types'
 import { Chat } from '../Chat'
 
-jest.useFakeTimers()
-
 describe('chat', () => {
   it('renders image preview', () => {
     expect.assertions(1)
