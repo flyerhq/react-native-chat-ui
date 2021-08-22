@@ -15,7 +15,7 @@
   "dependencies": {
     "@expo/react-native-action-sheet": "^3.10.0",
     "react": "^17.0.2",
-    "react-native": "^0.65.0",
+    "react-native": "^0.65.1",
     "react-native-document-picker": "^6.0.3",
     "react-native-file-viewer": "^2.1.4",
     "react-native-get-random-values": "^1.7.0",
