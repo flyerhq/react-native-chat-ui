@@ -41,6 +41,13 @@ export const l10n = {
     inputPlaceholder: 'Сообщение',
     sendButtonAccessibilityLabel: 'Отправить',
   },
+  tr: {
+    attachmentButtonAccessibilityLabel: 'Medya gönder',
+    emptyChatPlaceholder: 'Henüz mesaj yok',
+    fileButtonAccessibilityLabel: 'Dosya',
+    inputPlaceholder: 'Mesaj yazın',
+    sendButtonAccessibilityLabel: 'Gönder',
+  },
   uk: {
     attachmentButtonAccessibilityLabel: 'Надіслати медіа',
     emptyChatPlaceholder: 'Повідомлень ще немає',
