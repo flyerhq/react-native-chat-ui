@@ -19,6 +19,7 @@ describe('input', () => {
           {...{
             onSendPress,
             renderScrollable,
+            sendButtonVisibilityMode: 'editing',
           }}
         />
       </UserContext.Provider>
@@ -42,6 +43,7 @@ describe('input', () => {
             {...{
               onSendPress,
               renderScrollable,
+              sendButtonVisibilityMode: 'editing',
               textInputProps: { onChangeText, value: newValue },
             }}
           />
@@ -54,6 +56,7 @@ describe('input', () => {
           {...{
             onSendPress,
             renderScrollable,
+            sendButtonVisibilityMode: 'editing',
             textInputProps: { onChangeText, value },
           }}
         />
@@ -77,6 +80,7 @@ describe('input', () => {
           {...{
             onSendPress,
             renderScrollable,
+            sendButtonVisibilityMode: 'editing',
             textInputProps: { onChangeText },
           }}
         />
@@ -100,6 +104,7 @@ describe('input', () => {
           {...{
             onSendPress,
             renderScrollable,
+            sendButtonVisibilityMode: 'editing',
             textInputProps: { value },
           }}
         />
@@ -123,6 +128,7 @@ describe('input', () => {
           {...{
             onSendPress,
             renderScrollable,
+            sendButtonVisibilityMode: 'editing',
             textInputProps: { defaultValue },
           }}
         />
@@ -144,8 +150,9 @@ describe('input', () => {
         <Input
           {...{
             onAttachmentPress,
-            renderScrollable,
             onSendPress,
+            renderScrollable,
+            sendButtonVisibilityMode: 'editing',
           }}
         />
       </UserContext.Provider>
@@ -168,8 +175,9 @@ describe('input', () => {
               size: undefined,
             },
             isAttachmentUploading,
-            renderScrollable,
             onSendPress,
+            renderScrollable,
+            sendButtonVisibilityMode: 'editing',
           }}
         />
       </UserContext.Provider>
