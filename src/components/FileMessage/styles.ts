@@ -21,15 +21,15 @@ const styles = ({
     icon: {
       tintColor:
         user?.id === message.author.id
-          ? theme.colors.sentMessageDocumentIconColor
-          : theme.colors.receivedMessageDocumentIconColor,
+          ? theme.colors.sentMessageDocumentIcon
+          : theme.colors.receivedMessageDocumentIcon,
     },
     iconContainer: {
       alignItems: 'center',
       backgroundColor:
         user?.id === message.author.id
-          ? `${String(theme.colors.sentMessageDocumentIconColor)}33`
-          : `${String(theme.colors.receivedMessageDocumentIconColor)}33`,
+          ? `${String(theme.colors.sentMessageDocumentIcon)}33`
+          : `${String(theme.colors.receivedMessageDocumentIcon)}33`,
       borderRadius: 21,
       height: 42,
       justifyContent: 'center',

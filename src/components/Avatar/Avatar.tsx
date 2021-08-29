@@ -31,7 +31,10 @@ export const Avatar = React.memo(
             accessibilityRole='image'
             resizeMode='cover'
             source={{ uri: author.imageUrl }}
-            style={styles.image}
+            style={[
+              styles.image,
+              { backgroundColor: theme.colors.userAvatarImageBackground },
+            ]}
           />
         )
       }

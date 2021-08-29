@@ -56,9 +56,10 @@ export const defaultTheme: Theme = {
     inputBackground: NEUTRAL_0,
     inputText: NEUTRAL_7,
     primary: PRIMARY,
-    receivedMessageDocumentIconColor: PRIMARY,
+    receivedMessageDocumentIcon: PRIMARY,
     secondary: SECONDARY,
-    sentMessageDocumentIconColor: NEUTRAL_7,
+    sentMessageDocumentIcon: NEUTRAL_7,
+    userAvatarImageBackground: 'transparent',
     userAvatarNameColors: COLORS,
   },
   fonts: {
