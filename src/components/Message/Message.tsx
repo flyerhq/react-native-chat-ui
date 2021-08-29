@@ -38,6 +38,7 @@ export interface MessageTopLevelProps extends TextMessageTopLevelProps {
 }
 
 export interface MessageProps extends MessageTopLevelProps {
+  enableAnimation?: boolean
   message: MessageType.DerivedAny
   messageWidth: number
   roundBorder: boolean
@@ -48,6 +49,7 @@ export interface MessageProps extends MessageTopLevelProps {
 
 export const Message = React.memo(
   ({
+    enableAnimation,
     message,
     messageWidth,
     onMessagePress,
@@ -117,6 +119,7 @@ export const Message = React.memo(
             renderTextMessage,
             <TextMessage
               {...{
+                enableAnimation,
                 message,
                 messageWidth,
                 onPreviewDataFetched,

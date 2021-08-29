@@ -35,6 +35,8 @@ import { Input, InputAdditionalProps, InputTopLevelProps } from '../Input'
 import { Message, MessageTopLevelProps } from '../Message'
 import styles from './styles'
 
+// Untestable
+/* istanbul ignore next */
 const animate = () => {
   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
 }
@@ -47,6 +49,7 @@ export interface ChatProps extends ChatTopLevelProps {
   customDateHeaderText?: (dateTime: number) => string
   dateFormat?: string
   disableImageGallery?: boolean
+  enableAnimation?: boolean
   flatListProps?: Partial<FlatListProps<MessageType.DerivedAny[]>>
   inputProps?: InputAdditionalProps
   isLastPage?: boolean
@@ -64,6 +67,7 @@ export const Chat = ({
   customDateHeaderText,
   dateFormat,
   disableImageGallery,
+  enableAnimation,
   flatListProps,
   inputProps,
   isAttachmentUploading,
@@ -120,19 +124,21 @@ export const Chat = ({
     initLocale(locale)
   }, [locale])
 
-  if (animationRef.current) {
+  // Untestable
+  /* istanbul ignore next */
+  if (animationRef.current && enableAnimation) {
     InteractionManager.runAfterInteractions(animate)
   }
 
   React.useEffect(() => {
     // Untestable
     /* istanbul ignore next */
-    if (animationRef.current) {
+    if (animationRef.current && enableAnimation) {
       InteractionManager.runAfterInteractions(animate)
     } else {
       animationRef.current = true
     }
-  }, [messages])
+  }, [enableAnimation, messages])
 
   const handleEndReached = React.useCallback(
     // Ignoring because `scroll` event for some reason doesn't trigger even basic
@@ -225,6 +231,7 @@ export const Chat = ({
       return (
         <Message
           {...{
+            enableAnimation,
             message,
             messageWidth,
             onMessageLongPress,
@@ -245,6 +252,7 @@ export const Chat = ({
       )
     },
     [
+      enableAnimation,
       handleMessagePress,
       onMessageLongPress,
       onPreviewDataFetched,

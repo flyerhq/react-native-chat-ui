@@ -23,12 +23,14 @@ export interface TextMessageTopLevelProps {
 }
 
 export interface TextMessageProps extends TextMessageTopLevelProps {
+  enableAnimation?: boolean
   message: MessageType.DerivedText
   messageWidth: number
   showName: boolean
 }
 
 export const TextMessage = ({
+  enableAnimation,
   message,
   messageWidth,
   onPreviewDataFetched,
@@ -103,6 +105,7 @@ export const TextMessage = ({
     REGEX_LINK.test(message.text.toLowerCase()) ? (
     <LinkPreview
       containerStyle={{ width: previewData?.image ? messageWidth : undefined }}
+      enableAnimation={enableAnimation}
       header={showName ? getUserName(message.author) : undefined}
       onPreviewDataFetched={handlePreviewDataFetched}
       previewData={previewData}
