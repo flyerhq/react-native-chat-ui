@@ -28,6 +28,7 @@ import {
   unwrap,
   UserContext,
 } from '../../utils'
+import { CircularActivityIndicator } from '../CircularActivityIndicator'
 import { Input, InputAdditionalProps, InputTopLevelProps } from '../Input'
 import { Message, MessageTopLevelProps } from '../Message'
 import styles from './styles'
@@ -40,11 +41,13 @@ export interface ChatProps extends ChatTopLevelProps {
   customDateHeaderText?: (dateTime: number) => string
   dateFormat?: string
   disableImageGallery?: boolean
-  flatListProps?: FlatListProps<MessageType.DerivedAny[]>
+  flatListProps?: Partial<FlatListProps<MessageType.DerivedAny[]>>
   inputProps?: InputAdditionalProps
+  isLastPage?: boolean
   l10nOverride?: Partial<Record<keyof typeof l10n[keyof typeof l10n], string>>
   locale?: keyof typeof l10n
   messages: MessageType.Any[]
+  onEndReached?: () => Promise<void>
   showUserNames?: boolean
   theme?: Theme
   timeFormat?: string
@@ -58,10 +61,12 @@ export const Chat = ({
   flatListProps,
   inputProps,
   isAttachmentUploading,
+  isLastPage,
   l10nOverride,
   locale = 'en',
   messages,
   onAttachmentPress,
+  onEndReached,
   onMessageLongPress,
   onMessagePress,
   onPreviewDataFetched,
@@ -85,12 +90,15 @@ export const Chat = ({
     flatList,
     flatListContentContainer,
     footer,
+    footerLoadingPage,
+    header,
     keyboardAccessoryView,
   } = styles({ theme })
 
   const { onLayout, size } = useComponentSize()
   const list = React.useRef<FlatList<MessageType.DerivedAny>>(null)
   const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
+  const [isNextPageLoading, setNextPageLoading] = React.useState(false)
   const [imageViewIndex, setImageViewIndex] = React.useState(0)
   const [stackEntry, setStackEntry] = React.useState<StatusBarProps>({})
 
@@ -104,6 +112,25 @@ export const Chat = ({
   React.useEffect(() => {
     initLocale(locale)
   }, [locale])
+
+  const handleEndReached = React.useCallback(
+    async ({ distanceFromEnd }: { distanceFromEnd: number }) => {
+      if (
+        !onEndReached ||
+        isLastPage ||
+        distanceFromEnd <= 0 ||
+        messages.length === 0 ||
+        isNextPageLoading
+      ) {
+        return
+      }
+
+      setNextPageLoading(true)
+      await onEndReached?.()
+      setNextPageLoading(false)
+    },
+    [isLastPage, isNextPageLoading, messages.length, onEndReached]
+  )
 
   const handleImagePress = React.useCallback(
     (message: MessageType.Image) => {
@@ -218,7 +245,17 @@ export const Chat = ({
     [emptyComponentContainer, emptyComponentTitle, locale]
   )
 
-  const renderListFooterComponent = React.useCallback(() => <View />, [])
+  const renderListFooterComponent = React.useCallback(
+    () =>
+      isNextPageLoading ? (
+        <View style={footerLoadingPage}>
+          <CircularActivityIndicator color={theme.colors.primary} size={16} />
+        </View>
+      ) : (
+        <View style={footer} />
+      ),
+    [footer, footerLoadingPage, isNextPageLoading, theme.colors.primary]
+  )
 
   const renderScrollable = React.useCallback(
     (panHandlers: GestureResponderHandlers) => (
@@ -232,8 +269,10 @@ export const Chat = ({
         initialNumToRender={10}
         ListEmptyComponent={renderListEmptyComponent}
         ListFooterComponent={renderListFooterComponent}
-        ListFooterComponentStyle={footer}
+        ListHeaderComponent={<View />}
+        ListHeaderComponentStyle={header}
         maxToRenderPerBatch={6}
+        onEndReachedThreshold={0.75}
         style={flatList}
         showsVerticalScrollIndicator={false}
         {...unwrap(flatListProps)}
@@ -241,6 +280,7 @@ export const Chat = ({
         inverted
         keyboardDismissMode='interactive'
         keyExtractor={keyExtractor}
+        onEndReached={handleEndReached}
         ref={list}
         renderItem={renderItem}
         {...panHandlers}
@@ -251,7 +291,8 @@ export const Chat = ({
       flatList,
       flatListContentContainer,
       flatListProps,
-      footer,
+      handleEndReached,
+      header,
       keyExtractor,
       renderItem,
       renderListEmptyComponent,

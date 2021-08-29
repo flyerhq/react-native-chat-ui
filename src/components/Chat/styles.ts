@@ -27,6 +27,15 @@ export default ({ theme }: { theme: Theme }) =>
     footer: {
       height: 16,
     },
+    footerLoadingPage: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: 16,
+      height: 32,
+    },
+    header: {
+      height: 4,
+    },
     keyboardAccessoryView: {
       backgroundColor: theme.colors.inputBackground,
       borderTopLeftRadius: theme.borders.inputBorderRadius,
