@@ -11,12 +11,10 @@ import {
   GestureResponderHandlers,
   InteractionManager,
   LayoutAnimation,
-  Platform,
   SafeAreaView,
   StatusBar,
   StatusBarProps,
   Text,
-  UIManager,
   View,
 } from 'react-native'
 import ImageView from 'react-native-image-viewing'
@@ -36,10 +34,6 @@ import { CircularActivityIndicator } from '../CircularActivityIndicator'
 import { Input, InputAdditionalProps, InputTopLevelProps } from '../Input'
 import { Message, MessageTopLevelProps } from '../Message'
 import styles from './styles'
-
-Platform.OS === 'android' &&
-  UIManager.setLayoutAnimationEnabledExperimental &&
-  UIManager.setLayoutAnimationEnabledExperimental(true)
 
 const animate = () => {
   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
@@ -106,8 +100,9 @@ export const Chat = ({
     header,
     keyboardAccessoryView,
   } = styles({ theme })
-  const refa = React.useRef(false)
+
   const { onLayout, size } = useComponentSize()
+  const animationRef = React.useRef(false)
   const list = React.useRef<FlatList<MessageType.DerivedAny>>(null)
   const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
   const [isNextPageLoading, setNextPageLoading] = React.useState(false)
@@ -125,15 +120,17 @@ export const Chat = ({
     initLocale(locale)
   }, [locale])
 
-  if (refa.current) {
+  if (animationRef.current) {
     InteractionManager.runAfterInteractions(animate)
   }
 
   React.useEffect(() => {
-    if (refa.current) {
+    // Untestable
+    /* istanbul ignore next */
+    if (animationRef.current) {
       InteractionManager.runAfterInteractions(animate)
     } else {
-      refa.current = true
+      animationRef.current = true
     }
   }, [messages])
 
