@@ -114,6 +114,10 @@ export const Chat = ({
   }, [locale])
 
   const handleEndReached = React.useCallback(
+    // Ignoring because `scroll` event for some reason doesn't trigger even basic
+    // `onEndReached`, impossible to test.
+    // TODO: Verify again later
+    /* istanbul ignore next */
     async ({ distanceFromEnd }: { distanceFromEnd: number }) => {
       if (
         !onEndReached ||
@@ -247,6 +251,8 @@ export const Chat = ({
 
   const renderListFooterComponent = React.useCallback(
     () =>
+      // Impossible to test, see `handleEndReached` function
+      /* istanbul ignore next */
       isNextPageLoading ? (
         <View style={footerLoadingPage}>
           <CircularActivityIndicator color={theme.colors.primary} size={16} />
