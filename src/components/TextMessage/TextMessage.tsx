@@ -47,6 +47,12 @@ export const TextMessage = ({
       user,
     })
 
+  const hanleEmailPress = (email: string) => {
+    try {
+      Linking.openURL(`mailto:${email}`)
+    } catch {}
+  }
+
   const handlePreviewDataFetched = (data: PreviewData) => {
     setPreviewData(data)
     onPreviewDataFetched?.({ message, previewData: data })
@@ -79,6 +85,11 @@ export const TextMessage = ({
       <ParsedText
         accessibilityRole='link'
         parse={[
+          {
+            onPress: hanleEmailPress,
+            style: [text, { textDecorationLine: 'underline' }],
+            type: 'email',
+          },
           {
             onPress: handleUrlPress,
             pattern: REGEX_LINK,
