@@ -88,6 +88,7 @@ export const Chat = ({
   renderFileMessage,
   renderImageMessage,
   renderTextMessage,
+  sendButtonVisibilityMode = 'editing',
   showUserAvatars = false,
   showUserNames = false,
   textInputProps,
@@ -359,6 +360,7 @@ export const Chat = ({
                   onAttachmentPress,
                   onSendPress: handleSendPress,
                   renderScrollable,
+                  sendButtonVisibilityMode,
                   textInputProps,
                 }}
               />

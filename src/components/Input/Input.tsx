@@ -18,6 +18,7 @@ export interface InputTopLevelProps {
   isAttachmentUploading?: boolean
   onAttachmentPress?: () => void
   onSendPress: (message: MessageType.PartialText) => void
+  sendButtonVisibilityMode?: 'always' | 'editing'
   textInputProps?: TextInputProps
 }
 
@@ -34,6 +35,7 @@ export const Input = ({
   isAttachmentUploading,
   onAttachmentPress,
   onSendPress,
+  sendButtonVisibilityMode,
   textInputProps,
 }: InputProps) => {
   const l10n = React.useContext(L10nContext)
@@ -94,7 +96,10 @@ export const Input = ({
         onChangeText={handleChangeText}
         value={value}
       />
-      {user && value.trim() ? <SendButton onPress={handleSend} /> : null}
+      {sendButtonVisibilityMode === 'always' ||
+      (sendButtonVisibilityMode === 'editing' && user && value.trim()) ? (
+        <SendButton onPress={handleSend} />
+      ) : null}
     </View>
   )
 }
