@@ -11,11 +11,11 @@ export default ({ theme }: { theme: Theme }) =>
     emptyComponentContainer: {
       alignItems: 'center',
       marginHorizontal: 24,
+      transform: [{ rotateX: '180deg' }],
     },
     emptyComponentTitle: {
       ...theme.fonts.emptyChatPlaceholderTextStyle,
       textAlign: 'center',
-      transform: [{ rotateX: '180deg' }],
     },
     flatList: {
       backgroundColor: theme.colors.background,

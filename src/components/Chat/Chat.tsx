@@ -2,6 +2,7 @@ import {
   KeyboardAccessoryView,
   useComponentSize,
 } from '@flyerhq/react-native-keyboard-accessory-view'
+import { oneOf } from '@flyerhq/react-native-link-preview'
 import dayjs from 'dayjs'
 import calendar from 'dayjs/plugin/calendar'
 import * as React from 'react'
@@ -49,6 +50,7 @@ export interface ChatProps extends ChatTopLevelProps {
   customDateHeaderText?: (dateTime: number) => string
   dateFormat?: string
   disableImageGallery?: boolean
+  emptyState?: () => React.ReactNode
   enableAnimation?: boolean
   flatListProps?: Partial<FlatListProps<MessageType.DerivedAny[]>>
   inputProps?: InputAdditionalProps
@@ -67,6 +69,7 @@ export const Chat = ({
   customDateHeaderText,
   dateFormat,
   disableImageGallery,
+  emptyState,
   enableAnimation,
   flatListProps,
   inputProps,
@@ -270,12 +273,15 @@ export const Chat = ({
   const renderListEmptyComponent = React.useCallback(
     () => (
       <View style={emptyComponentContainer}>
-        <Text style={emptyComponentTitle}>
-          {l10n[locale].emptyChatPlaceholder}
-        </Text>
+        {oneOf(
+          emptyState,
+          <Text style={emptyComponentTitle}>
+            {l10n[locale].emptyChatPlaceholder}
+          </Text>
+        )()}
       </View>
     ),
-    [emptyComponentContainer, emptyComponentTitle, locale]
+    [emptyComponentContainer, emptyComponentTitle, emptyState, locale]
   )
 
   const renderListFooterComponent = React.useCallback(
