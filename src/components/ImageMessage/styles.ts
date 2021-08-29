@@ -17,7 +17,7 @@ const styles = ({
 }) =>
   StyleSheet.create({
     image: {
-      aspectRatio,
+      height: messageWidth / aspectRatio,
       maxHeight: messageWidth,
       minWidth: 170,
       width: messageWidth,
@@ -31,30 +31,21 @@ const styles = ({
     minimizedImageContainer: {
       alignItems: 'center',
       backgroundColor:
-        user?.id === message.authorId
+        user?.id === message.author.id
           ? theme.colors.primary
           : theme.colors.secondary,
       flexDirection: 'row',
     },
-    nameText: StyleSheet.flatten([
-      theme.fonts.body1,
-      {
-        color:
-          user?.id === message.authorId
-            ? theme.colors.primaryText
-            : theme.colors.secondaryText,
-      },
-    ]),
-    sizeText: StyleSheet.flatten([
-      theme.fonts.caption,
-      {
-        color:
-          user?.id === message.authorId
-            ? `${String(theme.colors.primaryText)}80`
-            : theme.colors.caption,
-        marginTop: 4,
-      },
-    ]),
+    nameText:
+      user?.id === message.author.id
+        ? theme.fonts.sentMessageBodyTextStyle
+        : theme.fonts.receivedMessageBodyTextStyle,
+    sizeText: {
+      ...(user?.id === message.author.id
+        ? theme.fonts.sentMessageCaptionTextStyle
+        : theme.fonts.receivedMessageCaptionTextStyle),
+      marginTop: 4,
+    },
     textContainer: {
       flexShrink: 1,
       marginRight: 24,

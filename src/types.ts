@@ -1,26 +1,66 @@
 import { PreviewData } from '@flyerhq/react-native-link-preview'
-import {
-  ColorValue,
-  ImageSourcePropType,
-  StyleProp,
-  TextStyle,
-} from 'react-native'
+import * as React from 'react'
+import { ColorValue, ImageURISource, TextStyle } from 'react-native'
 
 export namespace MessageType {
-  export type Any = File | Image | Text
+  export type Any = Custom | File | Image | Text | Unsupported
+
+  export type DerivedMessage =
+    | DerivedCustom
+    | DerivedFile
+    | DerivedImage
+    | DerivedText
+    | DerivedUnsupported
+  export type DerivedAny = DateHeader | DerivedMessage
+
   export type PartialAny = PartialFile | PartialImage | PartialText
 
   interface Base {
-    authorId: string
+    author: User
+    createdAt?: number
     id: string
-    status?: 'delivered' | 'error' | 'read' | 'sending'
-    timestamp?: number
-    type: 'file' | 'image' | 'text'
+    metadata?: Record<string, any>
+    roomId?: string
+    status?: 'delivered' | 'error' | 'seen' | 'sending' | 'sent'
+    type: 'custom' | 'file' | 'image' | 'text' | 'unsupported'
+    updatedAt?: number
+  }
+
+  export interface DerivedMessageProps extends Base {
+    nextMessageInGroup: boolean
+    // TODO: Check name?
+    offset: number
+    showName: boolean
+    showStatus: boolean
+  }
+
+  export interface DerivedCustom extends DerivedMessageProps {
+    type: Custom['type']
+  }
+
+  export interface DerivedFile extends DerivedMessageProps, File {
+    type: File['type']
+  }
+
+  export interface DerivedImage extends DerivedMessageProps, Image {
+    type: Image['type']
+  }
+
+  export interface DerivedText extends DerivedMessageProps, Text {
+    type: Text['type']
+  }
+
+  export interface DerivedUnsupported extends DerivedMessageProps {
+    type: Unsupported['type']
+  }
+
+  export interface Custom extends Base {
+    type: 'custom'
   }
 
   export interface PartialFile {
-    fileName: string
     mimeType?: string
+    name: string
     size: number
     uri: string
   }
@@ -31,7 +71,7 @@ export namespace MessageType {
 
   export interface PartialImage {
     height?: number
-    imageName: string
+    name: string
     size: number
     uri: string
     width?: number
@@ -49,6 +89,21 @@ export namespace MessageType {
   export interface Text extends Base, PartialText {
     type: 'text'
   }
+
+  export interface Unsupported extends Base {
+    type: 'unsupported'
+  }
+
+  export interface DateHeader {
+    id: string
+    text: string
+    type: 'dateHeader'
+  }
+}
+
+export interface PreviewImage {
+  id: string
+  uri: ImageURISource['uri']
 }
 
 export interface Size {
@@ -70,36 +125,50 @@ export interface ThemeBorders {
 
 export interface ThemeColors {
   background: ColorValue
-  caption: ColorValue
   error: ColorValue
   inputBackground: ColorValue
   inputText: ColorValue
   primary: ColorValue
-  primaryText: ColorValue
   secondary: ColorValue
-  secondaryText: ColorValue
-  subtitle2: ColorValue
+  receivedMessageDocumentIconColor: ColorValue
+  sentMessageDocumentIconColor: ColorValue
+  userAvatarNameColors: ColorValue[]
 }
 
 export interface ThemeFonts {
-  body1: StyleProp<TextStyle>
-  body2: StyleProp<TextStyle>
-  caption: StyleProp<TextStyle>
-  subtitle1: StyleProp<TextStyle>
-  subtitle2: StyleProp<TextStyle>
+  dateDividerTextStyle: TextStyle
+  emptyChatPlaceholderTextStyle: TextStyle
+  inputTextStyle: TextStyle
+  receivedMessageBodyTextStyle: TextStyle
+  receivedMessageCaptionTextStyle: TextStyle
+  receivedMessageLinkDescriptionTextStyle: TextStyle
+  receivedMessageLinkTitleTextStyle: TextStyle
+  sentMessageBodyTextStyle: TextStyle
+  sentMessageCaptionTextStyle: TextStyle
+  sentMessageLinkDescriptionTextStyle: TextStyle
+  sentMessageLinkTitleTextStyle: TextStyle
+  userAvatarTextStyle: TextStyle
+  userNameTextStyle: TextStyle
 }
 
 export interface ThemeIcons {
-  attachmentButtonIcon?: ImageSourcePropType
-  deliveredIcon?: ImageSourcePropType
-  documentIcon?: ImageSourcePropType
-  readIcon?: ImageSourcePropType
-  sendButtonIcon?: ImageSourcePropType
+  attachmentButtonIcon?: () => React.ReactNode
+  deliveredIcon?: () => React.ReactNode
+  documentIcon?: () => React.ReactNode
+  errorIcon?: () => React.ReactNode
+  seenIcon?: () => React.ReactNode
+  sendButtonIcon?: () => React.ReactNode
+  sendingIcon?: () => React.ReactNode
 }
 
 export interface User {
-  avatarUrl?: string
+  createdAt?: number
   firstName?: string
   id: string
+  imageUrl?: ImageURISource['uri']
   lastName?: string
+  lastSeen?: number
+  metadata?: Record<string, any>
+  role?: 'admin' | 'agent' | 'moderator' | 'user'
+  updatedAt?: number
 }

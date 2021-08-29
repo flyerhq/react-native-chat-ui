@@ -3,7 +3,7 @@ import { fireEvent, render, waitFor } from '@testing-library/react-native'
 import * as React from 'react'
 import { Linking } from 'react-native'
 
-import { textMessage } from '../../../../jest/fixtures'
+import { derivedTextMessage } from '../../../../jest/fixtures'
 import { TextMessage } from '../TextMessage'
 
 describe('text message', () => {
@@ -25,8 +25,15 @@ describe('text message', () => {
     const openUrlMock = jest.spyOn(Linking, 'openURL')
     const { getByRole, getByText } = render(
       <TextMessage
-        message={{ ...textMessage, text: link }}
+        message={{
+          ...derivedTextMessage,
+          author: { id: 'newUserId', firstName: 'John' },
+          text: link,
+        }}
         messageWidth={440}
+        onPreviewDataFetched={jest.fn}
+        showName
+        usePreviewData
       />
     )
     await waitFor(() => getByRole('image'))
@@ -57,8 +64,11 @@ describe('text message', () => {
     const openUrlMock = jest.spyOn(Linking, 'openURL')
     const { getByRole, getByText } = render(
       <TextMessage
-        message={{ ...textMessage, text: link }}
+        message={{ ...derivedTextMessage, text: link }}
         messageWidth={440}
+        onPreviewDataFetched={jest.fn}
+        showName={false}
+        usePreviewData
       />
     )
     await waitFor(() => getByRole('image'))

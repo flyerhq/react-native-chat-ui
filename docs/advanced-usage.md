@@ -23,16 +23,17 @@ const App = () => {
         mediaType: 'photo',
         quality: 0.7,
       },
-      (response) => {
-        if (response.base64) {
+      ({ assets }) => {
+        const response = assets?.[0]
+
+        if (response?.base64) {
           const imageMessage: MessageType.Image = {
-            authorId: userId,
+            author: user,
+            createdAt: Date.now(),
             height: response.height,
             id: uuidv4(),
-            imageName:
-              response.fileName ?? response.uri?.split('/').pop() ?? '🖼',
+            name: response.fileName ?? response.uri?.split('/').pop() ?? '🖼',
             size: response.fileSize ?? 0,
-            timestamp: Math.floor(Date.now() / 1000),
             type: 'image',
             uri: `data:image/*;base64,${response.base64}`,
             width: response.width,
@@ -64,7 +65,7 @@ You can use this URL https://bit.ly/2P0cn2g to test the file message presentatio
 
 :::
 
-On tap, images will be previewed inside an interactive image gallery.
+On tap, images will be previewed inside an interactive image gallery. To disable the image gallery pass `disableImageGallery` prop to the `Chat` component.
 
 ## Files
 
@@ -78,16 +79,16 @@ const App = () => {
   // ...
   const handleFileSelection = async () => {
     try {
-      const response = await DocumentPicker.pick({
+      const response = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.allFiles],
       })
       const fileMessage: MessageType.File = {
-        authorId: userId,
-        fileName: response.name,
+        author: user,
+        createdAt: Date.now(),
         id: uuidv4(),
         mimeType: response.type,
+        name: response.name,
         size: response.size,
-        timestamp: Math.floor(Date.now() / 1000),
         type: 'file',
         uri: response.uri,
       }
@@ -122,16 +123,20 @@ import FileViewer from 'react-native-file-viewer'
 
 const App = () => {
   // ...
-  const handleFilePress = async (message: MessageType.File) => {
-    try {
-      await FileViewer.open(message.uri, { showOpenWithDialog: true })
-    } catch {}
+  const handleMessagePress = async (
+    message: MessageType.DerivedUserMessage
+  ) => {
+    if (message.type === 'file') {
+      try {
+        await FileViewer.open(message.uri, { showOpenWithDialog: true })
+      } catch {}
+    }
   }
 
   return (
     <Chat
       // ...
-      onFilePress={handleFilePress}
+      onMessagePress={handleMessagePress}
     />
   )
 }
@@ -201,15 +206,15 @@ const uuidv4 = () => {
     const v = c === 'x' ? r : (r % 4) + 8
     return v.toString(16)
   })
- }
+}
 
 const App = () => {
-  const userId = '06c33e8b-e835-4736-80f4-63f44b66666c'
   const { showActionSheetWithOptions } = useActionSheet()
   const [messages, setMessages] = useState<MessageType.Any[]>([])
+  const user = { id: '06c33e8b-e835-4736-80f4-63f44b66666c' }
 
   const addMessage = (message: MessageType.Any) => {
-    setMessages([{ ...message, status: 'read' }, ...messages])
+    setMessages([message, ...messages])
   }
 
   const handleAttachmentPress = () => {
@@ -239,16 +244,16 @@ const App = () => {
 
   const handleFileSelection = async () => {
     try {
-      const response = await DocumentPicker.pick({
+      const response = await DocumentPicker.pickSingle({
         type: [DocumentPicker.types.allFiles],
       })
       const fileMessage: MessageType.File = {
-        authorId: userId,
-        fileName: response.name,
+        author: user,
+        createdAt: Date.now(),
         id: uuidv4(),
         mimeType: response.type,
+        name: response.name,
         size: response.size,
-        timestamp: Math.floor(Date.now() / 1000),
         type: 'file',
         uri: response.uri,
       }
@@ -268,16 +273,17 @@ const App = () => {
         mediaType: 'photo',
         quality: 0.7,
       },
-      (response) => {
-        if (response.base64) {
+      ({ assets }) => {
+        const response = assets?.[0]
+
+        if (response?.base64) {
           const imageMessage: MessageType.Image = {
-            authorId: userId,
+            author: user,
+            createdAt: Date.now(),
             height: response.height,
             id: uuidv4(),
-            imageName:
-              response.fileName ?? response.uri?.split('/').pop() ?? '🖼',
+            name: response.fileName ?? response.uri?.split('/').pop() ?? '🖼',
             size: response.fileSize ?? 0,
-            timestamp: Math.floor(Date.now() / 1000),
             type: 'image',
             uri: `data:image/*;base64,${response.base64}`,
             width: response.width,
@@ -304,10 +310,10 @@ const App = () => {
 
   const handleSendPress = (message: MessageType.PartialText) => {
     const textMessage: MessageType.Text = {
-      authorId: userId,
+      author: user,
+      createdAt: Date.now(),
       id: uuidv4(),
       text: message.text,
-      timestamp: Math.floor(Date.now() / 1000),
       type: 'text',
     }
     addMessage(textMessage)
@@ -323,7 +329,7 @@ const App = () => {
         onFilePress={handleFilePress}
         onPreviewDataFetched={handlePreviewDataFetched}
         onSendPress={handleSendPress}
-        user={{ id: userId }}
+        user={user}
       />
     </SafeAreaProvider>
   )
@@ -331,3 +337,51 @@ const App = () => {
 
 export default App
 ```
+
+## Custom messages
+
+Use the `renderCustomMessage` function to render whatever message you want. To store the data use a `metadata` map of the `CustomMessage`. You can have multiple different custom messages, you will need to identify them based on some property inside the `metadata` and render accordingly.
+
+## Pagination
+
+Use `onEndReached`, `onEndReachedThreshold` (available through `flatListProps`) and `isLastPage` parameters to control pagination. Here is a simple example based on a [basic usage](basic-usage):
+
+```ts
+// ...
+
+const App = () => {
+  const [page, setPage] = useState(0)
+  // ...
+  useEffect(() => {
+    handleEndReached()
+  }, [])
+
+  const handleEndReached = async () => {
+    const response = await fetch(
+      `https://api.instantwebtools.net/v1/passenger?page=${page}&size=20`
+    )
+    const json = await response.json()
+    const m = json.data.map((e: any) => ({
+      author: user,
+      id: e._id,
+      text: e.name,
+      type: 'text',
+    }))
+    setMessages([...messages, ...m])
+    setPage(page + 1)
+  }
+
+  return (
+    <Chat
+      // ...
+      onEndReached={handleEndReached}
+    />
+  )
+}
+
+export default App
+```
+
+## User avatars & names
+
+To show user avatars & names use `showUserAvatars` and `showUserNames` parameters. Can be used separately. By default, the chat will select one of 10 provided colors as an avatar background and name text color. Color is calculated based on the user's `id` hash code, so it is unique in different rooms. To modify provided colors use `userAvatarNameColors` parameter in [theme](themes). If you want to have one color for everyone, just pass this color as a single item in the `userAvatarNameColors` list.

@@ -4,7 +4,6 @@ import {
   ColorValue,
   Easing,
   StyleProp,
-  StyleSheet,
   ViewStyle,
 } from 'react-native'
 
@@ -38,7 +37,7 @@ export const CircularActivityIndicator = ({
 
   return (
     <Animated.View
-      style={StyleSheet.flatten([
+      style={[
         {
           transform: [
             {
@@ -51,7 +50,7 @@ export const CircularActivityIndicator = ({
         },
         circle,
         style,
-      ])}
+      ]}
       testID='CircularActivityIndicator'
     />
   )
