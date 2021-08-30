@@ -20,6 +20,7 @@ import {
 } from 'react-native'
 import ImageView from 'react-native-image-viewing'
 
+import { usePrevious } from '../../hooks'
 import { l10n } from '../../l10n'
 import { defaultTheme } from '../../theme'
 import { MessageType, Theme, User } from '../../types'
@@ -124,6 +125,22 @@ export const Chat = ({
     timeFormat,
   })
 
+  const previousChatMessages = usePrevious(chatMessages)
+
+  React.useEffect(() => {
+    if (
+      chatMessages[0]?.type !== 'dateHeader' &&
+      chatMessages[0]?.id !== previousChatMessages?.[0]?.id &&
+      chatMessages[0]?.author?.id === user.id
+    ) {
+      list.current?.scrollToOffset({
+        animated: true,
+        offset: 0,
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatMessages])
+
   React.useEffect(() => {
     initLocale(locale)
   }, [locale])
@@ -201,14 +218,6 @@ export const Chat = ({
   const handleRequestClose = () => {
     setIsImageViewVisible(false)
     StatusBar.popStackEntry(stackEntry)
-  }
-
-  const handleSendPress = (message: MessageType.PartialText) => {
-    onSendPress(message)
-    list.current?.scrollToOffset({
-      animated: true,
-      offset: 0,
-    })
   }
 
   const keyExtractor = React.useCallback(
@@ -358,7 +367,7 @@ export const Chat = ({
                   ...unwrap(inputProps),
                   isAttachmentUploading,
                   onAttachmentPress,
-                  onSendPress: handleSendPress,
+                  onSendPress,
                   renderScrollable,
                   sendButtonVisibilityMode,
                   textInputProps,
