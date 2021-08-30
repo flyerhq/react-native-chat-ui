@@ -15,9 +15,8 @@ describe('image message', () => {
       height: undefined,
       width: undefined,
     }
-    const onPress = jest.fn()
     const { getByRole } = render(
-      <ImageMessage message={message} messageWidth={440} onPress={onPress} />
+      <ImageMessage message={message} messageWidth={440} />
     )
     expect(getSizeMock).toHaveBeenCalledTimes(1)
     const getSizeArgs = getSizeMock.mock.calls[0]
@@ -28,10 +27,7 @@ describe('image message', () => {
       success(size.width, size.height)
     })
     const successImageComponent = getByRole('image')
-    expect(successImageComponent.props).toHaveProperty(
-      'style.height',
-      440 / (size.width / size.height)
-    )
+    expect(successImageComponent.props).toHaveProperty('style.height', 440)
     act(() => {
       success(size.width, size.width * 10 + 1)
     })
