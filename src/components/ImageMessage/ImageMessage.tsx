@@ -8,7 +8,6 @@ import styles from './styles'
 export interface ImageMessageProps {
   message: MessageType.DerivedImage
   messageWidth: number
-  onPress?: (message: MessageType.DerivedImage) => void
 }
 
 export const ImageMessage = ({ message, messageWidth }: ImageMessageProps) => {
@@ -23,12 +22,13 @@ export const ImageMessage = ({ message, messageWidth }: ImageMessageProps) => {
   const aspectRatio = size.width / (size.height || 1)
   const isMinimized = aspectRatio < 0.1 || aspectRatio > 10
   const {
-    image,
+    horizontalImage,
     minimizedImage,
     minimizedImageContainer,
     nameText,
     sizeText,
     textContainer,
+    verticalImage,
   } = styles({
     aspectRatio,
     message,
@@ -48,14 +48,18 @@ export const ImageMessage = ({ message, messageWidth }: ImageMessageProps) => {
 
   const renderImage = () => {
     return (
-      <View>
-        <Image
-          accessibilityRole='image'
-          resizeMode={isMinimized ? 'cover' : 'contain'}
-          source={{ uri: message.uri }}
-          style={isMinimized ? minimizedImage : image}
-        />
-      </View>
+      <Image
+        accessibilityRole='image'
+        resizeMode={isMinimized ? 'cover' : 'contain'}
+        source={{ uri: message.uri }}
+        style={
+          isMinimized
+            ? minimizedImage
+            : aspectRatio < 1
+            ? verticalImage
+            : horizontalImage
+        }
+      />
     )
   }
 

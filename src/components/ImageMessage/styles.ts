@@ -16,10 +16,9 @@ const styles = ({
   user?: User
 }) =>
   StyleSheet.create({
-    image: {
+    horizontalImage: {
       height: messageWidth / aspectRatio,
       maxHeight: messageWidth,
-      minWidth: 170,
       width: messageWidth,
     },
     minimizedImage: {
@@ -50,6 +49,11 @@ const styles = ({
       flexShrink: 1,
       marginRight: 24,
       marginVertical: 16,
+    },
+    verticalImage: {
+      height: messageWidth,
+      minWidth: 170,
+      width: messageWidth * aspectRatio,
     },
   })
 
