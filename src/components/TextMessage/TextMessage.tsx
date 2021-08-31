@@ -12,6 +12,7 @@ import { getUserName, ThemeContext, UserContext } from '../../utils'
 import styles from './styles'
 
 export interface TextMessageTopLevelProps {
+  /** @see {@link LinkPreviewProps.onPreviewDataFetched} */
   onPreviewDataFetched?: ({
     message,
     previewData,
@@ -19,6 +20,7 @@ export interface TextMessageTopLevelProps {
     message: MessageType.DerivedText
     previewData: PreviewData
   }) => void
+  /** Enables link (URL) preview */
   usePreviewData?: boolean
 }
 

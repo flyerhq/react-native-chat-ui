@@ -14,6 +14,7 @@ export interface SendButtonPropsAdditionalProps {
 }
 
 export interface SendButtonProps extends SendButtonPropsAdditionalProps {
+  /** Callback for send button tap event */
   onPress: () => void
 }
 

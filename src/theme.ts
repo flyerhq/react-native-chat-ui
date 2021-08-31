@@ -4,7 +4,7 @@ import { Theme } from './types'
 
 // For internal usage only. Use values from theme itself.
 
-/** See {@link ThemeColors.userAvatarNameColors} */
+/** @see {@link ThemeColors.userAvatarNameColors} */
 export const COLORS: ColorValue[] = [
   '#ff6767',
   '#66e0da',
@@ -45,6 +45,7 @@ const SECONDARY = '#f5f5f7'
 /** Secondary dark */
 const SECONDARY_DARK = '#2b2250'
 
+/** Default chat theme which implements {@link Theme} */
 export const defaultTheme: Theme = {
   borders: {
     inputBorderRadius: 20,
@@ -155,6 +156,7 @@ export const defaultTheme: Theme = {
   },
 }
 
+/** Dark chat theme which implements {@link Theme} */
 export const darkTheme: Theme = {
   ...defaultTheme,
   colors: {

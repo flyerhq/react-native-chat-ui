@@ -111,6 +111,8 @@ export interface Size {
   width: number
 }
 
+/** Base chat theme containing all required properties to make a theme.
+ * Implement this interface if you want to create a custom theme. */
 export interface Theme {
   borders: ThemeBorders
   colors: ThemeColors

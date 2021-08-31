@@ -16,24 +16,31 @@ import { TextMessage, TextMessageTopLevelProps } from '../TextMessage'
 import styles from './styles'
 
 export interface MessageTopLevelProps extends TextMessageTopLevelProps {
+  /** Called when user makes a long press on any message */
   onMessageLongPress?: (message: MessageType.Any) => void
+  /** Called when user taps on any message */
   onMessagePress?: (message: MessageType.Any) => void
+  /** Render a custom message inside predefined bubble */
   renderCustomMessage?: (
     message: MessageType.Custom,
     messageWidth: number
   ) => React.ReactNode
+  /** Render a file message inside predefined bubble */
   renderFileMessage?: (
     message: MessageType.File,
     messageWidth: number
   ) => React.ReactNode
+  /** Render an image message inside predefined bubble */
   renderImageMessage?: (
     message: MessageType.Image,
     messageWidth: number
   ) => React.ReactNode
+  /** Render a text message inside predefined bubble */
   renderTextMessage?: (
     message: MessageType.Text,
     messageWidth: number
   ) => React.ReactNode
+  /** Show user avatars for received messages. Useful for a group chat. */
   showUserAvatars?: boolean
 }
 
@@ -47,6 +54,9 @@ export interface MessageProps extends MessageTopLevelProps {
   showStatus: boolean
 }
 
+/** Base component for all message types in the chat. Renders bubbles around
+ * messages and status. Sets maximum width for a message for
+ * a nice look on larger screens. */
 export const Message = React.memo(
   ({
     enableAnimation,

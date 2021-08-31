@@ -14,6 +14,7 @@ export interface AttachmentButtonAdditionalProps {
 }
 
 export interface AttachmentButtonProps extends AttachmentButtonAdditionalProps {
+  /** Callback for attachment button tap event */
   onPress?: () => void
 }
 

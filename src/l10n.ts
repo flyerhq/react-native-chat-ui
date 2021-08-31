@@ -1,3 +1,4 @@
+/** Base chat l10n containing all required properties to provide localized copy. */
 export const l10n = {
   en: {
     attachmentButtonAccessibilityLabel: 'Send media',
