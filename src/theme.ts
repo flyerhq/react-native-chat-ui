@@ -4,7 +4,7 @@ import { Theme } from './types'
 
 // For internal usage only. Use values from theme itself.
 
-/// See [ChatTheme.userAvatarNameColors]
+/** See {@link ThemeColors.userAvatarNameColors} */
 export const COLORS: ColorValue[] = [
   '#ff6767',
   '#66e0da',
@@ -18,31 +18,31 @@ export const COLORS: ColorValue[] = [
   '#c78ae5',
 ]
 
-/// Dark
+/** Dark */
 const DARK = '#1f1c38'
 
-/// Error
+/** Error */
 const ERROR = '#ff6767'
 
-/// N0
+/** N0 */
 const NEUTRAL_0 = '#1d1c21'
 
-/// N2
+/** N2 */
 const NEUTRAL_2 = '#9e9cab'
 
-/// N7
+/** N7 */
 const NEUTRAL_7 = '#ffffff'
 
-/// N7 with opacity
+/** N7 with opacity */
 const NEUTRAL_7_WITH_OPACITY = '#ffffff80'
 
-/// Primary
+/** Primary */
 const PRIMARY = '#6f61e8'
 
-/// Secondary
+/** Secondary */
 const SECONDARY = '#f5f5f7'
 
-/// Secondary dark
+/** Secondary dark */
 const SECONDARY_DARK = '#2b2250'
 
 export const defaultTheme: Theme = {

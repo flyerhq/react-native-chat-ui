@@ -13,7 +13,7 @@ export const L10nContext = React.createContext<typeof l10n[keyof typeof l10n]>(
 export const ThemeContext = React.createContext<Theme>(defaultTheme)
 export const UserContext = React.createContext<User | undefined>(undefined)
 
-/// Returns text representation of a provided bytes value (e.g. 1kB, 1GB)
+/** Returns text representation of a provided bytes value (e.g. 1kB, 1GB) */
 export const formatBytes = (size: number, fractionDigits = 2) => {
   if (size <= 0) return '0 B'
   const multiple = Math.floor(Math.log(size) / Math.log(1024))
@@ -24,18 +24,18 @@ export const formatBytes = (size: number, fractionDigits = 2) => {
   )
 }
 
-/// Returns size in bytes of the provided text
+/** Returns size in bytes of the provided text */
 export const getTextSizeInBytes = (text: string) => new Blob([text]).size
 
-/// Returns user avatar and name color based on the ID
+/** Returns user avatar and name color based on the ID */
 export const getUserAvatarNameColor = (user: User, colors: ColorValue[]) =>
   colors[hashCode(user.id) % colors.length]
 
-/// Returns user name as joined firstName and lastName
+/** Returns user name as joined firstName and lastName */
 export const getUserName = ({ firstName, lastName }: User) =>
   `${firstName ?? ''} ${lastName ?? ''}`.trim()
 
-/// Returns hash code of the provided text
+/** Returns hash code of the provided text */
 const hashCode = (text = '') => {
   let i,
     chr,
@@ -51,7 +51,7 @@ const hashCode = (text = '') => {
   return hash
 }
 
-/// Inits dayjs locale
+/** Inits dayjs locale */
 export const initLocale = (locale?: keyof typeof l10n) => {
   const locales: { [key in keyof typeof l10n]: unknown } = {
     en: require('dayjs/locale/en'),
@@ -68,11 +68,10 @@ export const initLocale = (locale?: keyof typeof l10n) => {
   dayjs.locale(locale)
 }
 
-/// Returns either prop or empty object if null or undefined
+/** Returns either prop or empty object if null or undefined */
 export const unwrap = <T>(prop: T) => prop ?? {}
 
-/// Returns formatted date used as a divider between different days in the
-/// chat history
+/** Returns formatted date used as a divider between different days in the chat history */
 const getVerboseDateTimeRepresentation = (
   dateTime: number,
   {
@@ -105,8 +104,7 @@ const getVerboseDateTimeRepresentation = (
   return `${formattedDate}, ${formattedTime}`
 }
 
-/// Parses provided messages to chat messages (with headers) and
-/// returns them with a gallery
+/** Parses provided messages to chat messages (with headers) and returns them with a gallery */
 export const calculateChatMessages = (
   messages: MessageType.Any[],
   user: User,
@@ -236,7 +234,7 @@ export const calculateChatMessages = (
   }
 }
 
-/// Removes all derived message props from the derived message
+/** Removes all derived message props from the derived message */
 export const excludeDerivedMessageProps = (
   message: MessageType.DerivedMessage
 ) => {
