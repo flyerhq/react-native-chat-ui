@@ -15,8 +15,8 @@ const styles = ({
     container: {
       alignItems: 'center',
       flexDirection: 'row',
-      padding: 16,
-      paddingRight: 24,
+      padding: theme.insets.messageInsetsVertical,
+      paddingRight: theme.insets.messageInsetsHorizontal,
     },
     icon: {
       tintColor:

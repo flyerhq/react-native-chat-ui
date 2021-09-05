@@ -154,6 +154,10 @@ export const defaultTheme: Theme = {
       lineHeight: 16,
     },
   },
+  insets: {
+    messageInsetsHorizontal: 20,
+    messageInsetsVertical: 16,
+  },
 }
 
 /** Dark chat theme which implements {@link Theme} */

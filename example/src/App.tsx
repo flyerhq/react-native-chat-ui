@@ -53,11 +53,7 @@ const App = () => {
         uri: response.uri,
       }
       addMessage(fileMessage)
-    } catch (err) {
-      if (!DocumentPicker.isCancel(err)) {
-        // Handle error
-      }
-    }
+    } catch {}
   }
 
   const handleImageSelection = () => {

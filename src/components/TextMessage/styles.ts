@@ -36,8 +36,8 @@ const styles = ({
         ? theme.fonts.sentMessageBodyTextStyle
         : theme.fonts.receivedMessageBodyTextStyle,
     textContainer: {
-      marginHorizontal: 24,
-      marginVertical: 16,
+      marginHorizontal: theme.insets.messageInsetsHorizontal,
+      marginVertical: theme.insets.messageInsetsVertical,
     },
   })
 

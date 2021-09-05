@@ -20,13 +20,13 @@
     "react-native-file-viewer": "^2.1.4",
     "react-native-get-random-values": "^1.7.0",
     "react-native-image-picker": "^4.0.6",
-    "react-native-safe-area-context": "^3.3.1",
+    "react-native-safe-area-context": "^3.3.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.0",
-    "@babel/runtime": "^7.15.3",
-    "@react-native-community/eslint-config": "^3.0.0",
+    "@babel/core": "^7.15.5",
+    "@babel/runtime": "^7.15.4",
+    "@react-native-community/eslint-config": "^3.0.1",
     "@types/jest": "^27.0.1",
     "@types/react-native": "^0.64.13",
     "@types/react-test-renderer": "^17.0.1",

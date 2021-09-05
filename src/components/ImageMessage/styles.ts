@@ -24,7 +24,9 @@ const styles = ({
     minimizedImage: {
       borderRadius: 15,
       height: 64,
-      margin: 16,
+      marginLeft: theme.insets.messageInsetsVertical,
+      marginRight: 16,
+      marginVertical: theme.insets.messageInsetsVertical,
       width: 64,
     },
     minimizedImageContainer: {
@@ -47,8 +49,8 @@ const styles = ({
     },
     textContainer: {
       flexShrink: 1,
-      marginRight: 24,
-      marginVertical: 16,
+      marginRight: theme.insets.messageInsetsHorizontal,
+      marginVertical: theme.insets.messageInsetsVertical,
     },
     verticalImage: {
       height: messageWidth,

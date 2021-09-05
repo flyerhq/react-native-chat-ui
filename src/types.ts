@@ -118,6 +118,7 @@ export interface Theme {
   colors: ThemeColors
   fonts: ThemeFonts
   icons?: ThemeIcons
+  insets: ThemeInsets
 }
 
 export interface ThemeBorders {
@@ -162,6 +163,11 @@ export interface ThemeIcons {
   seenIcon?: () => React.ReactNode
   sendButtonIcon?: () => React.ReactNode
   sendingIcon?: () => React.ReactNode
+}
+
+export interface ThemeInsets {
+  messageInsetsHorizontal: number
+  messageInsetsVertical: number
 }
 
 export interface User {

@@ -275,7 +275,7 @@ PODS:
     - React-Core
   - react-native-image-picker (4.0.6):
     - React-Core
-  - react-native-safe-area-context (3.3.1):
+  - react-native-safe-area-context (3.3.2):
     - React-Core
   - React-perflogger (0.65.1)
   - React-RCTActionSheet (0.65.1):
@@ -524,7 +524,7 @@ SPEC CHECKSUMS:
   react-native-document-picker: a7950caaee8587002c9acbc7fe497a342094d93a
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
   react-native-image-picker: a6e56460d34905c849ada551db30897dc7f3d535
-  react-native-safe-area-context: ca9f3b49266e56b1d841ccdde7cfe2e076f529b6
+  react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   React-perflogger: fd28ee1f2b5b150b00043f0301d96bd417fdc339
   React-RCTActionSheet: 7f3fa0855c346aa5d7c60f9ced16e067db6d29fa
   React-RCTAnimation: 2119a18ee26159004b001bc56404ca5dbaae6077
@@ -543,4 +543,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 00cc632f842abec16680e32cbda9bcca522eb954
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.0

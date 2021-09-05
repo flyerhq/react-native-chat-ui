@@ -127,6 +127,7 @@ export const TextMessage = ({
       renderText={renderPreviewText}
       renderTitle={renderPreviewTitle}
       text={message.text}
+      textContainerStyle={textContainer}
       touchableWithoutFeedbackProps={{
         accessibilityRole: undefined,
         accessible: false,
