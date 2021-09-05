@@ -1,5 +1,6 @@
 import { fireEvent, render } from '@testing-library/react-native'
 import * as React from 'react'
+import { Text } from 'react-native'
 
 import {
   fileMessage,
@@ -164,5 +165,27 @@ describe('chat', () => {
 
     const placeholder = getByText(l10n.en.emptyChatPlaceholder)
     expect(placeholder).toBeDefined()
+  })
+
+  it('renders custom bottom component', () => {
+    expect.assertions(1)
+    const customBottomComponent = jest.fn(() => <Text>Bottom</Text>)
+    const messages = []
+    const onSendPress = jest.fn()
+    const onMessagePress = jest.fn()
+    const { getByText } = render(
+      <Chat
+        {...{
+          customBottomComponent,
+          messages,
+          onMessagePress,
+          onSendPress,
+          user,
+        }}
+      />
+    )
+
+    const customComponent = getByText('Bottom')
+    expect(customComponent).toBeDefined()
   })
 })

@@ -12,13 +12,13 @@ import {
   GestureResponderHandlers,
   InteractionManager,
   LayoutAnimation,
-  SafeAreaView,
   StatusBar,
   StatusBarProps,
   Text,
   View,
 } from 'react-native'
 import ImageView from 'react-native-image-viewing'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { usePrevious } from '../../hooks'
 import { l10n } from '../../l10n'
@@ -48,6 +48,8 @@ dayjs.extend(calendar)
 export type ChatTopLevelProps = InputTopLevelProps & MessageTopLevelProps
 
 export interface ChatProps extends ChatTopLevelProps {
+  /** Allows you to replace the default Input widget e.g. if you want to create a channel view. */
+  customBottomComponent?: () => React.ReactNode
   /** If {@link ChatProps.dateFormat} and/or {@link ChatProps.timeFormat} is not enough to
    * customize date headers in your case, use this to return an arbitrary
    * string based on a `dateTime` of a particular message. Can be helpful to
@@ -99,6 +101,7 @@ export interface ChatProps extends ChatTopLevelProps {
 
 /** Entry component, represents the complete chat */
 export const Chat = ({
+  customBottomComponent,
   customDateHeaderText,
   dateFormat,
   disableImageGallery,
@@ -145,6 +148,7 @@ export const Chat = ({
   const { onLayout, size } = useComponentSize()
   const animationRef = React.useRef(false)
   const list = React.useRef<FlatList<MessageType.DerivedAny>>(null)
+  const insets = useSafeAreaInsets()
   const [isImageViewVisible, setIsImageViewVisible] = React.useState(false)
   const [isNextPageLoading, setNextPageLoading] = React.useState(false)
   const [imageViewIndex, setImageViewIndex] = React.useState(0)
@@ -347,7 +351,10 @@ export const Chat = ({
         contentContainerStyle={[
           flatListContentContainer,
           // eslint-disable-next-line react-native/no-inline-styles
-          { justifyContent: chatMessages.length !== 0 ? undefined : 'center' },
+          {
+            justifyContent: chatMessages.length !== 0 ? undefined : 'center',
+            paddingTop: insets.bottom,
+          },
         ]}
         initialNumToRender={10}
         ListEmptyComponent={renderListEmptyComponent}
@@ -376,6 +383,7 @@ export const Chat = ({
       flatListProps,
       handleEndReached,
       header,
+      insets.bottom,
       keyExtractor,
       renderItem,
       renderListEmptyComponent,
@@ -387,32 +395,39 @@ export const Chat = ({
     <UserContext.Provider value={user}>
       <ThemeContext.Provider value={theme}>
         <L10nContext.Provider value={{ ...l10n[locale], ...l10nOverride }}>
-          <SafeAreaView style={container} onLayout={onLayout}>
-            <KeyboardAccessoryView
-              {...{
-                renderScrollable,
-                style: keyboardAccessoryView,
-              }}
-            >
-              <Input
+          <View style={container} onLayout={onLayout}>
+            {customBottomComponent ? (
+              <>
+                <>{renderScrollable({})}</>
+                <>{customBottomComponent()}</>
+              </>
+            ) : (
+              <KeyboardAccessoryView
                 {...{
-                  ...unwrap(inputProps),
-                  isAttachmentUploading,
-                  onAttachmentPress,
-                  onSendPress,
                   renderScrollable,
-                  sendButtonVisibilityMode,
-                  textInputProps,
+                  style: keyboardAccessoryView,
                 }}
-              />
-            </KeyboardAccessoryView>
+              >
+                <Input
+                  {...{
+                    ...unwrap(inputProps),
+                    isAttachmentUploading,
+                    onAttachmentPress,
+                    onSendPress,
+                    renderScrollable,
+                    sendButtonVisibilityMode,
+                    textInputProps,
+                  }}
+                />
+              </KeyboardAccessoryView>
+            )}
             <ImageView
               imageIndex={imageViewIndex}
               images={gallery}
               onRequestClose={handleRequestClose}
               visible={isImageViewVisible}
             />
-          </SafeAreaView>
+          </View>
         </L10nContext.Provider>
       </ThemeContext.Provider>
     </UserContext.Provider>
