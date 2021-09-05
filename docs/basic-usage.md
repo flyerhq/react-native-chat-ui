@@ -3,17 +3,17 @@ id: basic-usage
 title: Basic Usage
 ---
 
-You start with a `<Chat />` component that will render a chat screen. It has 3 required props:
+You start with a `Chat` component that will render a chat. It has 3 required properties:
 
-- `messages` - an array of messages to be rendered. Accepts any message, see [types](types). If you have your message types you will need to map those to any of the defined ones. Let us know if we need to add more message types or add more fields to the existing ones.
-- `onSendPress` - a function that will have a partial text message as a parameter. See [types](types) for more info on how types are structured. From the partial text message you need to create a text message which will at least have `author`, `id`, `text` and `type: 'text'`, this is done by you because we wanted to give you more control over those values.
-- `user` - a [User](types#user) object, that has only one required field - an `id`, used to determine the message author.
+* `messages` - an array of messages to be rendered. Accepts any message, see [types](types). If you have your message types you will need to map those to any of the defined ones. Let us know if we need to add more message types or add more fields to the existing ones.
+* `onSendPress` - a function that will have a partial text message as a parameter. See [types](types) for more info on how types are structured. From the partial text message you need to create a text message which will at least have `author`, `id`, `text` and `type: 'text'`, this is done by you because we wanted to give you more control over those values.
+* `user` - a [User](types#user) object, that has only one required field - an `id`, used to determine the message author.
 
 Below you will find a drop-in example of the chat with only text messages.
 
 :::note
 
-Try to write any URL, for example, flyer.chat, it should be unwrapped in a rich preview.
+Try to write any URL, for example, `flyer.chat`, it should be unwrapped in a rich preview.
 
 :::
 

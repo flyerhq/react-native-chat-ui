@@ -65,7 +65,7 @@ You can use this URL https://bit.ly/2P0cn2g to test the file message presentatio
 
 :::
 
-On tap, images will be previewed inside an interactive image gallery. To disable the image gallery pass `disableImageGallery` prop to the `Chat` component.
+On tap, images will be previewed inside an interactive image gallery. To disable the image gallery pass `disableImageGallery` property to the `Chat` component.
 
 ## Files
 
@@ -142,7 +142,7 @@ export default App
 
 ## Link preview
 
-Link preview works automatically, we created a separate library for that, you can found it [here](https://github.com/flyerhq/react-native-link-preview). Usually, however, you'll want to save the preview data so it stays the same, you can do that using `onPreviewDataFetched` callback:
+Link preview works automatically, we created a separate package for that, you can found it [here](https://github.com/flyerhq/react-native-link-preview). It can be disabled by setting `usePreviewData` to false. Usually, however, you'll want to save the preview data so it stays the same, you can do that using `onPreviewDataFetched` callback:
 
 ```ts
 // ...

@@ -11,15 +11,3 @@ You can pass the `locale` prop to the `<Chat />` component. This locale will be 
   locale='en'
 />
 ```
-
-## Types
-
-| Name                               | Type   | Description                                                   |
-|------------------------------------|--------|---------------------------------------------------------------|
-| attachmentButtonAccessibilityLabel | string | Accessibility label (hint) for the attachment button          |
-| emptyChatPlaceholder               | string | Placeholder when there are no messages                        |
-| fileButtonAccessibilityLabel       | string | Accessibility label (hint) for the tap action on file message |
-| inputPlaceholder                   | string | Placeholder for the text input                                |
-| sendButtonAccessibilityLabel       | string | Accessibility label (hint) for the send button                |
-| today                              | string | Today string                                                  |
-| yesterday                          | string | Yesterday string                                              |
