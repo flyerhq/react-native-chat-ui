@@ -13,7 +13,11 @@ export namespace MessageType {
     | DerivedUnsupported
   export type DerivedAny = DateHeader | DerivedMessage
 
-  export type PartialAny = PartialFile | PartialImage | PartialText
+  export type PartialAny =
+    | PartialCustom
+    | PartialFile
+    | PartialImage
+    | PartialText
 
   interface Base {
     author: User
@@ -34,7 +38,7 @@ export namespace MessageType {
     showStatus: boolean
   }
 
-  export interface DerivedCustom extends DerivedMessageProps {
+  export interface DerivedCustom extends DerivedMessageProps, Custom {
     type: Custom['type']
   }
 
@@ -50,15 +54,20 @@ export namespace MessageType {
     type: Text['type']
   }
 
-  export interface DerivedUnsupported extends DerivedMessageProps {
+  export interface DerivedUnsupported extends DerivedMessageProps, Unsupported {
     type: Unsupported['type']
   }
 
-  export interface Custom extends Base {
+  export interface PartialCustom extends Base {
+    metadata?: Record<string, any>
+  }
+
+  export interface Custom extends Base, PartialCustom {
     type: 'custom'
   }
 
   export interface PartialFile {
+    metadata?: Record<string, any>
     mimeType?: string
     name: string
     size: number
@@ -71,6 +80,7 @@ export namespace MessageType {
 
   export interface PartialImage {
     height?: number
+    metadata?: Record<string, any>
     name: string
     size: number
     uri: string
@@ -82,6 +92,7 @@ export namespace MessageType {
   }
 
   export interface PartialText {
+    metadata?: Record<string, any>
     previewData?: PreviewData
     text: string
   }
