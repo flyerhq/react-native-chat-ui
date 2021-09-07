@@ -60,6 +60,7 @@ export namespace MessageType {
 
   export interface PartialCustom extends Base {
     metadata?: Record<string, any>
+    type: 'custom'
   }
 
   export interface Custom extends Base, PartialCustom {
@@ -71,6 +72,7 @@ export namespace MessageType {
     mimeType?: string
     name: string
     size: number
+    type: 'file'
     uri: string
   }
 
@@ -83,6 +85,7 @@ export namespace MessageType {
     metadata?: Record<string, any>
     name: string
     size: number
+    type: 'image'
     uri: string
     width?: number
   }
@@ -95,6 +98,7 @@ export namespace MessageType {
     metadata?: Record<string, any>
     previewData?: PreviewData
     text: string
+    type: 'text'
   }
 
   export interface Text extends Base, PartialText {

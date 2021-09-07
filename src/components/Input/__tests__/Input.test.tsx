@@ -28,7 +28,7 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith({ text: 'text' })
+    expect(onSendPress).toHaveBeenCalledWith({ text: 'text', type: 'text' })
     expect(textInput.props).toHaveProperty('value', '')
   })
 
@@ -66,7 +66,7 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith({ text: 'text' })
+    expect(onSendPress).toHaveBeenCalledWith({ text: 'text', type: 'text' })
     expect(textInput.props).toHaveProperty('value', 'text')
   })
 
@@ -90,7 +90,7 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith({ text: 'text' })
+    expect(onSendPress).toHaveBeenCalledWith({ text: 'text', type: 'text' })
     expect(textInput.props).toHaveProperty('value', '')
   })
 
@@ -114,7 +114,7 @@ describe('input', () => {
     fireEvent.changeText(textInput, 'text')
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith({ text: value })
+    expect(onSendPress).toHaveBeenCalledWith({ text: value, type: 'text' })
     expect(textInput.props).toHaveProperty('value', value)
   })
 
@@ -137,7 +137,10 @@ describe('input', () => {
     const textInput = getByPlaceholderText(l10n.en.inputPlaceholder)
     const button = getByLabelText(l10n.en.sendButtonAccessibilityLabel)
     fireEvent.press(button)
-    expect(onSendPress).toHaveBeenCalledWith({ text: defaultValue })
+    expect(onSendPress).toHaveBeenCalledWith({
+      text: defaultValue,
+      type: 'text',
+    })
     expect(textInput.props).toHaveProperty('value', '')
   })
 

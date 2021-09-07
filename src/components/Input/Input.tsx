@@ -72,7 +72,7 @@ export const Input = ({
     // Additional check for the keyboard input.
     /* istanbul ignore next */
     if (trimmedValue) {
-      onSendPress({ text: trimmedValue })
+      onSendPress({ text: trimmedValue, type: 'text' })
       setText('')
     }
   }
