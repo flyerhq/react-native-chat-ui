@@ -111,7 +111,8 @@ export const Message = React.memo(
           )
         case 'file':
           return oneOf(renderFileMessage, <FileMessage message={message} />)(
-            message,
+            // type-coverage:ignore-next-line
+            excludeDerivedMessageProps(message) as MessageType.File,
             messageWidth
           )
         case 'image':
@@ -123,7 +124,11 @@ export const Message = React.memo(
                 messageWidth,
               }}
             />
-          )(message, messageWidth)
+          )(
+            // type-coverage:ignore-next-line
+            excludeDerivedMessageProps(message) as MessageType.Image,
+            messageWidth
+          )
         case 'text':
           return oneOf(
             renderTextMessage,
@@ -137,7 +142,11 @@ export const Message = React.memo(
                 usePreviewData,
               }}
             />
-          )(message, messageWidth)
+          )(
+            // type-coverage:ignore-next-line
+            excludeDerivedMessageProps(message) as MessageType.Text,
+            messageWidth
+          )
         default:
           return null
       }

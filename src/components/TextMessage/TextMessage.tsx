@@ -8,7 +8,12 @@ import { Linking, Text, View } from 'react-native'
 import ParsedText from 'react-native-parsed-text'
 
 import { MessageType } from '../../types'
-import { getUserName, ThemeContext, UserContext } from '../../utils'
+import {
+  excludeDerivedMessageProps,
+  getUserName,
+  ThemeContext,
+  UserContext,
+} from '../../utils'
 import styles from './styles'
 
 export interface TextMessageTopLevelProps {
@@ -17,7 +22,7 @@ export interface TextMessageTopLevelProps {
     message,
     previewData,
   }: {
-    message: MessageType.DerivedText
+    message: MessageType.Text
     previewData: PreviewData
   }) => void
   /** Enables link (URL) preview */
@@ -57,7 +62,12 @@ export const TextMessage = ({
 
   const handlePreviewDataFetched = (data: PreviewData) => {
     setPreviewData(data)
-    onPreviewDataFetched?.({ message, previewData: data })
+    onPreviewDataFetched?.({
+      // It's okay to cast here since we know it is a text message
+      // type-coverage:ignore-next-line
+      message: excludeDerivedMessageProps(message) as MessageType.Text,
+      previewData: data,
+    })
   }
 
   const handleUrlPress = (url: string) => {

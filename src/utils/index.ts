@@ -36,7 +36,7 @@ export const getUserName = ({ firstName, lastName }: User) =>
   `${firstName ?? ''} ${lastName ?? ''}`.trim()
 
 /** Returns hash code of the provided text */
-const hashCode = (text = '') => {
+export const hashCode = (text = '') => {
   let i,
     chr,
     hash = 0
@@ -48,7 +48,7 @@ const hashCode = (text = '') => {
     // eslint-disable-next-line no-bitwise
     hash |= 0 // Convert to 32bit integer
   }
-  return hash
+  return Math.abs(hash)
 }
 
 /** Inits dayjs locale */
