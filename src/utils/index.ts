@@ -31,6 +31,12 @@ export const getTextSizeInBytes = (text: string) => new Blob([text]).size
 export const getUserAvatarNameColor = (user: User, colors: ColorValue[]) =>
   colors[hashCode(user.id) % colors.length]
 
+/** Returns user initials (can have only first letter of firstName/lastName or both) */
+export const getUserInitials = ({ firstName, lastName }: User) =>
+  `${firstName?.charAt(0) ?? ''}${lastName?.charAt(0) ?? ''}`
+    .toUpperCase()
+    .trim()
+
 /** Returns user name as joined firstName and lastName */
 export const getUserName = ({ firstName, lastName }: User) =>
   `${firstName ?? ''} ${lastName ?? ''}`.trim()

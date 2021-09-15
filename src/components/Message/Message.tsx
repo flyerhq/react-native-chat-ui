@@ -38,7 +38,8 @@ export interface MessageTopLevelProps extends TextMessageTopLevelProps {
   /** Render a text message inside predefined bubble */
   renderTextMessage?: (
     message: MessageType.Text,
-    messageWidth: number
+    messageWidth: number,
+    showName: boolean
   ) => React.ReactNode
   /** Show user avatars for received messages. Useful for a group chat. */
   showUserAvatars?: boolean
@@ -145,7 +146,8 @@ export const Message = React.memo(
           )(
             // type-coverage:ignore-next-line
             excludeDerivedMessageProps(message) as MessageType.Text,
-            messageWidth
+            messageWidth,
+            showName
           )
         default:
           return null

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
 import { MessageType, Theme } from '../../types'
-import { getUserAvatarNameColor, getUserName } from '../../utils'
+import { getUserAvatarNameColor, getUserInitials } from '../../utils'
 
 export const Avatar = React.memo(
   ({
@@ -23,7 +23,7 @@ export const Avatar = React.memo(
         author,
         theme.colors.userAvatarNameColors
       )
-      const name = getUserName(author)
+      const initials = getUserInitials(author)
 
       if (author.imageUrl) {
         return (
@@ -41,9 +41,7 @@ export const Avatar = React.memo(
 
       return (
         <View style={[styles.avatarBackground, { backgroundColor: color }]}>
-          <Text style={theme.fonts.userAvatarTextStyle}>
-            {name ? name[0].toUpperCase() : ''}
-          </Text>
+          <Text style={theme.fonts.userAvatarTextStyle}>{initials}</Text>
         </View>
       )
     }
