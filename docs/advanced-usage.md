@@ -330,6 +330,58 @@ const App = () => {
 export default App
 ```
 
+## Custom chat bubbles
+
+Just pass the `renderBubble` function to the `Chat` component. `child` parameter of the `renderBubble` function is a default message content (which you can further customize using `renderCustomMessage`, `renderFileMessage`, `renderImageMessage`, `renderTextMessage` etc.). `message` parameter gives you the actual message to work with, where you can see whether the current user is author, message type, or anything you'd like to customize the bubble. `nextMessageInGroup` parameter gives you a hint about message groups and if you want to add a nip only for the last message in the group, you can do that (messages are grouped when written in quick succession by the same author).
+
+```ts
+import { Chat, defaultTheme, MessageType } from '@flyerhq/react-native-chat-ui'
+import { ReactNode } from 'react'
+import { View } from 'react-native'
+
+const renderBubble = ({
+  child,
+  message,
+  nextMessageInGroup,
+}: {
+  child: ReactNode
+  message: MessageType.Any
+  nextMessageInGroup: boolean
+}) => {
+  return (
+    <View
+      style={{
+        backgroundColor: user.id !== message.author.id ? '#ffffff' : '#1d1c21',
+        borderBottomLeftRadius:
+          !nextMessageInGroup && user.id !== message.author.id ? 20 : 0,
+        borderBottomRightRadius:
+          !nextMessageInGroup && user.id === message.author.id ? 20 : 0,
+        borderColor: '#1d1c21',
+        borderWidth: 1,
+        overflow: 'hidden',
+      }}
+    >
+      {child}
+    </View>
+  )
+}
+
+return (
+  <Chat
+    // ...
+    renderBubble={renderBubble}
+    theme={{
+      ...defaultTheme,
+      colors: { ...defaultTheme.colors, primary: '#1d1c21' },
+    }}
+  />
+)
+```
+
+This is how it would look like
+
+<img src="https://user-images.githubusercontent.com/14123304/133937546-6777b625-9f5b-46c2-812b-0416439618b6.png" width="288px" alt="Custom chat bubbles" />
+
 ## Custom messages
 
 Use the `renderCustomMessage` function to render whatever message you want. To store the data use a `metadata` map of the `CustomMessage`. You can have multiple different custom messages, you will need to identify them based on some property inside the `metadata` and render accordingly.

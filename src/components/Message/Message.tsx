@@ -20,6 +20,16 @@ export interface MessageTopLevelProps extends TextMessageTopLevelProps {
   onMessageLongPress?: (message: MessageType.Any) => void
   /** Called when user taps on any message */
   onMessagePress?: (message: MessageType.Any) => void
+  /** Customize the default bubble using this function. `child` is a content
+   * you should render inside your bubble, `message` is a current message
+   * (contains `author` inside) and `nextMessageInGroup` allows you to see
+   * if the message is a part of a group (messages are grouped when written
+   * in quick succession by the same author) */
+  renderBubble?: (payload: {
+    child: React.ReactNode
+    message: MessageType.Any
+    nextMessageInGroup: boolean
+  }) => React.ReactNode
   /** Render a custom message inside predefined bubble */
   renderCustomMessage?: (
     message: MessageType.Custom,
@@ -66,6 +76,7 @@ export const Message = React.memo(
     onMessagePress,
     onMessageLongPress,
     onPreviewDataFetched,
+    renderBubble,
     renderCustomMessage,
     renderFileMessage,
     renderImageMessage,
@@ -83,7 +94,7 @@ export const Message = React.memo(
     const currentUserIsAuthor =
       message.type !== 'dateHeader' && user?.id === message.author.id
 
-    const { container, contentContainer, dateHeader } = styles({
+    const { container, contentContainer, dateHeader, pressable } = styles({
       currentUserIsAuthor,
       message,
       messageWidth,
@@ -97,6 +108,21 @@ export const Message = React.memo(
           <Text style={theme.fonts.dateDividerTextStyle}>{message.text}</Text>
         </View>
       )
+    }
+
+    const renderBubbleContainer = () => {
+      const child = renderMessage()
+
+      return oneOf(
+        renderBubble,
+        <View style={contentContainer} testID='ContentContainer'>
+          {child}
+        </View>
+      )({
+        child,
+        message: excludeDerivedMessageProps(message),
+        nextMessageInGroup: roundBorder,
+      })
     }
 
     const renderMessage = () => {
@@ -170,10 +196,9 @@ export const Message = React.memo(
             onMessageLongPress?.(excludeDerivedMessageProps(message))
           }
           onPress={() => onMessagePress?.(excludeDerivedMessageProps(message))}
-          style={contentContainer}
-          testID='ContentContainer'
+          style={pressable}
         >
-          {renderMessage()}
+          {renderBubbleContainer()}
         </Pressable>
         <StatusIcon
           {...{

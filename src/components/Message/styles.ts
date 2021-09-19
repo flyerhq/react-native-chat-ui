@@ -41,7 +41,6 @@ const styles = ({
         : theme.borders.messageBorderRadius,
       borderColor: 'transparent',
       borderRadius: theme.borders.messageBorderRadius,
-      maxWidth: messageWidth,
       overflow: 'hidden',
     },
     dateHeader: {
@@ -49,6 +48,9 @@ const styles = ({
       justifyContent: 'center',
       marginBottom: 32,
       marginTop: 16,
+    },
+    pressable: {
+      maxWidth: messageWidth,
     },
   })
 
