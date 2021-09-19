@@ -74,7 +74,10 @@
       "!**/index.{ts,tsx}",
       "!**/styles.{ts,tsx}",
       "!**/types.{ts,tsx}",
-      "!**/*.d.ts"
+      "!**/*.d.ts",
+      "!**/ImageView.android.ts",
+      "!**/ImageView.ios.ts",
+      "!**/ImageView.tsx"
     ],
     "coverageThreshold": {
       "global": {

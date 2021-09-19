@@ -17,7 +17,6 @@ import {
   Text,
   View,
 } from 'react-native'
-import ImageView from 'react-native-image-viewing'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { usePrevious } from '../../hooks'
@@ -35,6 +34,7 @@ import {
 import { CircularActivityIndicator } from '../CircularActivityIndicator'
 import { Input, InputAdditionalProps, InputTopLevelProps } from '../Input'
 import { Message, MessageTopLevelProps } from '../Message'
+import ImageView from './ImageView'
 import styles from './styles'
 
 // Untestable
