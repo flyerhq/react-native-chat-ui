@@ -3,6 +3,10 @@
   "version": "1.4.2",
   "description": "Actively maintained, community-driven chat UI implementation with an optional Firebase BaaS.",
   "homepage": "https://flyer.chat",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flyerhq/react-native-chat-ui.git"
+  },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "author": "Oleksandr Demchenko <alexdemchenko@yahoo.com>",
