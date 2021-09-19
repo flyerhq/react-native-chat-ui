@@ -65,7 +65,7 @@ You can use this URL https://bit.ly/2P0cn2g to test the file message presentatio
 
 :::
 
-On tap, images will be previewed inside an interactive image gallery. To disable the image gallery pass `disableImageGallery` property to the `Chat` component.
+On tap, images will be previewed inside an interactive image gallery. To disable the image gallery pass `disableImageGallery` property to the `Chat` component. Not available on web and desktop.
 
 ## Files
 
