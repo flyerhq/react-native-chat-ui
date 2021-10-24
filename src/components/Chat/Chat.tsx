@@ -43,6 +43,7 @@ const animate = () => {
   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
 }
 
+// eslint-disable-next-line jest/require-hook
 dayjs.extend(calendar)
 
 export type ChatTopLevelProps = InputTopLevelProps & MessageTopLevelProps
@@ -154,6 +155,11 @@ export const Chat = ({
   const [isNextPageLoading, setNextPageLoading] = React.useState(false)
   const [imageViewIndex, setImageViewIndex] = React.useState(0)
   const [stackEntry, setStackEntry] = React.useState<StatusBarProps>({})
+
+  const l10nValue = React.useMemo(
+    () => ({ ...l10n[locale], ...unwrap(l10nOverride) }),
+    [l10nOverride, locale]
+  )
 
   const { chatMessages, gallery } = calculateChatMessages(messages, user, {
     customDateHeaderText,
@@ -325,12 +331,12 @@ export const Chat = ({
         {oneOf(
           emptyState,
           <Text style={emptyComponentTitle}>
-            {l10n[locale].emptyChatPlaceholder}
+            {l10nValue.emptyChatPlaceholder}
           </Text>
         )()}
       </View>
     ),
-    [emptyComponentContainer, emptyComponentTitle, emptyState, locale]
+    [emptyComponentContainer, emptyComponentTitle, emptyState, l10nValue]
   )
 
   const renderListFooterComponent = React.useCallback(
@@ -397,7 +403,7 @@ export const Chat = ({
   return (
     <UserContext.Provider value={user}>
       <ThemeContext.Provider value={theme}>
-        <L10nContext.Provider value={{ ...l10n[locale], ...l10nOverride }}>
+        <L10nContext.Provider value={l10nValue}>
           <View style={container} onLayout={onLayout}>
             {customBottomComponent ? (
               <>

@@ -375,7 +375,11 @@
 					/usr/lib/swift,
 					"$(inherited)",
 				);
-				LIBRARY_SEARCH_PATHS = "\"$(inherited)\"";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SDKROOT)/usr/lib/swift\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
@@ -430,7 +434,11 @@
 					/usr/lib/swift,
 					"$(inherited)",
 				);
-				LIBRARY_SEARCH_PATHS = "\"$(inherited)\"";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SDKROOT)/usr/lib/swift\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;

@@ -13,33 +13,32 @@
     "test": "jest"
   },
   "dependencies": {
-    "@expo/react-native-action-sheet": "^3.11.0",
+    "@expo/react-native-action-sheet": "^3.12.0",
     "react": "^17.0.2",
-    "react-native": "^0.65.1",
-    "react-native-document-picker": "^6.0.4",
+    "react-native": "^0.66.1",
+    "react-native-document-picker": "^7.1.1",
     "react-native-file-viewer": "^2.1.4",
     "react-native-get-random-values": "^1.7.0",
-    "react-native-image-picker": "^4.0.6",
+    "react-native-image-picker": "^4.1.2",
     "react-native-safe-area-context": "^3.3.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.5",
+    "@babel/core": "^7.15.8",
     "@babel/runtime": "^7.15.4",
     "@react-native-community/eslint-config": "^3.0.1",
-    "@types/jest": "^27.0.1",
-    "@types/react-native": "^0.65.0",
+    "@types/jest": "^27.0.2",
+    "@types/react-native": "^0.66.0",
     "@types/react-test-renderer": "^17.0.1",
     "@types/uuid": "^8.3.1",
-    "babel-jest": "^27.2.0",
+    "babel-jest": "^27.3.1",
     "casual": "^1.6.2",
     "eslint": "^7.32.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "jest": "^27.2.0",
+    "jest": "^27.3.1",
     "metro-react-native-babel-preset": "^0.66.2",
-    "react-native-codegen": "^0.0.7",
     "react-test-renderer": "^17.0.2",
-    "typescript": "^4.4.3"
+    "typescript": "^4.4.4"
   },
   "resolutions": {
     "@types/react": "^17"

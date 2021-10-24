@@ -86,9 +86,9 @@ const App = () => {
         author: user,
         createdAt: Date.now(),
         id: uuidv4(),
-        mimeType: response.type,
+        mimeType: response.type ?? undefined,
         name: response.name,
-        size: response.size,
+        size: response.size ?? 0,
         type: 'file',
         uri: response.uri,
       }
@@ -247,9 +247,9 @@ const App = () => {
         author: user,
         createdAt: Date.now(),
         id: uuidv4(),
-        mimeType: response.type,
+        mimeType: response.type ?? undefined,
         name: response.name,
-        size: response.size,
+        size: response.size ?? 0,
         type: 'file',
         uri: response.uri,
       }

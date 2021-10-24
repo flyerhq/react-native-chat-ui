@@ -3,12 +3,12 @@ import { formatBytes, getTextSizeInBytes, unwrap } from '..'
 describe('formatBytes', () => {
   it('formats bytes correctly when the size is 0', () => {
     expect.assertions(1)
-    expect(formatBytes(0)).toStrictEqual('0 B')
+    expect(formatBytes(0)).toBe('0 B')
   })
 
   it('formats bytes correctly', () => {
     expect.assertions(1)
-    expect(formatBytes(1024)).toStrictEqual('1 kB')
+    expect(formatBytes(1024)).toBe('1 kB')
   })
 })
 
@@ -16,13 +16,13 @@ describe('getTextSizeInBytes', () => {
   it('calculates the size for a simple text', () => {
     expect.assertions(1)
     const text = 'text'
-    expect(getTextSizeInBytes(text)).toStrictEqual(4)
+    expect(getTextSizeInBytes(text)).toBe(4)
   })
 
   it('calculates the size for an emoji text', () => {
     expect.assertions(1)
     const text = '🤔 🤓'
-    expect(getTextSizeInBytes(text)).toStrictEqual(9)
+    expect(getTextSizeInBytes(text)).toBe(9)
   })
 })
 
