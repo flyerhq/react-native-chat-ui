@@ -54,7 +54,7 @@ export const TextMessage = ({
       user,
     })
 
-  const hanleEmailPress = (email: string) => {
+  const handleEmailPress = (email: string) => {
     try {
       Linking.openURL(`mailto:${email}`)
     } catch {}
@@ -98,7 +98,7 @@ export const TextMessage = ({
         accessibilityRole='link'
         parse={[
           {
-            onPress: hanleEmailPress,
+            onPress: handleEmailPress,
             style: [text, { textDecorationLine: 'underline' }],
             type: 'email',
           },
