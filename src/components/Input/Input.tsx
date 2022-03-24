@@ -82,40 +82,44 @@ export const Input = ({
   }
 
   return (
-    <View style={container}>
-      {user &&
-        (isAttachmentUploading ? (
-          <CircularActivityIndicator
-            {...{
-              ...attachmentCircularActivityIndicatorProps,
-              color: theme.colors.inputText,
-              style: marginRight,
-            }}
-          />
-        ) : (
-          !!onAttachmentPress && (
-            <AttachmentButton
-              {...unwrap(attachmentButtonProps)}
-              onPress={onAttachmentPress}
+    <View style={{flexDirection : 'column'}}>
+      <View style={container}>
+        {user &&
+          (isAttachmentUploading ? (
+            <CircularActivityIndicator
+              {...{
+                ...attachmentCircularActivityIndicatorProps,
+                color: theme.colors.inputText,
+                style: marginRight,
+              }}
             />
-          )
-        ))}
-      <TextInput
-        multiline
-        placeholder={l10n.inputPlaceholder}
-        placeholderTextColor={`${String(theme.colors.inputText)}80`}
-        underlineColorAndroid='transparent'
-        {...textInputProps}
-        // Keep our implementation but allow user to use these `TextInputProps`
-        style={[input, textInputProps?.style]}
-        onChangeText={handleChangeText}
-        value={value}
-      />
-      {sendButtonVisibilityMode === 'always' ||
-      (sendButtonVisibilityMode === 'editing' && user && value.trim()) ? (
-        <SendButton onPress={handleSend} />
-      ) : null}
-      {(() => {return renderOptionPanel && renderOptionPanel ()})()}
+          ) : (
+            !!onAttachmentPress && (
+              <AttachmentButton
+                {...unwrap(attachmentButtonProps)}
+                onPress={onAttachmentPress}
+              />
+            )
+          ))}
+        <TextInput
+          multiline
+          placeholder={l10n.inputPlaceholder}
+          placeholderTextColor={`${String(theme.colors.inputText)}80`}
+          underlineColorAndroid='transparent'
+          {...textInputProps}
+          // Keep our implementation but allow user to use these `TextInputProps`
+          style={[input, textInputProps?.style]}
+          onChangeText={handleChangeText}
+          value={value}
+        />
+        {sendButtonVisibilityMode === 'always' ||
+        (sendButtonVisibilityMode === 'editing' && user && value.trim()) ? (
+          <SendButton onPress={handleSend} />
+        ) : null}
+      </View>
+      <View>
+        {(() => {return renderOptionPanel && renderOptionPanel ()})()}
+      </View>
     </View>
   )
 }
