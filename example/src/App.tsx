@@ -2,6 +2,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet'
 import { Chat, MessageType } from '@flyerhq/react-native-chat-ui'
 import { PreviewData } from '@flyerhq/react-native-link-preview'
 import React, { useState } from 'react'
+import {Dimensions, View} from 'react-native'
 import DocumentPicker from 'react-native-document-picker'
 import FileViewer from 'react-native-file-viewer'
 import { launchImageLibrary } from 'react-native-image-picker'
@@ -126,6 +127,23 @@ const App = () => {
       onPreviewDataFetched={handlePreviewDataFetched}
       onSendPress={handleSendPress}
       user={user}
+
+      // onAttachmentPress={() => {
+      //   this.setState ({bShowOption : true})
+      // }}
+
+      renderOptionPanel={() => {
+					
+        // if (!this.state.bShowOption) return ;
+
+        // we can show it now 
+        return (
+          <View style={{width : Dimensions.get('screen').width,height : 40,backgroundColor : 'lightblue'}}>
+            {/* render anything you want  */}
+          </View>
+        )
+      }}
+
     />
   )
 }
