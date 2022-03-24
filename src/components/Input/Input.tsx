@@ -29,6 +29,9 @@ export interface InputTopLevelProps {
    * `TextInput` state. Defaults to `editing`. */
   sendButtonVisibilityMode?: 'always' | 'editing'
   textInputProps?: TextInputProps
+
+  /** Render a optional panel inside predefined bubble */
+  renderOptionPanel?: () => React.ReactNode
 }
 
 export interface InputAdditionalProps {
@@ -46,6 +49,7 @@ export const Input = ({
   isAttachmentUploading,
   onAttachmentPress,
   onSendPress,
+  renderOptionPanel,
   sendButtonVisibilityMode,
   textInputProps,
 }: InputProps) => {
@@ -111,6 +115,7 @@ export const Input = ({
       (sendButtonVisibilityMode === 'editing' && user && value.trim()) ? (
         <SendButton onPress={handleSend} />
       ) : null}
+      {(() => {return renderOptionPanel && renderOptionPanel ()})()}
     </View>
   )
 }
