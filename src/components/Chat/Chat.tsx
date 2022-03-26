@@ -122,7 +122,11 @@ export const Chat = ({
   onPreviewDataFetched,
   onSendPress,
   renderBubble,
+  
   renderOptionPanel,
+  renderLeftPanel,
+  renderRightPanel,
+
   renderCustomMessage,
   renderFileMessage,
   renderImageMessage,
@@ -295,7 +299,11 @@ export const Chat = ({
             onMessagePress: handleMessagePress,
             onPreviewDataFetched,
             renderBubble,
+            
             renderOptionPanel,
+            renderLeftPanel,
+            renderRightPanel,
+
             renderCustomMessage,
             renderFileMessage,
             renderImageMessage,
@@ -316,7 +324,11 @@ export const Chat = ({
       onMessageLongPress,
       onPreviewDataFetched,
       renderBubble,
+      
       renderOptionPanel,
+      renderLeftPanel,
+      renderRightPanel,
+
       renderCustomMessage,
       renderFileMessage,
       renderImageMessage,

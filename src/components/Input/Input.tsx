@@ -30,8 +30,14 @@ export interface InputTopLevelProps {
   sendButtonVisibilityMode?: 'always' | 'editing'
   textInputProps?: TextInputProps
 
-  /** Render a optional panel inside predefined bubble */
+  /** Render a optional panel  */
   renderOptionPanel?: () => React.ReactNode
+
+  /** Render left panel */
+  renderLeftPanel?: () => React.ReactNode
+
+  /** Render right panel */
+  renderRightPanel?: () => React.ReactNode
 }
 
 export interface InputAdditionalProps {
@@ -49,7 +55,11 @@ export const Input = ({
   isAttachmentUploading,
   onAttachmentPress,
   onSendPress,
+  
   renderOptionPanel,
+  renderLeftPanel,
+  renderRightPanel,
+
   sendButtonVisibilityMode,
   textInputProps,
 }: InputProps) => {
@@ -94,12 +104,13 @@ export const Input = ({
               }}
             />
           ) : (
-            !!onAttachmentPress && (
-              <AttachmentButton
-                {...unwrap(attachmentButtonProps)}
-                onPress={onAttachmentPress}
-              />
-            )
+            renderLeftPanel ? renderLeftPanel () :
+              !!onAttachmentPress && (
+                <AttachmentButton
+                  {...unwrap(attachmentButtonProps)}
+                  onPress={onAttachmentPress}
+                />
+              )
           ))}
         <TextInput
           multiline
@@ -114,7 +125,7 @@ export const Input = ({
         />
         {sendButtonVisibilityMode === 'always' ||
         (sendButtonVisibilityMode === 'editing' && user && value.trim()) ? (
-          <SendButton onPress={handleSend} />
+          renderRightPanel ? renderRightPanel () : <SendButton onPress={handleSend} />
         ) : null}
       </View>
       <View>
