@@ -36,6 +36,9 @@ export interface InputTopLevelProps {
   /** Render left panel */
   renderLeftPanel?: () => React.ReactNode
 
+  /** Render middle panel */
+  renderMidPanel?: () => React.ReactNode
+
   /** Render right panel */
   renderRightPanel?: () => React.ReactNode
 }
@@ -58,6 +61,7 @@ export const Input = ({
   
   renderOptionPanel,
   renderLeftPanel,
+  renderMidPanel,
   renderRightPanel,
 
   sendButtonVisibilityMode,
@@ -111,18 +115,22 @@ export const Input = ({
                   onPress={onAttachmentPress}
                 />
               )
-          ))}
-        <TextInput
-          multiline
-          placeholder={l10n.inputPlaceholder}
-          placeholderTextColor={`${String(theme.colors.inputText)}80`}
-          underlineColorAndroid='transparent'
-          {...textInputProps}
-          // Keep our implementation but allow user to use these `TextInputProps`
-          style={[input, textInputProps?.style]}
-          onChangeText={handleChangeText}
-          value={value}
-        />
+          ))
+        }
+        {
+          renderMidPanel ? renderMidPanel () :
+            (<TextInput
+              multiline
+              placeholder={l10n.inputPlaceholder}
+              placeholderTextColor={`${String(theme.colors.inputText)}80`}
+              underlineColorAndroid='transparent'
+              {...textInputProps}
+              // Keep our implementation but allow user to use these `TextInputProps`
+              style={[input, textInputProps?.style]}
+              onChangeText={handleChangeText}
+              value={value}
+            />)
+        }
         {sendButtonVisibilityMode === 'always' ||
         (sendButtonVisibilityMode === 'editing' && user && value.trim()) ? (
           renderRightPanel ? renderRightPanel () : <SendButton onPress={handleSend} />

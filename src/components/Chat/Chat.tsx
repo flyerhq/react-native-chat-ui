@@ -125,6 +125,7 @@ export const Chat = ({
 
   renderOptionPanel,
   renderLeftPanel,
+  renderMidPanel,
   renderRightPanel,
 
   renderCustomMessage,
@@ -302,6 +303,7 @@ export const Chat = ({
             
             renderOptionPanel,
             renderLeftPanel,
+            renderMidPanel,
             renderRightPanel,
 
             renderCustomMessage,
@@ -327,6 +329,7 @@ export const Chat = ({
       
       renderOptionPanel,
       renderLeftPanel,
+      renderMidPanel,
       renderRightPanel,
 
       renderCustomMessage,
