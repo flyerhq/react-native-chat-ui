@@ -443,6 +443,7 @@ export const Chat = ({
                     onSendPress,
                     renderOptionPanel,
                     renderLeftPanel,
+                    renderMidPanel,
                     renderRightPanel,
                     renderScrollable,
                     sendButtonVisibilityMode,
