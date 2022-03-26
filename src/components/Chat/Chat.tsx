@@ -122,7 +122,7 @@ export const Chat = ({
   onPreviewDataFetched,
   onSendPress,
   renderBubble,
-  
+
   renderOptionPanel,
   renderLeftPanel,
   renderRightPanel,
@@ -439,6 +439,8 @@ export const Chat = ({
                     onAttachmentPress,
                     onSendPress,
                     renderOptionPanel,
+                    renderLeftPanel,
+                    renderRightPanel,
                     renderScrollable,
                     sendButtonVisibilityMode,
                     textInputProps,
