@@ -30,6 +30,8 @@ export interface InputTopLevelProps {
   sendButtonVisibilityMode?: 'always' | 'editing'
   textInputProps?: TextInputProps
 
+  renderInputPanel?: () => React.ReactNode
+
   /** Render a optional panel  */
   renderOptionPanel?: () => React.ReactNode
 
@@ -59,6 +61,7 @@ export const Input = ({
   onAttachmentPress,
   onSendPress,
   
+  renderInputPanel,
   renderOptionPanel,
   renderLeftPanel,
   renderMidPanel,
@@ -93,6 +96,14 @@ export const Input = ({
       onSendPress({ text: trimmedValue, type: 'text' })
       setText('')
     }
+  }
+
+  if (renderInputPanel) {
+    return (
+      <View>
+        {renderInputPanel ()}
+      </View>
+    );
   }
 
   return (

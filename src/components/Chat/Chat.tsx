@@ -123,6 +123,7 @@ export const Chat = ({
   onSendPress,
   renderBubble,
 
+  renderInputPanel,
   renderOptionPanel,
   renderLeftPanel,
   renderMidPanel,
@@ -301,6 +302,7 @@ export const Chat = ({
             onPreviewDataFetched,
             renderBubble,
             
+            renderInputPanel,
             renderOptionPanel,
             renderLeftPanel,
             renderMidPanel,
@@ -327,6 +329,7 @@ export const Chat = ({
       onPreviewDataFetched,
       renderBubble,
       
+      renderInputPanel,
       renderOptionPanel,
       renderLeftPanel,
       renderMidPanel,
@@ -441,6 +444,7 @@ export const Chat = ({
                     isAttachmentUploading,
                     onAttachmentPress,
                     onSendPress,
+                    renderInputPanel,
                     renderOptionPanel,
                     renderLeftPanel,
                     renderMidPanel,
