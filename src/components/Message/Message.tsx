@@ -53,6 +53,8 @@ export interface MessageTopLevelProps extends TextMessageTopLevelProps {
   ) => React.ReactNode
   /** Show user avatars for received messages. Useful for a group chat. */
   showUserAvatars?: boolean
+
+  onAvatarPress? :() => void
 }
 
 export interface MessageProps extends MessageTopLevelProps {
@@ -81,6 +83,7 @@ export const Message = React.memo(
     renderFileMessage,
     renderImageMessage,
     renderTextMessage,
+    onAvatarPress,
     roundBorder,
     showAvatar,
     showName,
@@ -189,6 +192,7 @@ export const Message = React.memo(
             showAvatar,
             showUserAvatars,
             theme,
+            onAvatarPress,
           }}
         />
         <Pressable
