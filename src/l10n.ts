@@ -56,4 +56,11 @@ export const l10n = {
     inputPlaceholder: 'Повідомлення',
     sendButtonAccessibilityLabel: 'Надіслати',
   },
+  de: {
+    attachmentButtonAccessibilityLabel: 'Medien verschicken',
+    emptyChatPlaceholder: 'Bisher keine Nachrichten',
+    fileButtonAccessibilityLabel: 'Datei',
+    inputPlaceholder: 'Nachricht',
+    sendButtonAccessibilityLabel: 'Senden',
+  },
 }
