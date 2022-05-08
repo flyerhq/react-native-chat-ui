@@ -68,6 +68,7 @@ export const initLocale = (locale?: keyof typeof l10n) => {
     ru: require('dayjs/locale/ru'),
     tr: require('dayjs/locale/tr'),
     uk: require('dayjs/locale/uk'),
+    de: require('dayjs/locale/de'),
   }
 
   locale ? locales[locale] : locales.en
