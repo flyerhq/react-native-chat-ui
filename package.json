@@ -1,18 +1,19 @@
 {
-  "name": "@flyerhq/react-native-chat-ui",
-  "version": "1.4.3",
+  "name": "@ShortByte/react-native-chat-ui",
+  "version": "1.4.4",
   "description": "Actively maintained, community-driven chat UI implementation with an optional Firebase BaaS.",
   "homepage": "https://flyer.chat",
   "repository": {
     "type": "git",
-    "url": "https://github.com/flyerhq/react-native-chat-ui.git"
+    "url": "https://github.com/ShortByte/react-native-chat-ui.git"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "author": "Oleksandr Demchenko <alexdemchenko@yahoo.com>",
   "contributors": [
     "Vitalii Danylov <vitaliidanylov1992@gmail.com>",
-    "Volodymyr Smolianinov <voidozzer@gmail.com>"
+    "Volodymyr Smolianinov <voidozzer@gmail.com>",
+    "Leon Enneken <github@shortbyte.me>"
   ],
   "license": "Apache-2.0",
   "keywords": [
@@ -103,7 +104,7 @@
       "./jest/setup.ts"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(@flyerhq|@react-native|react-native))"
+      "node_modules/(?!(@flyerhq|@ShortByte|@react-native|react-native))"
     ]
   },
   "typeCoverage": {
