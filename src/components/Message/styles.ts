@@ -18,8 +18,8 @@ const styles = ({
   StyleSheet.create({
     container: {
       alignItems: 'flex-end',
-      alignSelf: currentUserIsAuthor ? 'flex-end' : 'flex-start',
-      justifyContent: !currentUserIsAuthor ? 'flex-end' : 'flex-start',
+      // alignSelf: currentUserIsAuthor ? 'flex-end' : 'flex-start',
+      // justifyContent: !currentUserIsAuthor ? 'flex-end' : 'flex-start',
       flex: 1,
       flexDirection: 'row',
       marginBottom: message.type === 'dateHeader' ? 0 : 4 + message.offset,

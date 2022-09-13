@@ -46,7 +46,7 @@ export const Avatar = React.memo(
       )
     }
 
-    return !currentUserIsAuthor && showUserAvatars ? (
+    return showUserAvatars ? (
       <View testID='AvatarContainer'>
         {showAvatar ? renderAvatar() : <View style={styles.placeholder} />}
       </View>

@@ -1,6 +1,6 @@
 {
-  "name": "@flyerhq/react-native-chat-ui",
-  "version": "1.4.3",
+  "name": "@nabeel91/react-native-chat-ui",
+  "version": "1.4.8",
   "description": "Actively maintained, community-driven chat UI implementation with an optional Firebase BaaS.",
   "homepage": "https://flyer.chat",
   "repository": {
@@ -31,7 +31,7 @@
     "access": "public"
   },
   "scripts": {
-    "compile": "rm -rf lib && tsc -p . && copyup src/assets/*.png lib",
+    "compile": "rimraf lib && tsc -p . && copyup src/assets/*.png lib",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prepare": "yarn compile",
     "test": "jest",
@@ -64,7 +64,7 @@
     "react-native-safe-area-context": "^3.3.2",
     "react-test-renderer": "^17.0.2",
     "type-coverage": "^2.18.2",
-    "typescript": "^4.4.4"
+    "typescript": "^4.8.2"
   },
   "peerDependencies": {
     "react": "*",
