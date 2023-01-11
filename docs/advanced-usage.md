@@ -61,7 +61,7 @@ To keep the UI clean, the image message renders in two different ways, if the as
 
 :::tip
 
-You can use this URL https://bit.ly/2P0cn2g to test the file message presentation, remove height and width from the `imageMessage` so the library will calculate it automatically and replace `uri`'s data with this URL.
+You can use this [URL](https://via.placeholder.com/1001x100.png/ffffff/6f61e8?text=I+love+Flyer+Chat+:)) to test the file message presentation, remove height and width from the `imageMessage` so the library will calculate it automatically and replace `uri`'s data with this URL.
 
 :::
 
