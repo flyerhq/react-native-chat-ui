@@ -1,3 +1,7 @@
+<p align="center">
+  ⚠️⚠️ Currently not maintained, please fork or look for alternatives ⚠️⚠️
+</p>
+
 <br>
 
 <p align="center">
