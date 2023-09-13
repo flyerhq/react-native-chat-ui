@@ -29,6 +29,20 @@ export interface InputTopLevelProps {
    * `TextInput` state. Defaults to `editing`. */
   sendButtonVisibilityMode?: 'always' | 'editing'
   textInputProps?: TextInputProps
+
+  renderInputPanel?: () => React.ReactNode
+
+  /** Render a optional panel  */
+  renderOptionPanel?: () => React.ReactNode
+
+  /** Render left panel */
+  renderLeftPanel?: () => React.ReactNode
+
+  /** Render middle panel */
+  renderMidPanel?: () => React.ReactNode
+
+  /** Render right panel */
+  renderRightPanel?: () => React.ReactNode
 }
 
 export interface InputAdditionalProps {
@@ -46,6 +60,13 @@ export const Input = ({
   isAttachmentUploading,
   onAttachmentPress,
   onSendPress,
+  
+  renderInputPanel,
+  renderOptionPanel,
+  renderLeftPanel,
+  renderMidPanel,
+  renderRightPanel,
+
   sendButtonVisibilityMode,
   textInputProps,
 }: InputProps) => {
@@ -77,40 +98,58 @@ export const Input = ({
     }
   }
 
+  if (renderInputPanel) {
+    return (
+      <View>
+        {renderInputPanel ()}
+      </View>
+    );
+  }
+
   return (
-    <View style={container}>
-      {user &&
-        (isAttachmentUploading ? (
-          <CircularActivityIndicator
-            {...{
-              ...attachmentCircularActivityIndicatorProps,
-              color: theme.colors.inputText,
-              style: marginRight,
-            }}
-          />
-        ) : (
-          !!onAttachmentPress && (
-            <AttachmentButton
-              {...unwrap(attachmentButtonProps)}
-              onPress={onAttachmentPress}
+    <View style={{flexDirection : 'column'}}>
+      <View style={container}>
+        {user &&
+          (isAttachmentUploading ? (
+            <CircularActivityIndicator
+              {...{
+                ...attachmentCircularActivityIndicatorProps,
+                color: theme.colors.inputText,
+                style: marginRight,
+              }}
             />
-          )
-        ))}
-      <TextInput
-        multiline
-        placeholder={l10n.inputPlaceholder}
-        placeholderTextColor={`${String(theme.colors.inputText)}80`}
-        underlineColorAndroid='transparent'
-        {...textInputProps}
-        // Keep our implementation but allow user to use these `TextInputProps`
-        style={[input, textInputProps?.style]}
-        onChangeText={handleChangeText}
-        value={value}
-      />
-      {sendButtonVisibilityMode === 'always' ||
-      (sendButtonVisibilityMode === 'editing' && user && value.trim()) ? (
-        <SendButton onPress={handleSend} />
-      ) : null}
+          ) : (
+            renderLeftPanel ? renderLeftPanel () :
+              !!onAttachmentPress && (
+                <AttachmentButton
+                  {...unwrap(attachmentButtonProps)}
+                  onPress={onAttachmentPress}
+                />
+              )
+          ))
+        }
+        {
+          renderMidPanel ? renderMidPanel () :
+            (<TextInput
+              multiline
+              placeholder={l10n.inputPlaceholder}
+              placeholderTextColor={`${String(theme.colors.inputText)}80`}
+              underlineColorAndroid='transparent'
+              {...textInputProps}
+              // Keep our implementation but allow user to use these `TextInputProps`
+              style={[input, textInputProps?.style]}
+              onChangeText={handleChangeText}
+              value={value}
+            />)
+        }
+        {sendButtonVisibilityMode === 'always' ||
+        (sendButtonVisibilityMode === 'editing' && user && value.trim()) ? (
+          renderRightPanel ? renderRightPanel () : <SendButton onPress={handleSend} />
+        ) : null}
+      </View>
+      <View>
+        {(() => {return renderOptionPanel && renderOptionPanel ()})()}
+      </View>
     </View>
   )
 }
