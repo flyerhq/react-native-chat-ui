@@ -428,4 +428,8 @@ export default App
 
 ## User avatars & names
 
-To show user avatars & names use `showUserAvatars` and `showUserNames` parameters. Can be used separately. By default, the chat will select one of 10 provided colors as an avatar background and name text color. Color is calculated based on the user's `id` hash code, so it is unique in different rooms. To modify provided colors use `userAvatarNameColors` parameter in [theme](themes). If you want to have one color for everyone, just pass this color as a single item in the `userAvatarNameColors` list.
+To show user avatars & names use `showUserAvatars` and `showUserNames` parameters. Can be used separately. By default, the chat will select one of 10 provided colors as an avatar background and name text color. Color is calculated based on the user's `id` hash code, so it is unique in different rooms. To modify provided colors use `userAvatarNameColors` parameter in [theme](themes). If you want to have one color for everyone, just pass this color as a single item in the `userAvatarNameColors` list. To add avatar image use imageUrl property in the user object and to add user names use firstName and lastName property to the user object . Example
+```ts
+// ...
+const user = { id: '06c33e8b-e835-4736-80f4-63f44b66666d',firstName:'Sagnik',lastName:'Saha',imageUrl:'https://bestgoodcaptions.com/wp-content/uploads/2019/12/Profile-Picture-Quotes.jpg'}  
+```
